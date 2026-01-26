@@ -54,4 +54,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserSticker::class);
     }
+
+    /**
+     * Get the packs for this user.
+     */
+    public function packs(): HasMany
+    {
+        return $this->hasMany(Pack::class);
+    }
 }
