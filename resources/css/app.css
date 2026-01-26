@@ -10,3 +10,91 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Pack Opening Animation */
+@keyframes pack-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+@keyframes pack-tear-left {
+    0% {
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        transform: translateX(-100px) rotate(-15deg);
+        opacity: 0;
+    }
+}
+
+@keyframes pack-tear-right {
+    0% {
+        clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        transform: translateX(100px) rotate(15deg);
+        opacity: 0;
+    }
+}
+
+@keyframes stickers-reveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes tear-line {
+    0% {
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        height: 100%;
+        opacity: 1;
+    }
+}
+
+.pack-shake {
+    animation: pack-shake 0.1s ease-in-out infinite;
+}
+
+.pack-tear-left {
+    animation: pack-tear-left 0.5s ease-out forwards;
+}
+
+.pack-tear-right {
+    animation: pack-tear-right 0.5s ease-out forwards;
+}
+
+.stickers-reveal {
+    animation: stickers-reveal 0.4s ease-out forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.stickers-reveal > * {
+    animation: stickers-reveal 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+.stickers-reveal > *:nth-child(1) { animation-delay: 0.35s; }
+.stickers-reveal > *:nth-child(2) { animation-delay: 0.45s; }
+.stickers-reveal > *:nth-child(3) { animation-delay: 0.55s; }
+.stickers-reveal > *:nth-child(4) { animation-delay: 0.65s; }
+.stickers-reveal > *:nth-child(5) { animation-delay: 0.75s; }
+
+.tear-line {
+    animation: tear-line 0.2s ease-out forwards;
+}
