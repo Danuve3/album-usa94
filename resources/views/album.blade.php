@@ -7,6 +7,13 @@
                 Mi Álbum USA 94
             </h1>
 
+            <div class="mb-8 rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
+                <h2 class="mb-6 text-center text-lg font-medium text-gray-900 dark:text-white">
+                    Mis Sobres
+                </h2>
+                <livewire:pack-pile />
+            </div>
+
             <div class="rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
                 <p class="text-center text-gray-600 dark:text-gray-400">
                     ¡Bienvenido, {{ auth()->user()->name }}!
