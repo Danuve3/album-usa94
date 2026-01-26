@@ -158,4 +158,37 @@ class LoginTest extends TestCase
 
         $response->assertRedirect('/');
     }
+
+    public function test_unauthenticated_users_are_redirected_to_login(): void
+    {
+        $response = $this->get('/album');
+
+        $response->assertRedirect('/login');
+    }
+
+    public function test_authenticated_users_can_access_album(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/album');
+
+        $response->assertStatus(200);
+        $response->assertSee('Mi Álbum USA 94');
+    }
+
+    public function test_logout_invalidates_session(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        $this->assertAuthenticated();
+
+        $response = $this->post('/logout');
+
+        $response->assertRedirect('/');
+        $this->assertGuest();
+
+        $response = $this->get('/album');
+        $response->assertRedirect('/login');
+    }
 }
