@@ -4,11 +4,10 @@ namespace App\Livewire;
 
 use App\Enums\TradeStatus;
 use App\Models\Trade;
-use App\Models\UserSticker;
+use App\Services\TradeService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class TradeInbox extends Component
@@ -91,56 +90,15 @@ class TradeInbox extends Component
             return;
         }
 
-        if ($this->selectedTrade->isExpired()) {
-            session()->flash('error', 'Este intercambio ha expirado.');
+        try {
+            app(TradeService::class)->execute($this->selectedTrade);
+            session()->flash('success', 'Intercambio aceptado. Los cromos han sido transferidos.');
+        } catch (\InvalidArgumentException $e) {
+            session()->flash('error', $e->getMessage());
 
             return;
         }
 
-        if (! $this->selectedTrade->isPending()) {
-            session()->flash('error', 'Este intercambio ya no está pendiente.');
-
-            return;
-        }
-
-        // Verify all stickers are still available
-        $offeredItems = $this->selectedTrade->offeredItems()->with('userSticker')->get();
-        $requestedItems = $this->selectedTrade->requestedItems()->with('userSticker')->get();
-
-        foreach ($offeredItems as $item) {
-            if (! $item->userSticker || $item->userSticker->is_glued) {
-                session()->flash('error', 'Algunos cromos ya no están disponibles.');
-
-                return;
-            }
-        }
-
-        foreach ($requestedItems as $item) {
-            if (! $item->userSticker || $item->userSticker->is_glued) {
-                session()->flash('error', 'Algunos de tus cromos ya no están disponibles.');
-
-                return;
-            }
-        }
-
-        DB::transaction(function () use ($offeredItems, $requestedItems) {
-            // Transfer offered stickers (sender -> receiver)
-            foreach ($offeredItems as $item) {
-                UserSticker::where('id', $item->user_sticker_id)
-                    ->update(['user_id' => $this->selectedTrade->receiver_id]);
-            }
-
-            // Transfer requested stickers (receiver -> sender)
-            foreach ($requestedItems as $item) {
-                UserSticker::where('id', $item->user_sticker_id)
-                    ->update(['user_id' => $this->selectedTrade->sender_id]);
-            }
-
-            // Update trade status
-            $this->selectedTrade->transitionTo(TradeStatus::Accepted);
-        });
-
-        session()->flash('success', 'Intercambio aceptado. Los cromos han sido transferidos.');
         $this->closeDetail();
     }
 
