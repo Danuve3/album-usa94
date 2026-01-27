@@ -4,7 +4,9 @@ namespace Tests\Feature\Livewire;
 
 use App\Livewire\Album;
 use App\Models\Page;
+use App\Models\Sticker;
 use App\Models\User;
+use App\Models\UserSticker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -187,5 +189,132 @@ class AlbumTest extends TestCase
             ->assertSee('Anterior')
             ->assertSee('Siguiente')
             ->assertSee('Última');
+    }
+
+    public function test_glue_sticker_requires_authentication(): void
+    {
+        $sticker = Sticker::factory()->create();
+        $userSticker = UserSticker::factory()->create([
+            'sticker_id' => $sticker->id,
+            'is_glued' => false,
+        ]);
+
+        $component = Livewire::test(Album::class);
+        $result = $component->call('glueSticker', $userSticker->id, $sticker->id);
+
+        $returns = $result->effects['returns'][0];
+        $this->assertFalse($returns['success']);
+        $this->assertEquals('Usuario no autenticado', $returns['message']);
+
+        $userSticker->refresh();
+        $this->assertFalse($userSticker->is_glued);
+    }
+
+    public function test_glue_sticker_validates_user_owns_sticker(): void
+    {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $sticker = Sticker::factory()->create();
+        $userSticker = UserSticker::factory()->create([
+            'user_id' => $otherUser->id,
+            'sticker_id' => $sticker->id,
+            'is_glued' => false,
+        ]);
+
+        $component = Livewire::actingAs($user)->test(Album::class);
+        $result = $component->call('glueSticker', $userSticker->id, $sticker->id);
+
+        $returns = $result->effects['returns'][0];
+        $this->assertFalse($returns['success']);
+        $this->assertEquals('Cromo no encontrado o ya pegado', $returns['message']);
+
+        $userSticker->refresh();
+        $this->assertFalse($userSticker->is_glued);
+    }
+
+    public function test_glue_sticker_validates_sticker_not_already_glued(): void
+    {
+        $user = User::factory()->create();
+        $sticker = Sticker::factory()->create();
+        $userSticker = UserSticker::factory()->create([
+            'user_id' => $user->id,
+            'sticker_id' => $sticker->id,
+            'is_glued' => true,
+        ]);
+
+        $component = Livewire::actingAs($user)->test(Album::class);
+        $result = $component->call('glueSticker', $userSticker->id, $sticker->id);
+
+        $returns = $result->effects['returns'][0];
+        $this->assertFalse($returns['success']);
+        $this->assertEquals('Cromo no encontrado o ya pegado', $returns['message']);
+    }
+
+    public function test_glue_sticker_successfully_glues_sticker(): void
+    {
+        $user = User::factory()->create();
+        Page::factory()->create(['number' => 1]);
+        $sticker = Sticker::factory()->create(['page_number' => 1]);
+        $userSticker = UserSticker::factory()->create([
+            'user_id' => $user->id,
+            'sticker_id' => $sticker->id,
+            'is_glued' => false,
+        ]);
+
+        $component = Livewire::actingAs($user)->test(Album::class);
+        $result = $component->call('glueSticker', $userSticker->id, $sticker->id);
+
+        $result->assertDispatched('sticker-glued', stickerId: $sticker->id);
+
+        $returns = $result->effects['returns'][0];
+        $this->assertTrue($returns['success']);
+        $this->assertEquals('Cromo pegado correctamente', $returns['message']);
+
+        $userSticker->refresh();
+        $this->assertTrue($userSticker->is_glued);
+    }
+
+    public function test_glue_sticker_validates_sticker_id_matches(): void
+    {
+        $user = User::factory()->create();
+        $sticker1 = Sticker::factory()->create();
+        $sticker2 = Sticker::factory()->create();
+        $userSticker = UserSticker::factory()->create([
+            'user_id' => $user->id,
+            'sticker_id' => $sticker1->id,
+            'is_glued' => false,
+        ]);
+
+        $component = Livewire::actingAs($user)->test(Album::class);
+        $result = $component->call('glueSticker', $userSticker->id, $sticker2->id);
+
+        $returns = $result->effects['returns'][0];
+        $this->assertFalse($returns['success']);
+        $this->assertEquals('Cromo no encontrado o ya pegado', $returns['message']);
+
+        $userSticker->refresh();
+        $this->assertFalse($userSticker->is_glued);
+    }
+
+    public function test_glue_sticker_updates_pages_after_gluing(): void
+    {
+        $user = User::factory()->create();
+        Page::factory()->create(['number' => 1]);
+        $sticker = Sticker::factory()->create(['page_number' => 1]);
+        $userSticker = UserSticker::factory()->create([
+            'user_id' => $user->id,
+            'sticker_id' => $sticker->id,
+            'is_glued' => false,
+        ]);
+
+        $component = Livewire::actingAs($user)->test(Album::class);
+
+        $pagesBefore = $component->get('pages');
+        $this->assertEquals('available', $pagesBefore[0]['stickers'][0]['status']);
+
+        $component->call('glueSticker', $userSticker->id, $sticker->id);
+
+        $pagesAfter = $component->get('pages');
+        $this->assertEquals('glued', $pagesAfter[0]['stickers'][0]['status']);
     }
 }
