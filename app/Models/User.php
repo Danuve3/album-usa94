@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    use CrudTrait;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -22,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_banned',
+        'ban_reason',
+        'banned_at',
     ];
 
     /**
@@ -44,6 +49,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_banned' => 'boolean',
+            'banned_at' => 'datetime',
         ];
     }
 
@@ -61,5 +68,90 @@ class User extends Authenticatable
     public function packs(): HasMany
     {
         return $this->hasMany(Pack::class);
+    }
+
+    /**
+     * Get the activity logs for this user.
+     */
+    public function activityLogs(): HasMany
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
+    /**
+     * Get total stickers count.
+     */
+    public function getTotalStickersCountAttribute(): int
+    {
+        return $this->userStickers()->count();
+    }
+
+    /**
+     * Get glued stickers count.
+     */
+    public function getGluedStickersCountAttribute(): int
+    {
+        return $this->userStickers()->glued()->count();
+    }
+
+    /**
+     * Get duplicate stickers count (stickers that appear more than once).
+     */
+    public function getDuplicateStickersCountAttribute(): int
+    {
+        return $this->userStickers()
+            ->selectRaw('sticker_id, COUNT(*) as count')
+            ->groupBy('sticker_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->get()
+            ->sum(fn ($item) => $item->count - 1);
+    }
+
+    /**
+     * Get unopened packs count.
+     */
+    public function getUnopenedPacksCountAttribute(): int
+    {
+        return $this->packs()->unopened()->count();
+    }
+
+    /**
+     * Ban the user.
+     */
+    public function ban(?string $reason = null): void
+    {
+        $this->update([
+            'is_banned' => true,
+            'ban_reason' => $reason,
+            'banned_at' => now(),
+        ]);
+
+        ActivityLog::log($this, 'banned', $reason);
+    }
+
+    /**
+     * Unban the user.
+     */
+    public function unban(): void
+    {
+        $this->update([
+            'is_banned' => false,
+            'ban_reason' => null,
+            'banned_at' => null,
+        ]);
+
+        ActivityLog::log($this, 'unbanned');
+    }
+
+    /**
+     * Give packs to the user.
+     */
+    public function givePacks(int $count): void
+    {
+        for ($i = 0; $i < $count; $i++) {
+            $this->packs()->create(['opened_at' => null]);
+        }
+
+        ActivityLog::log($this, 'packs_given', "Se otorgaron {$count} sobres", ['count' => $count]);
     }
 }
