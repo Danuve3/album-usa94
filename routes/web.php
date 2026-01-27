@@ -28,5 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mercado', function () {
         return view('market');
     })->name('market');
+    Route::get('/estadisticas', function () {
+        return view('stats');
+    })->name('stats');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });

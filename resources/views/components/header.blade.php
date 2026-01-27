@@ -46,6 +46,12 @@
                 >
                     Mercado
                 </a>
+                <a
+                    href="{{ route('stats') }}"
+                    class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('stats') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' }}"
+                >
+                    Stats
+                </a>
             </nav>
 
             {{-- User section --}}
@@ -108,6 +114,12 @@
                 class="flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('market') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Mercado
+            </a>
+            <a
+                href="{{ route('stats') }}"
+                class="flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('stats') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+            >
+                Stats
             </a>
         </nav>
     </div>
