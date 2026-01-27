@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\StickerRarity;
 use App\Http\Requests\StickerRequest;
 use App\Models\Sticker;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class StickerCrudController extends CrudController
@@ -29,6 +32,10 @@ class StickerCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::addButton('top', 'import', 'view', 'crud::buttons.import_stickers');
+        CRUD::addButton('top', 'shiny_manager', 'view', 'crud::buttons.shiny_manager');
+        CRUD::addButton('top', 'bulk_shiny', 'view', 'crud::buttons.bulk_shiny');
+
+        CRUD::enableBulkActions();
 
         CRUD::column('number')
             ->label('Número')
@@ -139,6 +146,11 @@ class StickerCrudController extends CrudController
             ->default('common')
             ->wrapper(['class' => 'form-group col-md-4']);
 
+        CRUD::field('shiny_preview')
+            ->type('custom_html')
+            ->value($this->getShinyPreviewHtml())
+            ->wrapper(['class' => 'form-group col-md-4 d-flex align-items-end']);
+
         CRUD::field('is_horizontal')
             ->label('¿Es horizontal?')
             ->type('boolean')
@@ -191,6 +203,74 @@ class StickerCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function getShinyPreviewHtml(): string
+    {
+        $entry = $this->crud->getCurrentEntry();
+        $isShiny = $entry && $entry->rarity === StickerRarity::Shiny;
+
+        return '
+            <div class="mb-3 w-100">
+                <label class="form-label">Preview del efecto</label>
+                <div id="shiny-preview-container">
+                    <div id="shiny-preview-box" class="border rounded p-2 text-center '.($isShiny ? 'sticker-shiny' : 'bg-light').'" style="height: 38px; display: flex; align-items: center; justify-content: center;">
+                        <span id="shiny-preview-text" class="'.($isShiny ? 'fw-bold text-dark' : 'text-muted').'">
+                            '.($isShiny ? 'Brillante' : 'Normal').'
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <style>
+                @keyframes shiny-shimmer {
+                    0% { background-position: -200% center; }
+                    100% { background-position: 200% center; }
+                }
+                @keyframes shiny-glow {
+                    0%, 100% {
+                        box-shadow: 0 0 10px rgba(234, 179, 8, 0.5),
+                                    0 0 20px rgba(234, 179, 8, 0.3),
+                                    inset 0 0 15px rgba(255, 255, 255, 0.2);
+                    }
+                    50% {
+                        box-shadow: 0 0 15px rgba(234, 179, 8, 0.7),
+                                    0 0 30px rgba(234, 179, 8, 0.5),
+                                    inset 0 0 20px rgba(255, 255, 255, 0.4);
+                    }
+                }
+                .sticker-shiny {
+                    background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 15%, #fbbf24 30%, #f59e0b 45%, #fcd34d 60%, #fef3c7 75%, #fcd34d 90%, #f59e0b 100%);
+                    background-size: 200% 200%;
+                    animation: shiny-shimmer 3s ease-in-out infinite, shiny-glow 2s ease-in-out infinite;
+                    border: 2px solid #f59e0b !important;
+                }
+            </style>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var raritySelect = document.querySelector("select[name=\"rarity\"]");
+                    var previewBox = document.getElementById("shiny-preview-box");
+                    var previewText = document.getElementById("shiny-preview-text");
+
+                    if (raritySelect && previewBox && previewText) {
+                        raritySelect.addEventListener("change", function() {
+                            if (this.value === "shiny") {
+                                previewBox.classList.remove("bg-light");
+                                previewBox.classList.add("sticker-shiny");
+                                previewText.classList.remove("text-muted");
+                                previewText.classList.add("fw-bold", "text-dark");
+                                previewText.textContent = "Brillante";
+                            } else {
+                                previewBox.classList.add("bg-light");
+                                previewBox.classList.remove("sticker-shiny");
+                                previewText.classList.add("text-muted");
+                                previewText.classList.remove("fw-bold", "text-dark");
+                                previewText.textContent = "Normal";
+                            }
+                        });
+                    }
+                });
+            </script>
+        ';
     }
 
     protected function addImagePreview(): void
@@ -420,5 +500,70 @@ class StickerCrudController extends CrudController
             fputcsv($handle, [2, 'Cromo Brillante', 1, 250, 100, 150, 200, 'shiny', 1]);
             fclose($handle);
         }, 200, $headers);
+    }
+
+    public function bulkSetRarity(Request $request): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $entries = $request->input('entries', []);
+        $rarity = $request->input('rarity', 'shiny');
+
+        if (empty($entries)) {
+            return redirect()->back()->with('error', 'No se seleccionaron cromos.');
+        }
+
+        if (! in_array($rarity, ['common', 'shiny'])) {
+            return redirect()->back()->with('error', 'Rareza inválida.');
+        }
+
+        $updated = Sticker::whereIn('id', $entries)->update(['rarity' => $rarity]);
+
+        $rarityLabel = $rarity === 'shiny' ? 'brillantes' : 'comunes';
+
+        return redirect()->back()->with('success', "{$updated} cromos marcados como {$rarityLabel}.");
+    }
+
+    public function shinyManager(): View
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $totalStickers = Sticker::count();
+        $shinyStickers = Sticker::where('rarity', StickerRarity::Shiny)->get();
+        $shinyCount = $shinyStickers->count();
+
+        $probability = $totalStickers > 0
+            ? round(($shinyCount / $totalStickers) * 100, 2)
+            : 0;
+
+        $commonStickers = Sticker::where('rarity', StickerRarity::Common)
+            ->orderBy('number')
+            ->get();
+
+        return view('vendor.backpack.crud.shiny_manager', [
+            'shinyStickers' => $shinyStickers,
+            'commonStickers' => $commonStickers,
+            'totalStickers' => $totalStickers,
+            'shinyCount' => $shinyCount,
+            'probability' => $probability,
+            'title' => 'Gestión de Cromos Brillantes',
+        ]);
+    }
+
+    public function toggleShiny(Request $request, Sticker $sticker): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $newRarity = $sticker->rarity === StickerRarity::Shiny
+            ? StickerRarity::Common
+            : StickerRarity::Shiny;
+
+        $sticker->update(['rarity' => $newRarity]);
+
+        $message = $newRarity === StickerRarity::Shiny
+            ? "Cromo #{$sticker->number} marcado como brillante."
+            : "Cromo #{$sticker->number} marcado como común.";
+
+        return redirect()->back()->with('success', $message);
     }
 }
