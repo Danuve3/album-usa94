@@ -7,7 +7,7 @@
                 Mi Álbum USA 94
             </h1>
 
-            {{-- Main content grid: Album + Unglued Stickers --}}
+            {{-- Main content grid: Album + Stickers sidebar --}}
             <div class="mb-8 grid gap-6 lg:grid-cols-[1fr,320px]">
                 {{-- Album Viewer --}}
                 <div class="rounded-2xl bg-white p-4 shadow-xl sm:p-8 dark:bg-gray-800">
@@ -17,12 +17,23 @@
                     <livewire:album />
                 </div>
 
-                {{-- Unglued Stickers Pile --}}
-                <div class="rounded-2xl bg-white p-4 shadow-xl sm:p-6 dark:bg-gray-800 lg:self-start lg:sticky lg:top-4">
-                    <h2 class="mb-4 text-center text-lg font-medium text-gray-900 dark:text-white">
-                        Cromos Sin Pegar
-                    </h2>
-                    <livewire:unglued-stickers />
+                {{-- Stickers Sidebar --}}
+                <div class="flex flex-col gap-6 lg:self-start lg:sticky lg:top-4">
+                    {{-- Unglued Stickers Pile --}}
+                    <div class="rounded-2xl bg-white p-4 shadow-xl sm:p-6 dark:bg-gray-800">
+                        <h2 class="mb-4 text-center text-lg font-medium text-gray-900 dark:text-white">
+                            Cromos Sin Pegar
+                        </h2>
+                        <livewire:unglued-stickers />
+                    </div>
+
+                    {{-- Duplicate Stickers Pile --}}
+                    <div class="rounded-2xl bg-white p-4 shadow-xl sm:p-6 dark:bg-gray-800">
+                        <h2 class="mb-4 text-center text-lg font-medium text-amber-600 dark:text-amber-400">
+                            Cromos Repetidos
+                        </h2>
+                        <livewire:duplicate-stickers />
+                    </div>
                 </div>
             </div>
 
