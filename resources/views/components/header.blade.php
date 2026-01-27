@@ -56,6 +56,9 @@
 
             {{-- User section --}}
             <div class="flex items-center gap-3">
+                {{-- Notifications --}}
+                <livewire:notification-bell />
+
                 {{-- Packs counter --}}
                 <div class="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 dark:bg-amber-900/30">
                     <svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -7,6 +7,7 @@ use App\Enums\TradeStatus;
 use App\Models\Trade;
 use App\Models\User;
 use App\Models\UserSticker;
+use App\Notifications\TradeProposalNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -158,6 +159,9 @@ class TradeProposal extends Component
             }
 
             $this->createdTradeId = $trade->id;
+
+            $trade->load(['sender', 'offeredItems', 'requestedItems']);
+            $trade->receiver->notify(new TradeProposalNotification($trade));
         });
 
         $this->showSuccessModal = true;

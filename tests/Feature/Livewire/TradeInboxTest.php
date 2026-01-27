@@ -10,7 +10,9 @@ use App\Models\Trade;
 use App\Models\TradeItem;
 use App\Models\User;
 use App\Models\UserSticker;
+use App\Notifications\TradeRejectedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -346,5 +348,28 @@ class TradeInboxTest extends TestCase
             ->test(TradeInbox::class)
             ->call('setTab', 'sent')
             ->assertSee('No has enviado propuestas');
+    }
+
+    public function test_reject_trade_sends_notification_to_sender(): void
+    {
+        Notification::fake();
+
+        $user = User::factory()->create();
+        $sender = User::factory()->create();
+
+        $trade = Trade::create([
+            'sender_id' => $sender->id,
+            'receiver_id' => $user->id,
+            'status' => TradeStatus::Pending,
+            'expires_at' => now()->addDays(7),
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(TradeInbox::class)
+            ->call('selectTrade', $trade->id)
+            ->call('confirmAction', 'reject')
+            ->call('executeAction');
+
+        Notification::assertSentTo($sender, TradeRejectedNotification::class);
     }
 }

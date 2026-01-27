@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Enums\TradeStatus;
 use App\Models\Trade;
+use App\Notifications\TradeRejectedNotification;
 use App\Services\TradeService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -117,6 +118,9 @@ class TradeInbox extends Component
         }
 
         $this->selectedTrade->transitionTo(TradeStatus::Rejected);
+
+        $this->selectedTrade->load(['sender', 'receiver', 'offeredItems', 'requestedItems']);
+        $this->selectedTrade->sender->notify(new TradeRejectedNotification($this->selectedTrade));
 
         session()->flash('success', 'Intercambio rechazado.');
         $this->closeDetail();
