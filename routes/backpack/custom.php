@@ -17,6 +17,9 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('page', 'PageCrudController');
+    Route::get('sticker/import', 'StickerCrudController@importForm')->name('sticker.import');
+    Route::post('sticker/import', 'StickerCrudController@import')->name('sticker.import.store');
+    Route::get('sticker/import/template', 'StickerCrudController@importTemplate')->name('sticker.import.template');
     Route::crud('sticker', 'StickerCrudController');
     Route::crud('user', 'UserCrudController');
     Route::post('user/{id}/ban', 'UserCrudController@banUser')->name('user.ban');
