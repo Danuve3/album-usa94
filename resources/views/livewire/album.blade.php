@@ -68,34 +68,98 @@
                                     </div>
                                 @endif
 
-                                {{-- Glued Stickers Layer --}}
+                                {{-- Stickers Layer (all states: glued, available, empty) --}}
                                 @if (!empty($page['stickers']))
                                     @foreach ($page['stickers'] as $sticker)
-                                        <div
-                                            class="sticker-glued absolute"
-                                            style="
-                                                left: {{ $sticker['position_x'] }}%;
-                                                top: {{ $sticker['position_y'] }}%;
-                                                width: {{ $sticker['width'] }}%;
-                                                height: {{ $sticker['height'] }}%;
-                                                {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
-                                            "
-                                            data-sticker-id="{{ $sticker['id'] }}"
-                                            data-sticker-number="{{ $sticker['number'] }}"
-                                        >
-                                            @if ($sticker['image_path'])
-                                                <img
-                                                    data-src="{{ Storage::url($sticker['image_path']) }}"
-                                                    alt="{{ $sticker['name'] }}"
-                                                    class="w-full h-full object-contain sticker-image"
-                                                />
-                                            @else
-                                                <div class="w-full h-full bg-gray-300 dark:bg-gray-600 rounded flex items-center justify-center text-xs text-gray-500 dark:text-gray-400">
-                                                    {{ $sticker['number'] }}
+                                        @if ($sticker['status'] === 'glued')
+                                            {{-- Glued Sticker --}}
+                                            <div
+                                                class="sticker-glued absolute"
+                                                style="
+                                                    left: {{ $sticker['position_x'] }}%;
+                                                    top: {{ $sticker['position_y'] }}%;
+                                                    width: {{ $sticker['width'] }}%;
+                                                    height: {{ $sticker['height'] }}%;
+                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
+                                                "
+                                                data-sticker-id="{{ $sticker['id'] }}"
+                                                data-sticker-number="{{ $sticker['number'] }}"
+                                            >
+                                                @if ($sticker['image_path'])
+                                                    <img
+                                                        data-src="{{ Storage::url($sticker['image_path']) }}"
+                                                        alt="{{ $sticker['name'] }}"
+                                                        class="w-full h-full object-contain sticker-image"
+                                                    />
+                                                @else
+                                                    <div class="w-full h-full bg-gray-300 dark:bg-gray-600 rounded flex items-center justify-center text-xs text-gray-500 dark:text-gray-400">
+                                                        {{ $sticker['number'] }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @elseif ($sticker['status'] === 'available')
+                                            {{-- Available Sticker (user has it but not glued) --}}
+                                            <div
+                                                class="sticker-slot sticker-available absolute group"
+                                                style="
+                                                    left: {{ $sticker['position_x'] }}%;
+                                                    top: {{ $sticker['position_y'] }}%;
+                                                    width: {{ $sticker['width'] }}%;
+                                                    height: {{ $sticker['height'] }}%;
+                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
+                                                "
+                                                data-sticker-id="{{ $sticker['id'] }}"
+                                                data-sticker-number="{{ $sticker['number'] }}"
+                                                title="{{ $sticker['name'] }}"
+                                            >
+                                                <div class="w-full h-full rounded border-2 border-dashed border-emerald-500 bg-emerald-500/20 flex flex-col items-center justify-center">
+                                                    <span class="text-emerald-700 dark:text-emerald-400 font-bold text-xs sm:text-sm">{{ $sticker['number'] }}</span>
+                                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 dark:text-emerald-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                    </svg>
                                                 </div>
-                                            @endif
-                                        </div>
+                                                {{-- Tooltip --}}
+                                                <div class="sticker-tooltip opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-emerald-800 text-white text-xs rounded whitespace-nowrap z-20 pointer-events-none transition-opacity">
+                                                    {{ $sticker['name'] }}
+                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-emerald-800"></div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            {{-- Empty Slot (user doesn't have this sticker) --}}
+                                            <div
+                                                class="sticker-slot sticker-empty absolute group"
+                                                style="
+                                                    left: {{ $sticker['position_x'] }}%;
+                                                    top: {{ $sticker['position_y'] }}%;
+                                                    width: {{ $sticker['width'] }}%;
+                                                    height: {{ $sticker['height'] }}%;
+                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
+                                                "
+                                                data-sticker-id="{{ $sticker['id'] }}"
+                                                data-sticker-number="{{ $sticker['number'] }}"
+                                                title="{{ $sticker['name'] }}"
+                                            >
+                                                <div class="w-full h-full rounded border border-dashed border-gray-400/50 bg-gray-500/10 flex items-center justify-center">
+                                                    <span class="text-gray-500/70 dark:text-gray-400/50 font-medium text-xs sm:text-sm">{{ $sticker['number'] }}</span>
+                                                </div>
+                                                {{-- Tooltip --}}
+                                                <div class="sticker-tooltip opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-20 pointer-events-none transition-opacity">
+                                                    {{ $sticker['name'] }}
+                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     @endforeach
+                                @endif
+
+                                {{-- Sticker Counter --}}
+                                @if ($page['total_count'] > 0)
+                                    <div class="absolute top-2 left-2 bg-black/40 text-white text-xs px-2 py-1 rounded z-10 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                        </svg>
+                                        <span>{{ $page['glued_count'] }}/{{ $page['total_count'] }}</span>
+                                    </div>
                                 @endif
 
                                 {{-- Page Number Overlay --}}
@@ -353,6 +417,63 @@
 
         .sticker-glued .sticker-image {
             filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Sticker slots (empty and available) */
+        .sticker-slot {
+            z-index: 4;
+            pointer-events: auto;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sticker-slot:hover {
+            z-index: 15;
+        }
+
+        /* Empty sticker slot */
+        .sticker-empty > div {
+            transition: all 0.2s ease;
+        }
+
+        .sticker-empty:hover > div {
+            border-color: rgba(156, 163, 175, 0.7);
+            background-color: rgba(107, 114, 128, 0.15);
+        }
+
+        /* Available sticker slot (ready to be glued) */
+        .sticker-available > div {
+            transition: all 0.2s ease;
+            animation: available-pulse 2s ease-in-out infinite;
+        }
+
+        .sticker-available:hover > div {
+            border-color: rgb(16, 185, 129);
+            background-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        @keyframes available-pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.3);
+            }
+        }
+
+        /* Tooltip styling */
+        .sticker-tooltip {
+            font-size: 0.65rem;
+            max-width: 120px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .sticker-tooltip {
+                font-size: 0.75rem;
+                max-width: 150px;
+            }
         }
 
         /* Page flip library overrides */

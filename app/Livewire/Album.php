@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Page;
+use App\Models\Sticker;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class Album extends Component
     public int $totalPages = 0;
 
     /**
-     * @var array<int, array{number: int, image_path: string|null, stickers: array<int, array{id: int, number: int, name: string, position_x: int, position_y: int, width: int, height: int, is_horizontal: bool, image_path: string|null}>}>
+     * @var array<int, array{number: int, image_path: string|null, stickers: array<int, array{id: int, number: int, name: string, position_x: int, position_y: int, width: int, height: int, is_horizontal: bool, image_path: string|null, status: string}>, glued_count: int, total_count: int}>
      */
     public array $pages = [];
 
@@ -28,46 +29,81 @@ class Album extends Component
     {
         $pagesCollection = Page::ordered()->get();
 
-        $gluedStickers = $this->getGluedStickersGroupedByPage();
+        $allStickersWithStatus = $this->getAllStickersWithStatusGroupedByPage();
 
-        $this->pages = $pagesCollection->map(fn (Page $page) => [
-            'number' => $page->number,
-            'image_path' => $page->image_path,
-            'stickers' => $gluedStickers[$page->number] ?? [],
-        ])->toArray();
+        $this->pages = $pagesCollection->map(function (Page $page) use ($allStickersWithStatus) {
+            $pageStickers = $allStickersWithStatus[$page->number] ?? [];
+            $gluedCount = collect($pageStickers)->where('status', 'glued')->count();
+
+            return [
+                'number' => $page->number,
+                'image_path' => $page->image_path,
+                'stickers' => $pageStickers,
+                'glued_count' => $gluedCount,
+                'total_count' => count($pageStickers),
+            ];
+        })->toArray();
 
         $this->totalPages = count($this->pages);
     }
 
     /**
-     * Get all glued stickers for the current user, grouped by page number.
+     * Get all stickers with their status for the current user, grouped by page number.
+     * Status can be: 'glued' (pegado), 'available' (disponible para pegar), 'empty' (vacío)
      *
-     * @return array<int, array<int, array{id: int, number: int, name: string, position_x: int, position_y: int, width: int, height: int, is_horizontal: bool, image_path: string|null}>>
+     * @return array<int, array<int, array{id: int, number: int, name: string, position_x: int, position_y: int, width: int, height: int, is_horizontal: bool, image_path: string|null, status: string}>>
      */
-    private function getGluedStickersGroupedByPage(): array
+    private function getAllStickersWithStatusGroupedByPage(): array
     {
         $user = Auth::user();
 
-        if (! $user) {
-            return [];
+        // Get all stickers from the catalog
+        $allStickers = Sticker::orderBy('number')->get();
+
+        // Get user's sticker statuses if authenticated
+        $userGluedStickerIds = [];
+        $userAvailableStickerIds = [];
+
+        if ($user) {
+            $userStickers = UserSticker::where('user_id', $user->id)
+                ->get()
+                ->groupBy('sticker_id');
+
+            foreach ($userStickers as $stickerId => $userStickerGroup) {
+                $hasGlued = $userStickerGroup->contains('is_glued', true);
+                $hasUnglued = $userStickerGroup->contains('is_glued', false);
+
+                if ($hasGlued) {
+                    $userGluedStickerIds[] = $stickerId;
+                } elseif ($hasUnglued) {
+                    $userAvailableStickerIds[] = $stickerId;
+                }
+            }
         }
 
-        return UserSticker::where('user_id', $user->id)
-            ->glued()
-            ->with('sticker')
-            ->get()
-            ->groupBy(fn (UserSticker $userSticker) => $userSticker->sticker->page_number)
-            ->map(fn ($userStickers) => $userStickers->map(fn (UserSticker $userSticker) => [
-                'id' => $userSticker->sticker->id,
-                'number' => $userSticker->sticker->number,
-                'name' => $userSticker->sticker->name,
-                'position_x' => $userSticker->sticker->position_x,
-                'position_y' => $userSticker->sticker->position_y,
-                'width' => $userSticker->sticker->width,
-                'height' => $userSticker->sticker->height,
-                'is_horizontal' => $userSticker->sticker->is_horizontal,
-                'image_path' => $userSticker->sticker->image_path,
-            ])->unique('id')->values()->toArray())
+        return $allStickers
+            ->groupBy('page_number')
+            ->map(fn ($stickers) => $stickers->map(function (Sticker $sticker) use ($userGluedStickerIds, $userAvailableStickerIds) {
+                $status = 'empty';
+                if (in_array($sticker->id, $userGluedStickerIds)) {
+                    $status = 'glued';
+                } elseif (in_array($sticker->id, $userAvailableStickerIds)) {
+                    $status = 'available';
+                }
+
+                return [
+                    'id' => $sticker->id,
+                    'number' => $sticker->number,
+                    'name' => $sticker->name,
+                    'position_x' => $sticker->position_x,
+                    'position_y' => $sticker->position_y,
+                    'width' => $sticker->width,
+                    'height' => $sticker->height,
+                    'is_horizontal' => $sticker->is_horizontal,
+                    'image_path' => $sticker->image_path,
+                    'status' => $status,
+                ];
+            })->values()->toArray())
             ->toArray();
     }
 
