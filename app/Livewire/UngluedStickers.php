@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class UngluedStickers extends Component
@@ -19,6 +20,12 @@ class UngluedStickers extends Component
     public int $totalCount = 0;
 
     public function mount(): void
+    {
+        $this->loadStickers();
+    }
+
+    #[On('sticker-glued')]
+    public function onStickerGlued(): void
     {
         $this->loadStickers();
     }

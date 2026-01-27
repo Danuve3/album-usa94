@@ -3,6 +3,8 @@
     x-data="albumViewer()"
     x-init="init()"
     @album-go-to-page.window="goToPage($event.detail.page)"
+    @sticker-drag-start.window="onStickerDragStart($event.detail)"
+    @sticker-drag-end.window="onStickerDragEnd()"
 >
     {{-- Album Container --}}
     <div class="relative w-full max-w-4xl">
@@ -98,7 +100,7 @@
                                                 @endif
                                             </div>
                                         @elseif ($sticker['status'] === 'available')
-                                            {{-- Available Sticker (user has it but not glued) --}}
+                                            {{-- Available Sticker (user has it but not glued) - Drop Zone --}}
                                             <div
                                                 class="sticker-slot sticker-available absolute group"
                                                 style="
@@ -111,8 +113,15 @@
                                                 data-sticker-id="{{ $sticker['id'] }}"
                                                 data-sticker-number="{{ $sticker['number'] }}"
                                                 title="{{ $sticker['name'] }}"
+                                                x-bind:class="{
+                                                    'drop-zone-valid': draggingSticker && draggingSticker.id === {{ $sticker['id'] }},
+                                                    'drop-zone-invalid': draggingSticker && draggingSticker.id !== {{ $sticker['id'] }}
+                                                }"
+                                                @dragover.prevent="onDragOver($event, {{ $sticker['id'] }})"
+                                                @dragleave="onDragLeave($event, {{ $sticker['id'] }})"
+                                                @drop.prevent="onDrop($event, {{ $sticker['id'] }})"
                                             >
-                                                <div class="w-full h-full rounded border-2 border-dashed border-emerald-500 bg-emerald-500/20 flex flex-col items-center justify-center">
+                                                <div class="drop-zone-inner w-full h-full rounded border-2 border-dashed border-emerald-500 bg-emerald-500/20 flex flex-col items-center justify-center transition-all duration-200">
                                                     <span class="text-emerald-700 dark:text-emerald-400 font-bold text-xs sm:text-sm">{{ $sticker['number'] }}</span>
                                                     <svg class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 dark:text-emerald-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -256,12 +265,100 @@
                 totalPages: {{ $totalPages }},
                 loadedPages: new Set(),
                 stickerObserver: null,
+                draggingSticker: null,
+                dragOverSlot: null,
 
                 init() {
                     this.$nextTick(() => {
                         this.initPageFlip();
                         this.initStickerLazyLoading();
                     });
+                },
+
+                onStickerDragStart(sticker) {
+                    this.draggingSticker = sticker;
+                },
+
+                onStickerDragEnd() {
+                    this.draggingSticker = null;
+                    this.dragOverSlot = null;
+                },
+
+                onDragOver(event, slotStickerId) {
+                    if (!this.draggingSticker) return;
+
+                    this.dragOverSlot = slotStickerId;
+
+                    if (this.draggingSticker.id === slotStickerId) {
+                        event.dataTransfer.dropEffect = 'move';
+                    } else {
+                        event.dataTransfer.dropEffect = 'none';
+                    }
+                },
+
+                onDragLeave(event, slotStickerId) {
+                    if (this.dragOverSlot === slotStickerId) {
+                        this.dragOverSlot = null;
+                    }
+                },
+
+                async onDrop(event, slotStickerId) {
+                    if (!this.draggingSticker) return;
+
+                    const sticker = this.draggingSticker;
+
+                    if (sticker.id !== slotStickerId) {
+                        this.showInvalidDropFeedback(event.currentTarget);
+                        this.draggingSticker = null;
+                        this.dragOverSlot = null;
+                        return;
+                    }
+
+                    const slot = event.currentTarget;
+                    this.showGluingAnimation(slot, sticker);
+
+                    try {
+                        const result = await @this.glueSticker(sticker.user_sticker_id, sticker.id);
+
+                        if (result.success) {
+                            this.showSuccessAnimation(slot);
+                        } else {
+                            this.showErrorFeedback(slot, result.message);
+                        }
+                    } catch (error) {
+                        console.error('Error gluing sticker:', error);
+                        this.showErrorFeedback(slot, 'Error al pegar el cromo');
+                    }
+
+                    this.draggingSticker = null;
+                    this.dragOverSlot = null;
+                },
+
+                showInvalidDropFeedback(element) {
+                    element.classList.add('shake-animation');
+                    setTimeout(() => {
+                        element.classList.remove('shake-animation');
+                    }, 500);
+                },
+
+                showGluingAnimation(slot, sticker) {
+                    slot.classList.add('gluing-animation');
+                },
+
+                showSuccessAnimation(slot) {
+                    slot.classList.remove('gluing-animation');
+                    slot.classList.add('glued-success');
+                    setTimeout(() => {
+                        slot.classList.remove('glued-success');
+                    }, 1000);
+                },
+
+                showErrorFeedback(slot, message) {
+                    slot.classList.remove('gluing-animation');
+                    slot.classList.add('shake-animation');
+                    setTimeout(() => {
+                        slot.classList.remove('shake-animation');
+                    }, 500);
                 },
 
                 initPageFlip() {
@@ -488,6 +585,77 @@
         /* Dark mode adjustments */
         .dark .album-container .page {
             background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+
+        /* Drag & Drop styles */
+        .drop-zone-valid .drop-zone-inner {
+            border-color: rgb(34, 197, 94) !important;
+            background-color: rgba(34, 197, 94, 0.4) !important;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+            transform: scale(1.05);
+        }
+
+        .drop-zone-invalid .drop-zone-inner {
+            border-color: rgb(239, 68, 68) !important;
+            background-color: rgba(239, 68, 68, 0.2) !important;
+            opacity: 0.5;
+        }
+
+        /* Shake animation for invalid drop */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .shake-animation {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .shake-animation .drop-zone-inner {
+            border-color: rgb(239, 68, 68) !important;
+            background-color: rgba(239, 68, 68, 0.3) !important;
+        }
+
+        /* Gluing animation */
+        @keyframes gluing {
+            0% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(0.95);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .gluing-animation .drop-zone-inner {
+            animation: gluing 0.4s ease-out;
+            border-color: rgb(34, 197, 94) !important;
+            background-color: rgba(34, 197, 94, 0.5) !important;
+        }
+
+        /* Success animation */
+        @keyframes success-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        .glued-success .drop-zone-inner {
+            animation: success-pulse 0.6s ease-out;
+            border-color: rgb(34, 197, 94) !important;
+            background-color: rgba(34, 197, 94, 0.6) !important;
         }
     </style>
 </div>

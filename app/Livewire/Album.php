@@ -144,6 +144,34 @@ class Album extends Component
         }
     }
 
+    public function glueSticker(int $userStickerId, int $stickerId): array
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return ['success' => false, 'message' => 'Usuario no autenticado'];
+        }
+
+        $userSticker = UserSticker::where('id', $userStickerId)
+            ->where('user_id', $user->id)
+            ->where('sticker_id', $stickerId)
+            ->where('is_glued', false)
+            ->first();
+
+        if (! $userSticker) {
+            return ['success' => false, 'message' => 'Cromo no encontrado o ya pegado'];
+        }
+
+        $userSticker->is_glued = true;
+        $userSticker->save();
+
+        $this->loadPages();
+
+        $this->dispatch('sticker-glued', stickerId: $stickerId);
+
+        return ['success' => true, 'message' => 'Cromo pegado correctamente'];
+    }
+
     public function render(): View
     {
         return view('livewire.album');
