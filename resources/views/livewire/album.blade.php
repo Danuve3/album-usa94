@@ -50,17 +50,17 @@
             >
                 @if ($totalPages > 0)
                     @foreach ($pages as $index => $page)
-                        <div class="page bg-amber-50 dark:bg-amber-100" data-page-number="{{ $page['number'] }}">
-                            <div class="page-content relative w-full h-full flex items-center justify-center">
+                        <div class="page bg-amber-50 dark:bg-amber-100" data-page-number="{{ $page['number'] }}" data-page-index="{{ $index }}">
+                            <div class="page-content relative w-full h-full">
                                 @if ($page['image_path'])
                                     <img
                                         src="{{ Storage::url($page['image_path']) }}"
                                         alt="Página {{ $page['number'] }}"
-                                        class="max-w-full max-h-full object-contain"
+                                        class="absolute inset-0 w-full h-full object-cover"
                                         loading="lazy"
                                     />
                                 @else
-                                    <div class="flex flex-col items-center justify-center text-amber-800/50">
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center text-amber-800/50">
                                         <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
@@ -68,8 +68,38 @@
                                     </div>
                                 @endif
 
+                                {{-- Glued Stickers Layer --}}
+                                @if (!empty($page['stickers']))
+                                    @foreach ($page['stickers'] as $sticker)
+                                        <div
+                                            class="sticker-glued absolute"
+                                            style="
+                                                left: {{ $sticker['position_x'] }}%;
+                                                top: {{ $sticker['position_y'] }}%;
+                                                width: {{ $sticker['width'] }}%;
+                                                height: {{ $sticker['height'] }}%;
+                                                {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
+                                            "
+                                            data-sticker-id="{{ $sticker['id'] }}"
+                                            data-sticker-number="{{ $sticker['number'] }}"
+                                        >
+                                            @if ($sticker['image_path'])
+                                                <img
+                                                    data-src="{{ Storage::url($sticker['image_path']) }}"
+                                                    alt="{{ $sticker['name'] }}"
+                                                    class="w-full h-full object-contain sticker-image"
+                                                />
+                                            @else
+                                                <div class="w-full h-full bg-gray-300 dark:bg-gray-600 rounded flex items-center justify-center text-xs text-gray-500 dark:text-gray-400">
+                                                    {{ $sticker['number'] }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                @endif
+
                                 {{-- Page Number Overlay --}}
-                                <div class="absolute bottom-2 right-2 bg-black/20 text-white/80 text-xs px-2 py-1 rounded">
+                                <div class="absolute bottom-2 right-2 bg-black/20 text-white/80 text-xs px-2 py-1 rounded z-10">
                                     {{ $page['number'] }}
                                 </div>
                             </div>
@@ -160,10 +190,13 @@
                 pageFlip: null,
                 currentPage: @entangle('currentPage'),
                 totalPages: {{ $totalPages }},
+                loadedPages: new Set(),
+                stickerObserver: null,
 
                 init() {
                     this.$nextTick(() => {
                         this.initPageFlip();
+                        this.initStickerLazyLoading();
                     });
                 },
 
@@ -205,6 +238,59 @@
                     this.pageFlip.on('flip', (data) => {
                         this.currentPage = data.page;
                         @this.pageFlipped(data.page);
+                        this.loadStickersForVisiblePages(data.page);
+                    });
+
+                    // Load stickers for initial page
+                    this.loadStickersForVisiblePages(this.currentPage);
+                },
+
+                initStickerLazyLoading() {
+                    // Use Intersection Observer for sticker images
+                    if ('IntersectionObserver' in window) {
+                        this.stickerObserver = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    const img = entry.target;
+                                    if (img.dataset.src) {
+                                        img.src = img.dataset.src;
+                                        img.removeAttribute('data-src');
+                                        this.stickerObserver.unobserve(img);
+                                    }
+                                }
+                            });
+                        }, {
+                            rootMargin: '50px'
+                        });
+                    }
+                },
+
+                loadStickersForVisiblePages(currentPageIndex) {
+                    const container = this.$refs.albumContainer;
+                    if (!container) return;
+
+                    // Load current page and adjacent pages for smooth flipping
+                    const pagesToLoad = [
+                        currentPageIndex - 1,
+                        currentPageIndex,
+                        currentPageIndex + 1
+                    ].filter(p => p >= 0 && p < this.totalPages);
+
+                    pagesToLoad.forEach(pageIndex => {
+                        if (this.loadedPages.has(pageIndex)) return;
+
+                        const page = container.querySelector(`[data-page-index="${pageIndex}"]`);
+                        if (!page) return;
+
+                        const stickerImages = page.querySelectorAll('.sticker-glued img[data-src]');
+                        stickerImages.forEach(img => {
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.removeAttribute('data-src');
+                            }
+                        });
+
+                        this.loadedPages.add(pageIndex);
                     });
                 },
 
@@ -223,6 +309,7 @@
                 goToPage(pageIndex) {
                     if (this.pageFlip) {
                         this.pageFlip.turnToPage(pageIndex);
+                        this.loadStickersForVisiblePages(pageIndex);
                     }
                 },
 
@@ -230,6 +317,10 @@
                     if (this.pageFlip) {
                         this.pageFlip.destroy();
                         this.pageFlip = null;
+                    }
+                    if (this.stickerObserver) {
+                        this.stickerObserver.disconnect();
+                        this.stickerObserver = null;
                     }
                 }
             }
@@ -249,7 +340,19 @@
         }
 
         .album-container .page-content {
-            padding: 1rem;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Glued stickers styling */
+        .sticker-glued {
+            z-index: 5;
+            pointer-events: none;
+            transition: transform 0.2s ease;
+        }
+
+        .sticker-glued .sticker-image {
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         /* Page flip library overrides */
