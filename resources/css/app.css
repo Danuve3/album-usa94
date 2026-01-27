@@ -98,3 +98,128 @@
 .tear-line {
     animation: tear-line 0.2s ease-out forwards;
 }
+
+/* 3D Flip Animation for Sticker Cards */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+/* Sticker Card Slide-In Effect */
+@keyframes sticker-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.sticker-card {
+    animation: sticker-slide-in 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.sticker-card:nth-child(1) { animation-delay: 0.3s; }
+.sticker-card:nth-child(2) { animation-delay: 0.8s; }
+.sticker-card:nth-child(3) { animation-delay: 1.3s; }
+.sticker-card:nth-child(4) { animation-delay: 1.8s; }
+.sticker-card:nth-child(5) { animation-delay: 2.3s; }
+
+/* Shiny Sticker Holographic Effect */
+@keyframes shiny-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes shiny-glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(234, 179, 8, 0.5),
+                    0 0 20px rgba(234, 179, 8, 0.3),
+                    0 0 30px rgba(234, 179, 8, 0.1),
+                    inset 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(234, 179, 8, 0.7),
+                    0 0 30px rgba(234, 179, 8, 0.5),
+                    0 0 45px rgba(234, 179, 8, 0.3),
+                    inset 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+}
+
+.sticker-shiny {
+    background: linear-gradient(
+        135deg,
+        #fef3c7 0%,
+        #fcd34d 15%,
+        #fbbf24 30%,
+        #f59e0b 45%,
+        #fcd34d 60%,
+        #fef3c7 75%,
+        #fcd34d 90%,
+        #f59e0b 100%
+    );
+    background-size: 200% 200%;
+    animation: shiny-shimmer 3s ease-in-out infinite, shiny-glow 2s ease-in-out infinite;
+    border: 2px solid #f59e0b;
+    position: relative;
+    overflow: hidden;
+}
+
+.sticker-shiny::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 70%
+    );
+    animation: shiny-shimmer 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.sticker-shiny-badge {
+    text-shadow: 0 0 5px rgba(234, 179, 8, 0.8);
+}
+
+/* Duplicate Badge Animation */
+@keyframes duplicate-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.sticker-duplicate-badge {
+    animation: duplicate-pulse 1.5s ease-in-out infinite;
+}

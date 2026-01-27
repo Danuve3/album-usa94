@@ -265,34 +265,146 @@
         </script>
     @endif
 
-    {{-- Last opened stickers modal --}}
-    @if (count($lastOpenedStickers) > 0 && !$showOpeningModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" wire:click.self="clearLastOpened">
-            <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800 stickers-reveal">
-                <h3 class="mb-4 text-center text-lg font-semibold text-gray-900 dark:text-white">
-                    ¡Cromos obtenidos!
+    {{-- Sticker Reveal Modal --}}
+    @if ($showRevealModal && count($lastOpenedStickers) > 0)
+        <div
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+            x-data="stickerRevealer()"
+            x-init="init()"
+        >
+            <div class="w-full max-w-lg">
+                {{-- Title --}}
+                <h3 class="mb-6 text-center text-xl font-bold text-white drop-shadow-lg">
+                    <span x-show="!allRevealed" x-cloak>Revelando cromos...</span>
+                    <span x-show="allRevealed" x-cloak>¡Cromos obtenidos!</span>
                 </h3>
 
-                <div class="grid grid-cols-5 gap-2 stickers-reveal">
-                    @foreach ($lastOpenedStickers as $sticker)
-                        <div class="flex flex-col items-center rounded-lg p-2 {{ $sticker['rarity'] === 'shiny' ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30' : 'bg-gray-100 dark:bg-gray-700' }}">
-                            <span class="text-lg font-bold {{ $sticker['rarity'] === 'shiny' ? 'text-yellow-600 dark:text-yellow-400' : 'text-gray-700 dark:text-gray-300' }}">
-                                {{ $sticker['number'] }}
-                            </span>
-                            @if ($sticker['rarity'] === 'shiny')
-                                <span class="text-xs text-yellow-600 dark:text-yellow-400">Shiny</span>
-                            @endif
+                {{-- Stickers Grid --}}
+                <div class="grid grid-cols-5 gap-3 mb-6">
+                    @foreach ($lastOpenedStickers as $index => $sticker)
+                        <div
+                            class="sticker-card aspect-[3/4] perspective-1000"
+                            style="animation-delay: {{ 0.3 + ($index * 0.5) }}s;"
+                            x-data="{ revealed: false }"
+                            x-init="$watch('$wire.revealedCount', value => { if (value > {{ $index }}) revealed = true })"
+                        >
+                            <div
+                                class="relative w-full h-full transition-transform duration-700 ease-out transform-style-preserve-3d"
+                                :class="{ 'rotate-y-180': revealed }"
+                            >
+                                {{-- Card Back (unrevealed) --}}
+                                <div class="absolute inset-0 w-full h-full backface-hidden rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-lg flex items-center justify-center border-2 border-emerald-400/50">
+                                    <div class="text-white/60 text-3xl font-bold">?</div>
+                                </div>
+
+                                {{-- Card Front (revealed) --}}
+                                <div
+                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-lg shadow-lg flex flex-col items-center justify-center p-2
+                                    {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
+                                >
+                                    {{-- Sticker Number --}}
+                                    <span class="text-xl font-bold {{ $sticker['rarity'] === 'shiny' ? 'text-amber-800' : 'text-gray-800 dark:text-white' }}">
+                                        {{ $sticker['number'] }}
+                                    </span>
+
+                                    {{-- Shiny Badge --}}
+                                    @if ($sticker['rarity'] === 'shiny')
+                                        <span class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mt-1 sticker-shiny-badge">
+                                            ✦ Shiny ✦
+                                        </span>
+                                    @endif
+
+                                    {{-- Duplicate Badge --}}
+                                    @if ($sticker['is_duplicate'])
+                                        <span class="sticker-duplicate-badge absolute top-1 right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-md">
+                                            REPE
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
 
-                <button
-                    wire:click="clearLastOpened"
-                    class="mt-6 w-full rounded-lg bg-emerald-500 px-4 py-2 font-medium text-white transition-colors hover:bg-emerald-600"
-                >
-                    Continuar
-                </button>
+                {{-- Progress indicator --}}
+                <div class="flex justify-center gap-2 mb-4">
+                    @foreach ($lastOpenedStickers as $index => $sticker)
+                        <div
+                            class="w-2.5 h-2.5 rounded-full transition-all duration-300 {{ $sticker['rarity'] === 'shiny' ? 'shiny-dot' : '' }}"
+                            :class="$wire.revealedCount > {{ $index }}
+                                ? '{{ $sticker['rarity'] === 'shiny' ? 'bg-yellow-400 shadow-lg shadow-yellow-400/50' : 'bg-emerald-400' }}'
+                                : 'bg-white/30'"
+                        ></div>
+                    @endforeach
+                </div>
+
+                {{-- Info text --}}
+                <p class="text-center text-sm text-white/60 mb-4" x-show="allRevealed" x-cloak>
+                    Los cromos se han añadido a tu pila de sin pegar
+                </p>
+
+                {{-- Actions --}}
+                <div class="flex flex-col gap-3">
+                    {{-- Reveal All Button (only when not all revealed) --}}
+                    <button
+                        x-show="!allRevealed"
+                        x-cloak
+                        wire:click="revealAllStickers"
+                        class="w-full rounded-lg bg-white/10 backdrop-blur px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
+                    >
+                        Revelar todos
+                    </button>
+
+                    {{-- Continue Button (only when all revealed) --}}
+                    <button
+                        x-show="allRevealed"
+                        x-cloak
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        wire:click="finishReveal"
+                        class="w-full rounded-lg bg-emerald-500 px-4 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:scale-[1.02] shadow-lg shadow-emerald-500/30"
+                    >
+                        Continuar
+                    </button>
+                </div>
             </div>
         </div>
+
+        <script>
+            function stickerRevealer() {
+                return {
+                    allRevealed: false,
+                    totalStickers: {{ count($lastOpenedStickers) }},
+                    revealInterval: null,
+
+                    init() {
+                        this.startAutoReveal();
+                        this.$watch('$wire.revealedCount', (value) => {
+                            this.allRevealed = value >= this.totalStickers;
+                            if (this.allRevealed && this.revealInterval) {
+                                clearInterval(this.revealInterval);
+                            }
+                        });
+                    },
+
+                    startAutoReveal() {
+                        // Initial delay before first reveal (300ms)
+                        setTimeout(() => {
+                            @this.revealNextSticker();
+
+                            // Then reveal one sticker every 500ms (0.5s delay as per requirements)
+                            this.revealInterval = setInterval(() => {
+                                if (@this.revealedCount < this.totalStickers) {
+                                    @this.revealNextSticker();
+                                } else {
+                                    clearInterval(this.revealInterval);
+                                }
+                            }, 500);
+                        }, 300);
+                    }
+                }
+            }
+        </script>
     @endif
 </div>

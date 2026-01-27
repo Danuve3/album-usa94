@@ -20,6 +20,10 @@ class PackPile extends Component
 
     public array $lastOpenedStickers = [];
 
+    public bool $showRevealModal = false;
+
+    public int $revealedCount = 0;
+
     public function mount(): void
     {
         $this->refreshCount();
@@ -76,6 +80,7 @@ class PackPile extends Component
                 'number' => $userSticker->sticker->number,
                 'name' => $userSticker->sticker->name,
                 'rarity' => $userSticker->sticker->rarity->value,
+                'is_duplicate' => $userSticker->is_duplicate ?? false,
             ];
         })->toArray();
 
@@ -89,6 +94,27 @@ class PackPile extends Component
         $this->showOpeningModal = false;
         $this->isOpening = false;
         $this->isTearing = false;
+        $this->showRevealModal = true;
+        $this->revealedCount = 0;
+    }
+
+    public function revealNextSticker(): void
+    {
+        if ($this->revealedCount < count($this->lastOpenedStickers)) {
+            $this->revealedCount++;
+        }
+    }
+
+    public function revealAllStickers(): void
+    {
+        $this->revealedCount = count($this->lastOpenedStickers);
+    }
+
+    public function finishReveal(): void
+    {
+        $this->showRevealModal = false;
+        $this->lastOpenedStickers = [];
+        $this->revealedCount = 0;
     }
 
     public function openPack(PackService $packService): void
@@ -112,11 +138,14 @@ class PackPile extends Component
                 'number' => $userSticker->sticker->number,
                 'name' => $userSticker->sticker->name,
                 'rarity' => $userSticker->sticker->rarity->value,
+                'is_duplicate' => $userSticker->is_duplicate ?? false,
             ];
         })->toArray();
 
         $this->refreshCount();
         $this->isOpening = false;
+        $this->showRevealModal = true;
+        $this->revealedCount = 0;
 
         $this->dispatch('pack-opened');
     }
@@ -124,6 +153,8 @@ class PackPile extends Component
     public function clearLastOpened(): void
     {
         $this->lastOpenedStickers = [];
+        $this->showRevealModal = false;
+        $this->revealedCount = 0;
     }
 
     public function render(): View

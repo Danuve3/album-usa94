@@ -41,9 +41,17 @@ class PackService
             $shinyProbability = Setting::get('shiny_probability', self::DEFAULT_SHINY_PROBABILITY);
             $openedAt = now();
 
+            // Get existing sticker IDs for this user to detect duplicates
+            $existingStickerIds = UserSticker::where('user_id', $pack->user_id)
+                ->pluck('sticker_id')
+                ->toArray();
+
             for ($i = 0; $i < Pack::STICKERS_PER_PACK; $i++) {
                 $isShiny = random_int(1, 100) <= $shinyProbability;
                 $sticker = $this->getRandomSticker($isShiny);
+
+                // Check if this sticker is a duplicate
+                $isDuplicate = in_array($sticker->id, $existingStickerIds);
 
                 $userSticker = UserSticker::create([
                     'user_id' => $pack->user_id,
@@ -51,6 +59,12 @@ class PackService
                     'is_glued' => false,
                     'obtained_at' => $openedAt->copy()->addSeconds($i),
                 ]);
+
+                // Add custom attribute to indicate if it's a duplicate
+                $userSticker->is_duplicate = $isDuplicate;
+
+                // Add to existing IDs for subsequent checks within same pack
+                $existingStickerIds[] = $sticker->id;
 
                 $userStickers->push($userSticker);
             }
