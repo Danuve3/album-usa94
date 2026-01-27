@@ -5,6 +5,21 @@
                 USA 94
             </a>
 
+            <nav class="flex items-center gap-6">
+                <a
+                    href="{{ route('album') }}"
+                    class="text-sm font-medium {{ request()->routeIs('album') ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white' }} transition-colors"
+                >
+                    Album
+                </a>
+                <a
+                    href="{{ route('trades') }}"
+                    class="text-sm font-medium {{ request()->routeIs('trades') ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white' }} transition-colors"
+                >
+                    Intercambios
+                </a>
+            </nav>
+
             <div class="flex items-center gap-4">
                 <span class="text-sm text-gray-600 dark:text-gray-400">
                     {{ auth()->user()->name }}
