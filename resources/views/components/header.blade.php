@@ -1,3 +1,13 @@
+@php
+    $pendingTradesCount = 0;
+    if (auth()->check()) {
+        $pendingTradesCount = \App\Models\Trade::where('receiver_id', auth()->id())
+            ->pending()
+            ->active()
+            ->count();
+    }
+@endphp
+
 <header class="bg-white shadow-sm dark:bg-gray-800">
     <div class="mx-auto max-w-4xl px-4 py-4">
         <div class="flex items-center justify-between">
@@ -14,9 +24,14 @@
                 </a>
                 <a
                     href="{{ route('trades') }}"
-                    class="text-sm font-medium {{ request()->routeIs('trades') ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white' }} transition-colors"
+                    class="relative text-sm font-medium {{ request()->routeIs('trades') ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white' }} transition-colors"
                 >
                     Intercambios
+                    @if ($pendingTradesCount > 0)
+                        <span class="absolute -right-4 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                            {{ $pendingTradesCount > 99 ? '99+' : $pendingTradesCount }}
+                        </span>
+                    @endif
                 </a>
             </nav>
 

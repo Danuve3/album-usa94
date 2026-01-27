@@ -18,6 +18,24 @@
                 </a>
             </div>
 
+            {{-- Trade Inbox --}}
+            <div class="mb-8">
+                <livewire:trade-inbox />
+            </div>
+
+            {{-- Separator --}}
+            <div class="relative mb-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                </div>
+                <div class="relative flex justify-center">
+                    <span class="bg-gray-100 px-4 text-sm font-medium text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                        Nueva Propuesta
+                    </span>
+                </div>
+            </div>
+
+            {{-- Trade Proposal --}}
             <livewire:trade-proposal />
         </div>
     </main>
