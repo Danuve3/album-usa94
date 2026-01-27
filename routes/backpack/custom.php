@@ -21,6 +21,7 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::post('user/{id}/ban', 'UserCrudController@banUser')->name('user.ban');
     Route::post('user/{id}/give-packs', 'UserCrudController@givePacks')->name('user.give-packs');
+    Route::crud('setting', 'SettingCrudController');
 }); // this should be the absolute last line of this file
 
 /**

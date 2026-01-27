@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
@@ -24,9 +25,20 @@ class Setting extends Model
      */
     protected $fillable = [
         'key',
+        'name',
+        'description',
+        'group',
         'value',
         'type',
     ];
+
+    /**
+     * Get the configuration logs for this setting.
+     */
+    public function configurationLogs(): HasMany
+    {
+        return $this->hasMany(ConfigurationLog::class);
+    }
 
     /**
      * Get a setting value by key.
@@ -45,15 +57,22 @@ class Setting extends Model
     /**
      * Set a setting value by key.
      */
-    public static function set(string $key, mixed $value, ?string $type = null): void
+    public static function set(string $key, mixed $value, ?string $type = null, ?User $user = null): void
     {
         $type = $type ?? self::detectType($value);
         $stringValue = self::valueToString($value);
 
-        self::updateOrCreate(
+        $existing = self::where('key', $key)->first();
+        $oldValue = $existing?->value;
+
+        $setting = self::updateOrCreate(
             ['key' => $key],
             ['value' => $stringValue, 'type' => $type]
         );
+
+        if ($oldValue !== $stringValue) {
+            ConfigurationLog::logChange($setting, $oldValue, $stringValue, $user);
+        }
 
         self::clearCache();
     }
