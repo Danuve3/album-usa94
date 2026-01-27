@@ -25,5 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/intercambios', function () {
         return view('trades');
     })->name('trades');
+    Route::get('/mercado', function () {
+        return view('market');
+    })->name('market');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });

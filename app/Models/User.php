@@ -79,6 +79,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the market listings for this user.
+     */
+    public function marketListings(): HasMany
+    {
+        return $this->hasMany(MarketListing::class);
+    }
+
+    /**
      * Get total stickers count.
      */
     public function getTotalStickersCountAttribute(): int
