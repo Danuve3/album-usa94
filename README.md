@@ -1,59 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Album USA 94
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web para coleccionar stickers virtuales del Mundial de Fútbol USA 1994. Revive la nostalgia de completar tu álbum Panini con esta experiencia digital.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Álbum virtual**: Visualiza tu álbum con las páginas originales y pega tus stickers
+- **Sobres de stickers**: Abre packs y descubre qué figuritas te tocan
+- **Stickers duplicados**: Gestiona tus repetidas para intercambiar
+- **Mercado**: Compra y vende stickers con otros coleccionistas
+- **Intercambios**: Propón y negocia trades con la comunidad
+- **Estadísticas**: Consulta tu progreso y logros
+- **Notificaciones**: Recibe alertas de trades y actividad del mercado
+- **Panel admin**: Gestión completa con Backpack CRUD
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack Tecnológico
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 12 + PHP 8.3
+- **Frontend**: Livewire 4 + Tailwind CSS 4
+- **Admin**: Backpack CRUD 6
+- **Build**: Vite 7
+- **Base de datos**: SQLite (por defecto)
 
-## Learning Laravel
+## Instalación Local
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- npm
 
-## Laravel Sponsors
+### Pasos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Clonar el repositorio**
+   ```bash
+   git clone <url-del-repo>
+   cd album-usa94
+   ```
 
-### Premium Partners
+2. **Instalar dependencias y configurar**
+   ```bash
+   composer setup
+   ```
+   Este comando ejecuta automáticamente:
+   - Instalación de dependencias PHP
+   - Creación del archivo `.env`
+   - Generación de la clave de aplicación
+   - Ejecución de migraciones
+   - Instalación de dependencias npm
+   - Build de assets
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. **Iniciar el servidor de desarrollo**
+   ```bash
+   composer dev
+   ```
+   Esto levanta simultáneamente:
+   - Servidor Laravel en `http://localhost:8000`
+   - Queue worker para jobs en background
+   - Laravel Pail para logs en tiempo real
+   - Vite para hot reload de assets
 
-## Contributing
+## Comandos Útiles
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Solo servidor de desarrollo
+php artisan serve
 
-## Code of Conduct
+# Ejecutar tests
+composer test
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Linter de código
+./vendor/bin/pint
+```
 
-## Security Vulnerabilities
+## Estructura del Proyecto
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+app/
+├── Models/          # Modelos Eloquent (User, Sticker, Trade, etc.)
+├── Livewire/        # Componentes Livewire
+└── Http/Controllers/Admin/  # Controllers de Backpack
 
-## License
+database/
+├── migrations/      # Migraciones de la BD
+├── seeders/         # Seeders con datos iniciales
+└── data/            # Imágenes de páginas y stickers
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+resources/views/
+├── livewire/        # Vistas de componentes Livewire
+└── components/      # Blade components
+```
+
+## Licencia
+
+MIT
