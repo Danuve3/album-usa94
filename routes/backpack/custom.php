@@ -16,6 +16,10 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    // Override default dashboard routes to redirect to users
+    Route::get('dashboard', 'AdminController@dashboard')->name('backpack.dashboard');
+    Route::get('/', 'AdminController@redirect')->name('backpack');
+
     Route::crud('page', 'PageCrudController');
     Route::get('sticker/import', 'StickerCrudController@importForm')->name('sticker.import');
     Route::post('sticker/import', 'StickerCrudController@import')->name('sticker.import.store');
