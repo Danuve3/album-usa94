@@ -3,7 +3,7 @@
         <div class="relative mb-4">
             {{-- Pack pile visual --}}
             <button
-                wire:click="startOpening"
+                wire:click="openPack"
                 wire:loading.attr="disabled"
                 wire:loading.class="cursor-wait"
                 class="group relative focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg disabled:opacity-75"
@@ -25,8 +25,8 @@
                     {{-- Open text overlay --}}
                     <div class="absolute inset-0 flex items-end justify-center pb-2 bg-gradient-to-t from-black/50 to-transparent">
                         <div class="text-xs font-semibold text-white drop-shadow-md">
-                            <span wire:loading.remove wire:target="startOpening">Abrir</span>
-                            <span wire:loading wire:target="startOpening">...</span>
+                            <span wire:loading.remove wire:target="openPack">Abrir</span>
+                            <span wire:loading wire:target="openPack">...</span>
                         </div>
                     </div>
                 </div>
@@ -56,189 +56,6 @@
                 Vuelve mañana para recibir más sobres
             </p>
         </div>
-    @endif
-
-    {{-- Pack Opening Modal with drag interaction --}}
-    @if ($showOpeningModal)
-        <div
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-            x-data="packOpener()"
-            x-init="init()"
-            @keydown.escape.window="cancelIfNotTearing()"
-        >
-            {{-- Instruction text --}}
-            <div
-                class="absolute top-8 left-0 right-0 text-center transition-opacity duration-300"
-                :class="{ 'opacity-0': isTearing }"
-            >
-                <p class="text-white text-lg font-medium drop-shadow-lg">
-                    <span class="inline-flex items-center gap-2">
-                        <svg class="w-5 h-5 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                        Arrastra hacia abajo para abrir
-                    </span>
-                </p>
-            </div>
-
-            {{-- Pack container --}}
-            <div class="relative" :class="{ 'pointer-events-none': isTearing }">
-                {{-- Tear progress indicator --}}
-                <div
-                    class="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 overflow-hidden z-20"
-                    x-show="dragProgress > 0 && !isTearing"
-                    x-transition
-                >
-                    <div
-                        class="w-full bg-gradient-to-b from-white/80 via-yellow-300 to-white/80"
-                        :style="{ height: (dragProgress * 100) + '%' }"
-                    ></div>
-                </div>
-
-                {{-- Left half of pack --}}
-                <div
-                    class="absolute inset-0 rounded shadow-xl overflow-hidden"
-                    :class="{
-                        'pack-shake': isDragging && dragProgress > 0.3 && dragProgress < 1,
-                        'pack-tear-left': isTearing
-                    }"
-                    x-show="isTearing"
-                    style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);"
-                >
-                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-48 w-32 object-cover">
-                </div>
-
-                {{-- Right half of pack --}}
-                <div
-                    class="absolute inset-0 rounded shadow-xl overflow-hidden"
-                    :class="{
-                        'pack-shake': isDragging && dragProgress > 0.3 && dragProgress < 1,
-                        'pack-tear-right': isTearing
-                    }"
-                    x-show="isTearing"
-                    style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);"
-                >
-                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-48 w-32 object-cover">
-                </div>
-
-                {{-- Main draggable pack (before tearing) --}}
-                <div
-                    class="relative cursor-grab active:cursor-grabbing select-none touch-none"
-                    :class="{
-                        'pack-shake': isDragging && dragProgress > 0.3 && dragProgress < 1,
-                        'opacity-0': isTearing
-                    }"
-                    :style="{ transform: 'translateY(' + dragY + 'px)' }"
-                    @mousedown="startDrag($event)"
-                    @touchstart="startDrag($event)"
-                    x-ref="pack"
-                >
-                    <div class="relative h-48 w-32 rounded shadow-2xl transition-shadow overflow-hidden"
-                         :class="{ 'shadow-emerald-500/50': isDragging }">
-                        <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
-                        {{-- Progress indicator overlay --}}
-                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 w-20 h-1.5 bg-black/30 rounded-full overflow-hidden">
-                            <div
-                                class="h-full bg-white rounded-full transition-all duration-75"
-                                :style="{ width: (dragProgress * 100) + '%' }"
-                            ></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Close button (only when not tearing) --}}
-            <button
-                class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
-                @click="cancelIfNotTearing()"
-                x-show="!isTearing"
-            >
-                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-
-        <script>
-            function packOpener() {
-                return {
-                    isDragging: false,
-                    startY: 0,
-                    dragY: 0,
-                    dragProgress: 0,
-                    isTearing: false,
-                    tearThreshold: 120,
-
-                    init() {
-                        this.bindEvents();
-                    },
-
-                    bindEvents() {
-                        window.addEventListener('mousemove', (e) => this.onDrag(e));
-                        window.addEventListener('mouseup', () => this.endDrag());
-                        window.addEventListener('touchmove', (e) => this.onDrag(e), { passive: false });
-                        window.addEventListener('touchend', () => this.endDrag());
-                    },
-
-                    startDrag(e) {
-                        if (this.isTearing) return;
-                        this.isDragging = true;
-                        this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-                    },
-
-                    onDrag(e) {
-                        if (!this.isDragging || this.isTearing) return;
-
-                        if (e.type === 'touchmove') {
-                            e.preventDefault();
-                        }
-
-                        const currentY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-                        const deltaY = currentY - this.startY;
-
-                        // Only allow downward drag
-                        this.dragY = Math.max(0, Math.min(deltaY, this.tearThreshold + 30));
-                        this.dragProgress = Math.min(this.dragY / this.tearThreshold, 1);
-
-                        // Trigger tear when threshold reached
-                        if (this.dragProgress >= 1 && !this.isTearing) {
-                            this.triggerTear();
-                        }
-                    },
-
-                    endDrag() {
-                        if (this.isTearing) return;
-
-                        this.isDragging = false;
-
-                        // Snap back if not torn
-                        if (this.dragProgress < 1) {
-                            this.dragY = 0;
-                            this.dragProgress = 0;
-                        }
-                    },
-
-                    triggerTear() {
-                        this.isTearing = true;
-                        this.isDragging = false;
-
-                        // Call Livewire to open the pack
-                        @this.tearPack();
-
-                        // Wait for tear animation then show stickers
-                        setTimeout(() => {
-                            @this.finishOpening();
-                        }, 800);
-                    },
-
-                    cancelIfNotTearing() {
-                        if (!this.isTearing) {
-                            @this.cancelOpening();
-                        }
-                    }
-                }
-            }
-        </script>
     @endif
 
     {{-- Sticker Reveal Modal --}}

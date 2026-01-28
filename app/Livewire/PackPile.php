@@ -14,10 +14,6 @@ class PackPile extends Component
 
     public bool $isOpening = false;
 
-    public bool $showOpeningModal = false;
-
-    public bool $isTearing = false;
-
     public array $lastOpenedStickers = [];
 
     public bool $showRevealModal = false;
@@ -34,69 +30,6 @@ class PackPile extends Component
         $this->unopenedCount = Pack::where('user_id', Auth::id())
             ->unopened()
             ->count();
-    }
-
-    public function startOpening(): void
-    {
-        if ($this->unopenedCount === 0 || $this->isOpening) {
-            return;
-        }
-
-        $this->showOpeningModal = true;
-        $this->isOpening = true;
-    }
-
-    public function cancelOpening(): void
-    {
-        if ($this->isTearing) {
-            return;
-        }
-
-        $this->showOpeningModal = false;
-        $this->isOpening = false;
-    }
-
-    public function tearPack(PackService $packService): void
-    {
-        $pack = Pack::where('user_id', Auth::id())
-            ->unopened()
-            ->oldest()
-            ->first();
-
-        if (! $pack) {
-            $this->showOpeningModal = false;
-            $this->isOpening = false;
-
-            return;
-        }
-
-        $this->isTearing = true;
-
-        $userStickers = $packService->open($pack);
-
-        $this->lastOpenedStickers = $userStickers->map(function ($userSticker) {
-            return [
-                'id' => $userSticker->id,
-                'number' => $userSticker->sticker->number,
-                'name' => $userSticker->sticker->name,
-                'rarity' => $userSticker->sticker->rarity->value,
-                'image_path' => $userSticker->sticker->image_path,
-                'is_duplicate' => $userSticker->is_duplicate ?? false,
-            ];
-        })->toArray();
-
-        $this->refreshCount();
-
-        $this->dispatch('pack-opened');
-    }
-
-    public function finishOpening(): void
-    {
-        $this->showOpeningModal = false;
-        $this->isOpening = false;
-        $this->isTearing = false;
-        $this->showRevealModal = true;
-        $this->revealedCount = 0;
     }
 
     public function revealNextSticker(): void
