@@ -60,7 +60,7 @@
                 <livewire:notification-bell />
 
                 {{-- Packs counter --}}
-                <div class="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 dark:bg-amber-900/30">
+                <a href="{{ route('album') }}#pack-pile" class="flex cursor-pointer items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 transition-colors hover:bg-amber-100 dark:bg-amber-900/30 dark:hover:bg-amber-900/50">
                     <svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
@@ -70,7 +70,7 @@
                     <span class="hidden text-xs text-amber-600 sm:inline dark:text-amber-400">
                         {{ $unopenedPacksCount === 1 ? 'sobre' : 'sobres' }}
                     </span>
-                </div>
+                </a>
 
                 {{-- User name --}}
                 <span class="hidden text-sm font-medium text-gray-700 md:inline dark:text-gray-300">
