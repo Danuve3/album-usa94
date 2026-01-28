@@ -275,18 +275,32 @@
 
                                 {{-- Card Front (revealed) --}}
                                 <div
-                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-lg shadow-lg flex flex-col items-center justify-center p-2
+                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-lg shadow-lg overflow-hidden
                                     {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
                                 >
-                                    {{-- Sticker Number --}}
-                                    <span class="text-xl font-bold {{ $sticker['rarity'] === 'shiny' ? 'text-amber-800' : 'text-gray-800 dark:text-white' }}">
-                                        {{ $sticker['number'] }}
-                                    </span>
+                                    @if (!empty($sticker['image_path']))
+                                        <img
+                                            src="{{ Storage::url($sticker['image_path']) }}"
+                                            alt="{{ $sticker['name'] }}"
+                                            class="w-full h-full object-contain"
+                                        />
+                                    @else
+                                        <div class="flex flex-col items-center justify-center h-full p-2">
+                                            <span class="text-xl font-bold {{ $sticker['rarity'] === 'shiny' ? 'text-amber-800' : 'text-gray-800 dark:text-white' }}">
+                                                {{ $sticker['number'] }}
+                                            </span>
+                                        </div>
+                                    @endif
+
+                                    {{-- Number Badge --}}
+                                    <div class="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[9px] font-bold text-white">
+                                        #{{ $sticker['number'] }}
+                                    </div>
 
                                     {{-- Shiny Badge --}}
                                     @if ($sticker['rarity'] === 'shiny')
-                                        <span class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mt-1 sticker-shiny-badge">
-                                            ✦ Shiny ✦
+                                        <span class="absolute top-1 left-1 text-[8px] font-bold text-amber-400 drop-shadow-md sticker-shiny-badge">
+                                            ✦ Shiny
                                         </span>
                                     @endif
 

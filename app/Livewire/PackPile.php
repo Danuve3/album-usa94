@@ -80,6 +80,7 @@ class PackPile extends Component
                 'number' => $userSticker->sticker->number,
                 'name' => $userSticker->sticker->name,
                 'rarity' => $userSticker->sticker->rarity->value,
+                'image_path' => $userSticker->sticker->image_path,
                 'is_duplicate' => $userSticker->is_duplicate ?? false,
             ];
         })->toArray();
@@ -138,6 +139,7 @@ class PackPile extends Component
                 'number' => $userSticker->sticker->number,
                 'name' => $userSticker->sticker->name,
                 'rarity' => $userSticker->sticker->rarity->value,
+                'image_path' => $userSticker->sticker->image_path,
                 'is_duplicate' => $userSticker->is_duplicate ?? false,
             ];
         })->toArray();
