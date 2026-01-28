@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
+    use CrudTrait;
+
     /**
      * Cache key for all settings.
      */

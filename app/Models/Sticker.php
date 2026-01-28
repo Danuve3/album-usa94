@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Enums\StickerRarity;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sticker extends Model
 {
+    use CrudTrait;
+
     /** @use HasFactory<\Database\Factories\StickerFactory> */
     use HasFactory;
 
