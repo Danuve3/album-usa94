@@ -89,8 +89,9 @@
       ],
       "priority": 3,
       "dependsOn": [],
-      "passes": false,
-      "notes": "Backpack tiene configuración para cambiar la ruta del dashboard en config/backpack/base.php. Buscar la opción 'home_link' o similar, o crear una redirección. Files: config/backpack/base.php, routes/backpack/custom.php"
+      "passes": true,
+      "notes": "Backpack tiene configuración para cambiar la ruta del dashboard en config/backpack/base.php. Buscar la opción 'home_link' o similar, o crear una redirección. Files: config/backpack/base.php, routes/backpack/custom.php",
+      "completionNotes": "Completed by agent"
     },
     {
       "id": "US-016",
@@ -140,6 +141,6 @@
     }
   ],
   "metadata": {
-    "updatedAt": "2026-01-28T20:02:58.791Z"
+    "updatedAt": "2026-01-28T20:05:33.683Z"
   }
 }
