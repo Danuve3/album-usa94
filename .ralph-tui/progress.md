@@ -27,3 +27,12 @@ tablecieran correctamente, impidiendo que el token CSRF se validara adecuadament
 enían el trait `CrudTrait` de Backpack, que es requerido para que los controladores CRUD funcionen correctamente.\n\n**Cambios realizados:**\n- `app/Models/Sticker.php`: Agregado `use CrudTrait;` y el import correspondiente\n- `app/Models/Setting.php`: Agregado `use CrudTrait;` y el import correspondiente\n\n**Verificaciones:**\n- Los tests pasan correctamente\n- El código cumple con el estilo de Laravel Pint\n- Los modelos ahora tienen el método `identifiableAttribute()` del trait CrudTrait\n\n
 
 ---
+## ✓ Iteration 3 - US-015: Cambiar home del panel admin a listado de usuarios
+*2026-01-28T20:05:33.726Z (154s)*
+
+**Status:** Completed
+
+**Notes:**
+ra sobrescribir las de Backpack\n   - `/admin` y `/admin/dashboard` ahora usan el nuevo AdminController\n\n3. **`resources/views/vendor/backpack/ui/inc/menu_items.blade.php`**\n   - Eliminado el enlace de \"Dashboard\" del sidebar\n   - \"Usuarios\" movido a la primera posición del menú\n\n### Criterios de aceptación cumplidos:\n- ✅ Al acceder a /admin redirige a /admin/user\n- ✅ Vista de dashboard genérica eliminada (redirige a users)\n- ✅ El sidebar muestra Users como primera opción activa\n\n
+
+---
