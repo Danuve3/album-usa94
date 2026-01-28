@@ -1,0 +1,144 @@
+{
+  "name": "PRD 3 - Correcciones de UX, imágenes y panel admin",
+  "description": "Conjunto de mejoras y correcciones enfocadas en: hacer clicable el contador de sobres, usar las imágenes correctas de assets, simplificar apertura de sobres, arreglar errores del panel admin y mejorar el seeder con datos de prueba realistas",
+  "branchName": "ralph/prd3-fixes",
+  "userStories": [
+    {
+      "id": "US-010",
+      "title": "Hacer clicable el contador de sobres en el header",
+      "description": "El contador de sobres que aparece en el header (muestra el número de sobres disponibles) debe ser clicable. Al hacer click debe navegar/scrollear al componente PackPile donde el usuario puede abrir sus sobres.",
+      "acceptanceCriteria": [
+        "El contador de sobres en el header debe ser un enlace o botón clicable",
+        "Al hacer click debe llevarnos a la sección de abrir sobres (PackPile)",
+        "El cursor debe cambiar a pointer al pasar por encima",
+        "Debe funcionar tanto en la versión desktop como mobile del header"
+      ],
+      "priority": 7,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "El componente PackPile está en la vista album.blade.php. Considerar usar un anchor link con scroll suave o disparar un evento Livewire para mostrar el modal de apertura de sobres. Files: resources/views/components/header.blade.php"
+    },
+    {
+      "id": "US-011",
+      "title": "Usar imagen de sobre de database/data/packs para PackPile",
+      "description": "Actualmente los sobres en el componente PackPile se muestran con un gradiente y un icono SVG genérico. Debe usarse la imagen real del sobre que está en database/data/packs/pack.webp para mostrar una representación visual más auténtica.",
+      "acceptanceCriteria": [
+        "El sobre en PackPile debe mostrar la imagen de database/data/packs/pack.webp",
+        "La imagen debe copiarse a public/ o storage/ para ser accesible desde el frontend",
+        "El efecto de pila de sobres debe mantenerse pero usando la imagen real",
+        "La imagen debe verse correctamente en el modal de apertura también"
+      ],
+      "priority": 6,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "La imagen está en database/data/packs/pack.webp. Debe copiarse a public/images/ o similar durante el seeding o manualmente. Files: resources/views/livewire/pack-pile.blade.php, database/seeders/PackSeeder.php"
+    },
+    {
+      "id": "US-012",
+      "title": "Usar imágenes de páginas de database/data/pages para el álbum",
+      "description": "Las páginas del álbum deben mostrar las imágenes que están en database/data/pages/ (archivos 1.webp hasta 52.webp). Actualmente parece que no se están cargando correctamente.",
+      "acceptanceCriteria": [
+        "El álbum debe mostrar las imágenes de las páginas correctamente",
+        "Las imágenes de database/data/pages/ deben copiarse a storage/app/public/pages/",
+        "El PageSeeder debe registrar las rutas correctas en la base de datos",
+        "La navegación entre páginas debe mostrar cada imagen correspondiente"
+      ],
+      "priority": 4,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Hay 52 páginas en database/data/pages/ numeradas del 1.webp al 52.webp. Verificar que el PageSeeder las copie correctamente y que las rutas en la BD sean válidas. Files: database/seeders/PageSeeder.php, app/Livewire/Album.php"
+    },
+    {
+      "id": "US-013",
+      "title": "Verificar que los cromos usen las imágenes de database/data/stickers",
+      "description": "Asegurar que los cromos del álbum estén usando las imágenes correctas de database/data/stickers/. Son archivos webp numerados del 1 al 444.",
+      "acceptanceCriteria": [
+        "Los cromos pegados en el álbum deben mostrar sus imágenes correctamente",
+        "Las imágenes deben copiarse a storage/app/public/stickers/ o public/stickers/",
+        "El StickerSeeder debe registrar las rutas correctas",
+        "Los cromos deben verse en la revelación de sobres con su imagen"
+      ],
+      "priority": 5,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "El StickerSeeder actual ya intenta copiar las imágenes. Verificar que las rutas sean correctas y que Storage::url() devuelva URLs válidas. Files: database/seeders/StickerSeeder.php"
+    },
+    {
+      "id": "US-014",
+      "title": "Simplificar apertura de sobres a un solo click",
+      "description": "Actualmente la apertura de sobres requiere arrastrar hacia abajo (drag gesture) lo cual no funciona correctamente. Simplificar para que el sobre se abra con un simple click.",
+      "acceptanceCriteria": [
+        "Al hacer click en un sobre del PackPile, debe abrirse directamente",
+        "Eliminar el modal intermedio de 'Arrastra hacia abajo para abrir'",
+        "Mantener la animación de revelación de cromos",
+        "El comportamiento debe ser: click en sobre → animación de apertura → mostrar cromos"
+      ],
+      "priority": 8,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Eliminar el x-data packOpener() y el modal de drag. El método startOpening() puede llamar directamente a tearPack() y luego mostrar el reveal modal. Files: resources/views/livewire/pack-pile.blade.php, app/Livewire/PackPile.php"
+    },
+    {
+      "id": "US-015",
+      "title": "Cambiar home del panel admin a listado de usuarios",
+      "description": "Actualmente la home del panel de administración (/admin/dashboard) muestra un texto genérico de Getting Started de Backpack. Debe redirigir directamente al listado de usuarios.",
+      "acceptanceCriteria": [
+        "Al acceder a /admin debe redirigir a /admin/user",
+        "Eliminar o modificar la vista de dashboard genérica",
+        "El sidebar debe mostrar Users como primera opción activa"
+      ],
+      "priority": 3,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Backpack tiene configuración para cambiar la ruta del dashboard en config/backpack/base.php. Buscar la opción 'home_link' o similar, o crear una redirección. Files: config/backpack/base.php, routes/backpack/custom.php"
+    },
+    {
+      "id": "US-016",
+      "title": "Arreglar error 419 Page Expired en /admin/page y /admin/user",
+      "description": "Las secciones /admin/page y /admin/user dan error 419 Page Expired. Este error típicamente indica problemas con el token CSRF.",
+      "acceptanceCriteria": [
+        "Las páginas /admin/page y /admin/user deben cargar correctamente",
+        "Las operaciones CRUD deben funcionar sin errores 419",
+        "El token CSRF debe estar presente en los formularios"
+      ],
+      "priority": 1,
+      "dependsOn": [],
+      "passes": true,
+      "notes": "Error 419 suele ser por: 1) Token CSRF expirado, 2) Middleware mal configurado, 3) Sesión no iniciada. Verificar que las rutas tengan el middleware 'web' y que los formularios incluyan @csrf. Files: app/Http/Controllers/Admin/PageCrudController.php, app/Http/Controllers/Admin/UserCrudController.php, config/backpack/base.php",
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-017",
+      "title": "Arreglar errores internos en /admin/sticker y /admin/setting",
+      "description": "Las secciones /admin/sticker y /admin/setting dan errores internos del servidor. Investigar y corregir la causa.",
+      "acceptanceCriteria": [
+        "La página /admin/sticker debe cargar y mostrar el listado de cromos",
+        "La página /admin/setting debe cargar y mostrar la configuración",
+        "Las operaciones CRUD de ambas secciones deben funcionar"
+      ],
+      "priority": 2,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Revisar los logs de Laravel (storage/logs/laravel.log) para identificar el error específico. Puede ser un problema con relaciones, campos mal definidos o falta de datos en la BD. Files: app/Http/Controllers/Admin/StickerCrudController.php, app/Http/Controllers/Admin/SettingCrudController.php"
+    },
+    {
+      "id": "US-018",
+      "title": "Crear UserStickerSeeder con datos de prueba realistas",
+      "description": "Crear un nuevo seeder que asigne cromos a cada usuario de prueba con una distribución realista: 25 cromos pegados en el álbum, 5 cromos obtenidos pero sin pegar, y 15 cromos repetidos.",
+      "acceptanceCriteria": [
+        "Cada usuario debe tener 25 cromos pegados (is_glued = true)",
+        "Cada usuario debe tener 5 cromos obtenidos pero sin pegar (is_glued = false)",
+        "Cada usuario debe tener 15 cromos repetidos (duplicados de cromos que ya tiene)",
+        "Los cromos deben ser seleccionados aleatoriamente de los 444 disponibles",
+        "El seeder debe ejecutarse después de UserSeeder y StickerSeeder"
+      ],
+      "priority": 9,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Crear registros en la tabla user_stickers. Para los pegados: is_glued=true. Para los sin pegar: is_glued=false. Para los repetidos: crear múltiples registros del mismo sticker_id para el mismo user_id con diferentes obtained_at. Files: database/seeders/UserStickerSeeder.php (crear nuevo), database/seeders/DatabaseSeeder.php"
+    }
+  ],
+  "metadata": {
+    "updatedAt": "2026-01-28T20:00:26.836Z"
+  }
+}

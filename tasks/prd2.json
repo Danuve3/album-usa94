@@ -1,0 +1,90 @@
+{
+  "name": "Album USA94 - Correcciones",
+  "description": "Correcciones iniciales: login como home, seeders de usuarios de prueba y sobres iniciales",
+  "branchName": "ralph/correcciones-iniciales",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Agregar campo is_admin a usuarios",
+      "description": "Como sistema, necesito distinguir entre usuarios admin y usuarios normales mediante un campo en la base de datos.",
+      "acceptanceCriteria": [
+        "Crear migración que agregue campo 'is_admin' (boolean, default false) a la tabla users",
+        "Actualizar modelo User con el campo is_admin en $fillable y $casts",
+        "El middleware CheckIfAdmin verifica $user->is_admin === true para permitir acceso",
+        "composer test pasa sin errores",
+        "./vendor/bin/pint --test pasa sin errores"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "",
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-002",
+      "title": "Actualizar seeder de usuarios con 3 usuarios de prueba",
+      "description": "Como desarrollador, necesito tener usuarios de prueba predefinidos para testing: 1 admin y 2 usuarios normales.",
+      "acceptanceCriteria": [
+        "Renombrar AdminUserSeeder a UserSeeder o actualizar el existente",
+        "El seeder crea exactamente 3 usuarios",
+        "Usuario 1: admin@example.com con is_admin=true, nombre 'Admin'",
+        "Usuario 2: user1@example.com con is_admin=false, nombre 'Usuario 1'",
+        "Usuario 3: user2@example.com con is_admin=false, nombre 'Usuario 2'",
+        "Todos los usuarios tienen password 'password'",
+        "El DatabaseSeeder actualizado llama al seeder correcto",
+        "composer test pasa sin errores",
+        "./vendor/bin/pint --test pasa sin errores"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "",
+      "dependsOn": [
+        "US-001"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-003",
+      "title": "Crear seeder para asignar 5 sobres iniciales a cada usuario",
+      "description": "Como usuario nuevo, quiero empezar con 5 sobres disponibles para poder comenzar mi colección inmediatamente.",
+      "acceptanceCriteria": [
+        "Crear PackSeeder que asigne 5 sobres (Packs) a cada usuario existente",
+        "Los sobres se crean con opened_at = null (sin abrir)",
+        "El DatabaseSeeder ejecuta PackSeeder después del seeder de usuarios",
+        "Al ejecutar 'php artisan db:seed --class=PackSeeder' funciona correctamente",
+        "Al ejecutar 'php artisan migrate:fresh --seed' cada usuario tiene 5 sobres",
+        "composer test pasa sin errores",
+        "./vendor/bin/pint --test pasa sin errores"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "",
+      "dependsOn": [
+        "US-002"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-004",
+      "title": "Cambiar home por página de login/registro",
+      "description": "Como visitante, quiero que la página principal (/) muestre el formulario de login/registro para poder acceder directamente al sistema.",
+      "acceptanceCriteria": [
+        "La ruta '/' redirige a '/login' para usuarios no autenticados",
+        "La ruta '/' redirige a '/album' para usuarios autenticados",
+        "Eliminar o reubicar la vista 'welcome' actual",
+        "El formulario de login en '/' funciona correctamente",
+        "El enlace de registro lleva al formulario de registro",
+        "composer test pasa sin errores",
+        "./vendor/bin/pint --test pasa sin errores"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "",
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    }
+  ],
+  "metadata": {
+    "updatedAt": "2026-01-28T14:05:44.515Z"
+  }
+}
