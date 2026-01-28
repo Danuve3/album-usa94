@@ -12,27 +12,22 @@
                 {{-- Stacked packs effect --}}
                 @for ($i = min($unopenedCount - 1, 4); $i >= 0; $i--)
                     <div
-                        class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-lg transition-transform duration-200"
+                        class="absolute inset-0 rounded shadow-lg transition-transform duration-200 overflow-hidden"
                         style="transform: translate({{ $i * 3 }}px, {{ $i * 3 }}px); z-index: {{ 5 - $i }};"
-                    ></div>
+                    >
+                        <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
+                    </div>
                 @endfor
 
                 {{-- Top pack --}}
-                <div class="relative z-10 flex h-40 w-28 flex-col items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:shadow-2xl group-active:scale-95">
-                    {{-- USA 94 branding --}}
-                    <div class="mb-2 text-xs font-bold tracking-wider text-white/80">
-                        USA 94
-                    </div>
-
-                    {{-- Pack icon --}}
-                    <svg class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-
-                    {{-- Open text --}}
-                    <div class="mt-2 text-xs font-semibold text-white">
-                        <span wire:loading.remove wire:target="startOpening">Abrir</span>
-                        <span wire:loading wire:target="startOpening">...</span>
+                <div class="relative z-10 h-40 w-28 rounded shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:shadow-2xl group-active:scale-95 overflow-hidden">
+                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
+                    {{-- Open text overlay --}}
+                    <div class="absolute inset-0 flex items-end justify-center pb-2 bg-gradient-to-t from-black/50 to-transparent">
+                        <div class="text-xs font-semibold text-white drop-shadow-md">
+                            <span wire:loading.remove wire:target="startOpening">Abrir</span>
+                            <span wire:loading wire:target="startOpening">...</span>
+                        </div>
                     </div>
                 </div>
             </button>
@@ -102,7 +97,7 @@
 
                 {{-- Left half of pack --}}
                 <div
-                    class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-xl overflow-hidden"
+                    class="absolute inset-0 rounded shadow-xl overflow-hidden"
                     :class="{
                         'pack-shake': isDragging && dragProgress > 0.3 && dragProgress < 1,
                         'pack-tear-left': isTearing
@@ -110,17 +105,12 @@
                     x-show="isTearing"
                     style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);"
                 >
-                    <div class="flex h-48 w-32 flex-col items-center justify-center">
-                        <div class="mb-2 text-xs font-bold tracking-wider text-white/80">USA 94</div>
-                        <svg class="h-14 w-14 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-48 w-32 object-cover">
                 </div>
 
                 {{-- Right half of pack --}}
                 <div
-                    class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-xl overflow-hidden"
+                    class="absolute inset-0 rounded shadow-xl overflow-hidden"
                     :class="{
                         'pack-shake': isDragging && dragProgress > 0.3 && dragProgress < 1,
                         'pack-tear-right': isTearing
@@ -128,12 +118,7 @@
                     x-show="isTearing"
                     style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);"
                 >
-                    <div class="flex h-48 w-32 flex-col items-center justify-center">
-                        <div class="mb-2 text-xs font-bold tracking-wider text-white/80">USA 94</div>
-                        <svg class="h-14 w-14 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-48 w-32 object-cover">
                 </div>
 
                 {{-- Main draggable pack (before tearing) --}}
@@ -148,20 +133,11 @@
                     @touchstart="startDrag($event)"
                     x-ref="pack"
                 >
-                    <div class="flex h-48 w-32 flex-col items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-2xl transition-shadow"
+                    <div class="relative h-48 w-32 rounded shadow-2xl transition-shadow overflow-hidden"
                          :class="{ 'shadow-emerald-500/50': isDragging }">
-                        {{-- USA 94 branding --}}
-                        <div class="mb-2 text-xs font-bold tracking-wider text-white/80">
-                            USA 94
-                        </div>
-
-                        {{-- Pack icon --}}
-                        <svg class="h-14 w-14 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-
-                        {{-- Progress indicator --}}
-                        <div class="mt-3 w-20 h-1.5 bg-white/30 rounded-full overflow-hidden">
+                        <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
+                        {{-- Progress indicator overlay --}}
+                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 w-20 h-1.5 bg-black/30 rounded-full overflow-hidden">
                             <div
                                 class="h-full bg-white rounded-full transition-all duration-75"
                                 :style="{ width: (dragProgress * 100) + '%' }"
