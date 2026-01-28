@@ -3,10 +3,10 @@
   "sessionId": "6e29ab86-ec50-4928-b377-6b4f89b40d99",
   "status": "running",
   "startedAt": "2026-01-28T19:55:34.236Z",
-  "updatedAt": "2026-01-28T20:00:26.839Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-01-28T20:02:58.794Z",
+  "currentIteration": 1,
   "maxIterations": 10,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -53,8 +53,8 @@
       {
         "id": "US-016",
         "title": "Arreglar error 419 Page Expired en /admin/page y /admin/user",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-017",
@@ -70,7 +70,18 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-016",
+      "taskTitle": "Arreglar error 419 Page Expired en /admin/page y /admin/user",
+      "taskCompleted": true,
+      "durationMs": 282850,
+      "startedAt": "2026-01-28T19:55:43.984Z",
+      "endedAt": "2026-01-28T20:00:26.834Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/danuve/repos/album-usa94",
   "activeTaskIds": [],
