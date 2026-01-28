@@ -72,3 +72,12 @@ como el sobre arrastrable usan la imagen real\n   - Se mantuvo la barra de progr
 e` → `storage/app/public` configurado\n- ✅ 444 stickers en BD con `image_path` registrado (formato: `stickers/N.webp`)\n- ✅ Cromos pegados en el álbum muestran imágenes via `Storage::url()`\n- ✅ Cromos sin pegar muestran imágenes en la pila\n\n**Correcciones realizadas:**\n- Añadido `image_path` al array de stickers revelados en `PackPile.php` (líneas 83 y 142)\n- Actualizada la vista de revelación de sobres para mostrar la imagen del cromo en lugar de solo el número\n\n**Tests:** 159 passed\n\n
 
 ---
+## ✓ Iteration 8 - US-014: Simplificar apertura de sobres a un solo click
+*2026-01-28T20:18:36.942Z (168s)*
+
+**Status:** Completed
+
+**Notes:**
+`cancelOpening()`, `tearPack()` y `finishOpening()` que manejaban el flujo del modal de arrastre\n- `resources/views/livewire/pack-pile.blade.php`: Cambiado el botón para llamar directamente a `openPack` en lugar de `startOpening`, y eliminado completamente el modal intermedio de \"Arrastra hacia abajo para abrir\" (~180 líneas)\n\n**Comportamiento nuevo:**\n- Click en sobre → Se abre directamente → Muestra la animación de revelación de cromos\n\nLos 15 tests de PackPile pasan correctamente.\n\n
+
+---
