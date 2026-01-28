@@ -63,3 +63,12 @@ gura el cursor pointer\n   - `hover:bg-amber-100` y `dark:hover:bg-amber-900/50`
 como el sobre arrastrable usan la imagen real\n   - Se mantuvo la barra de progreso como overlay en la parte inferior del sobre\n\n**Criterios de aceptación cumplidos:**\n- [x] El sobre en PackPile muestra la imagen de `pack.webp`\n- [x] La imagen está copiada a `public/images/packs/` para ser accesible\n- [x] El efecto de pila se mantiene pero usando la imagen real\n- [x] La imagen se ve correctamente en el modal de apertura\n\n**Tests:** Todos los 15 tests de PackPile pasan correctamente.\n\n
 
 ---
+## ✓ Iteration 7 - US-013: Verificar que los cromos usen las imágenes de database/data/stickers
+*2026-01-28T20:15:47.819Z (176s)*
+
+**Status:** Completed
+
+**Notes:**
+e` → `storage/app/public` configurado\n- ✅ 444 stickers en BD con `image_path` registrado (formato: `stickers/N.webp`)\n- ✅ Cromos pegados en el álbum muestran imágenes via `Storage::url()`\n- ✅ Cromos sin pegar muestran imágenes en la pila\n\n**Correcciones realizadas:**\n- Añadido `image_path` al array de stickers revelados en `PackPile.php` (líneas 83 y 142)\n- Actualizada la vista de revelación de sobres para mostrar la imagen del cromo en lugar de solo el número\n\n**Tests:** 159 passed\n\n
+
+---
