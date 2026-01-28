@@ -36,3 +36,12 @@ enían el trait `CrudTrait` de Backpack, que es requerido para que los controlad
 ra sobrescribir las de Backpack\n   - `/admin` y `/admin/dashboard` ahora usan el nuevo AdminController\n\n3. **`resources/views/vendor/backpack/ui/inc/menu_items.blade.php`**\n   - Eliminado el enlace de \"Dashboard\" del sidebar\n   - \"Usuarios\" movido a la primera posición del menú\n\n### Criterios de aceptación cumplidos:\n- ✅ Al acceder a /admin redirige a /admin/user\n- ✅ Vista de dashboard genérica eliminada (redirige a users)\n- ✅ El sidebar muestra Users como primera opción activa\n\n
 
 ---
+## ✓ Iteration 4 - US-012: Usar imágenes de páginas de database/data/pages para el álbum
+*2026-01-28T20:07:55.849Z (141s)*
+
+**Status:** Completed
+
+**Notes:**
+Las 52 imágenes están correctamente copiadas en storage (~120KB cada una)\n- ✅ Los 52 registros existen en la BD con las rutas correctas\n- ✅ El enlace simbólico `public/storage` funciona\n- ✅ El componente Album carga y muestra las imágenes correctamente\n- ✅ Todos los tests pasan (14 tests, 23 assertions)\n\nNo hubo cambios de código porque el `PageSeeder` ya estaba correctamente implementado. El problema era operacional (datos/imágenes no habían sido copiados correctamente anteriormente).\n\n
+
+---
