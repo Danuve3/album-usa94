@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PackSeeder::class,
             PageSeeder::class,
             StickerSeeder::class,
+            UserStickerSeeder::class,
         ]);
     }
 }
