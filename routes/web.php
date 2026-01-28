@@ -6,7 +6,11 @@ use App\Livewire\HelloWorld;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('album');
+    }
+
+    return redirect()->route('login');
 });
 
 Route::get('/hello-world', HelloWorld::class);
