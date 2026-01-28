@@ -54,3 +54,12 @@ Las 52 imágenes están correctamente copiadas en storage (~120KB cada una)\n- �
 gura el cursor pointer\n   - `hover:bg-amber-100` y `dark:hover:bg-amber-900/50` - Feedback visual al hover\n   - `transition-colors` - Transición suave\n\n**Criterios de aceptación cumplidos:**\n- ✅ El contador de sobres en el header es un enlace clicable\n- ✅ Al hacer click navega a la sección de abrir sobres (PackPile)\n- ✅ El cursor cambia a pointer al pasar por encima\n- ✅ Funciona tanto en desktop como mobile (el elemento está en la sección del header que se muestra en ambas versiones)\n\n
 
 ---
+## ✓ Iteration 6 - US-011: Usar imagen de sobre de database/data/packs para PackPile
+*2026-01-28T20:12:51.081Z (167s)*
+
+**Status:** Completed
+
+**Notes:**
+como el sobre arrastrable usan la imagen real\n   - Se mantuvo la barra de progreso como overlay en la parte inferior del sobre\n\n**Criterios de aceptación cumplidos:**\n- [x] El sobre en PackPile muestra la imagen de `pack.webp`\n- [x] La imagen está copiada a `public/images/packs/` para ser accesible\n- [x] El efecto de pila se mantiene pero usando la imagen real\n- [x] La imagen se ve correctamente en el modal de apertura\n\n**Tests:** Todos los 15 tests de PackPile pasan correctamente.\n\n
+
+---

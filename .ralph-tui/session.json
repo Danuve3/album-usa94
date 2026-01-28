@@ -3,10 +3,10 @@
   "sessionId": "6e29ab86-ec50-4928-b377-6b4f89b40d99",
   "status": "running",
   "startedAt": "2026-01-28T19:55:34.236Z",
-  "updatedAt": "2026-01-28T20:12:51.043Z",
-  "currentIteration": 5,
+  "updatedAt": "2026-01-28T20:15:47.784Z",
+  "currentIteration": 6,
   "maxIterations": 10,
-  "tasksCompleted": 5,
+  "tasksCompleted": 6,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-011",
         "title": "Usar imagen de sobre de database/data/packs para PackPile",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-012",
@@ -120,6 +120,16 @@
       "durationMs": 126432,
       "startedAt": "2026-01-28T20:07:56.900Z",
       "endedAt": "2026-01-28T20:10:03.332Z"
+    },
+    {
+      "iteration": 6,
+      "status": "completed",
+      "taskId": "US-011",
+      "taskTitle": "Usar imagen de sobre de database/data/packs para PackPile",
+      "taskCompleted": true,
+      "durationMs": 166660,
+      "startedAt": "2026-01-28T20:10:04.380Z",
+      "endedAt": "2026-01-28T20:12:51.040Z"
     }
   ],
   "skippedTaskIds": [],
