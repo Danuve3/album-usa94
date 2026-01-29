@@ -3,10 +3,10 @@
   "sessionId": "41af4ef2-1b25-43d6-852f-770e84a169aa",
   "status": "running",
   "startedAt": "2026-01-29T10:10:17.551Z",
-  "updatedAt": "2026-01-29T10:14:14.487Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-01-29T10:16:11.305Z",
+  "currentIteration": 2,
   "maxIterations": 10,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-020",
         "title": "Mostrar botones inmediatamente y quitar bordes redondeados en revelación de cromos",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-021",
@@ -50,6 +50,16 @@
       "durationMs": 103525,
       "startedAt": "2026-01-29T10:10:22.554Z",
       "endedAt": "2026-01-29T10:12:06.079Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-020",
+      "taskTitle": "Mostrar botones inmediatamente y quitar bordes redondeados en revelación de cromos",
+      "taskCompleted": true,
+      "durationMs": 127384,
+      "startedAt": "2026-01-29T10:12:07.100Z",
+      "endedAt": "2026-01-29T10:14:14.484Z"
     }
   ],
   "skippedTaskIds": [],
