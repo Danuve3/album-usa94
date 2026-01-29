@@ -15,13 +15,13 @@
                         class="absolute inset-0 rounded shadow-lg transition-transform duration-200 overflow-hidden"
                         style="transform: translate({{ $i * 3 }}px, {{ $i * 3 }}px); z-index: {{ 5 - $i }};"
                     >
-                        <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
+                        <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-contain">
                     </div>
                 @endfor
 
                 {{-- Top pack --}}
-                <div class="relative z-10 h-40 w-28 rounded shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:shadow-2xl group-active:scale-95 overflow-hidden">
-                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-cover">
+                <div class="relative z-10 w-32 aspect-[353/285] rounded shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:shadow-2xl group-active:scale-95 overflow-hidden">
+                    <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-contain">
                     {{-- Open text overlay --}}
                     <div class="absolute inset-0 flex items-end justify-center pb-2 bg-gradient-to-t from-black/50 to-transparent">
                         <div class="text-xs font-semibold text-white drop-shadow-md">
@@ -44,7 +44,7 @@
     @else
         {{-- No packs available --}}
         <div class="flex flex-col items-center py-8">
-            <div class="mb-4 flex h-40 w-28 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-800">
+            <div class="mb-4 flex w-32 aspect-[353/285] items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-800">
                 <svg class="h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                 </svg>
