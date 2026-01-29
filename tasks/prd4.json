@@ -1,0 +1,73 @@
+{
+  "name": "PRD 4 - Correcciones de UI y funcionalidad de intercambios",
+  "description": "Correcciones de interfaz en la apertura de sobres (proporciones, botones visibles, cards sin bordes redondeados), arreglo del error Page Expired al desloguear, y corrección de los botones de aceptar/rechazar intercambios.",
+  "branchName": "ralph/prd4-fixes",
+  "userStories": [
+    {
+      "id": "US-019",
+      "title": "Corregir proporciones de sobres en PackPile",
+      "description": "En la pila de sobres por abrir (PackPile), los sobres no se muestran con las proporciones correctas. Deben tener el aspect ratio de la imagen original del sobre (pack.webp).",
+      "acceptanceCriteria": [
+        "Los sobres en la pila deben mantener las proporciones de la imagen pack.webp",
+        "El sobre no debe aparecer estirado o comprimido",
+        "Las proporciones deben mantenerse en todas las resoluciones (responsive)",
+        "El efecto de pila debe seguir funcionando correctamente con las nuevas proporciones"
+      ],
+      "priority": 7,
+      "dependsOn": [],
+      "passes": true,
+      "notes": "Revisar el CSS del componente PackPile. Probablemente se necesite usar object-fit: contain o ajustar el aspect-ratio del contenedor para que coincida con las dimensiones de pack.webp. Files: resources/views/livewire/pack-pile.blade.php",
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-020",
+      "title": "Mostrar botones inmediatamente y quitar bordes redondeados en revelación de cromos",
+      "description": "Al abrir un sobre se muestran 5 cards verdes con interrogación. Los botones 'Revelar todos' y 'Continuar' deben aparecer inmediatamente junto con las cards, no después de una interacción o tiempo de espera. Además, las cards reveladas no deben tener bordes redondeados.",
+      "acceptanceCriteria": [
+        "Los botones 'Revelar todos' y 'Continuar' deben mostrarse inmediatamente cuando aparecen las 5 cards verdes",
+        "No debe requerirse ninguna interacción ni tiempo de espera para ver los botones",
+        "Las cards de los cromos revelados no deben tener border-radius (esquinas cuadradas)",
+        "La funcionalidad de revelar cromos individuales debe seguir funcionando"
+      ],
+      "priority": 8,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Revisar el componente de revelación de cromos. Probablemente hay una condición o timeout que oculta los botones inicialmente. Para los bordes, buscar las clases rounded-* de Tailwind y eliminarlas de las cards. Files: resources/views/livewire/pack-pile.blade.php"
+    },
+    {
+      "id": "US-021",
+      "title": "Arreglar error Page Expired al desloguearse",
+      "description": "Al hacer click en el botón 'Salir' para desloguearse, aparece un alert con el mensaje 'This page has expired'. Este es un error típico de token CSRF expirado o mal configurado en el formulario de logout.",
+      "acceptanceCriteria": [
+        "El botón Salir debe desloguear al usuario correctamente",
+        "No debe aparecer ningún error de Page Expired",
+        "Después de desloguearse, el usuario debe ser redirigido a la página de login o home",
+        "El token CSRF debe estar presente y ser válido en el formulario de logout"
+      ],
+      "priority": 9,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Error 419 Page Expired indica problema con CSRF. Verificar que el formulario de logout incluya @csrf y que use POST. Si usa un link, debe cambiarse a un formulario. Files: resources/views/components/header.blade.php, routes/web.php"
+    },
+    {
+      "id": "US-022",
+      "title": "Arreglar botones Aceptar y Rechazar intercambio",
+      "description": "Cuando un usuario tiene un intercambio pendiente de aceptar, los botones 'Aceptar intercambio' y 'Rechazar' no hacen nada al hacer click. Deberían realizar/rechazar el intercambio respectivamente.",
+      "acceptanceCriteria": [
+        "El botón 'Aceptar intercambio' debe procesar y completar el intercambio",
+        "El botón 'Rechazar' debe rechazar y cancelar el intercambio pendiente",
+        "Ambos botones deben dar feedback visual al usuario (loading state o mensaje)",
+        "Después de la acción, la lista de intercambios pendientes debe actualizarse",
+        "Los cromos deben transferirse correctamente entre usuarios al aceptar"
+      ],
+      "priority": 10,
+      "dependsOn": [],
+      "passes": false,
+      "notes": "Puede ser un problema de wire:click no conectado correctamente, método faltante en el componente Livewire, o error en el backend. Revisar la consola del navegador y los logs de Laravel. Files: resources/views/livewire/trades.blade.php, app/Livewire/Trades.php"
+    }
+  ],
+  "metadata": {
+    "createdAt": "2026-01-29",
+    "updatedAt": "2026-01-29T10:12:06.080Z"
+  }
+}

@@ -1,14 +1,14 @@
 {
-  "id": "6e29ab86-ec50-4928-b377-6b4f89b40d99",
+  "id": "41af4ef2-1b25-43d6-852f-770e84a169aa",
   "status": "running",
-  "startedAt": "2026-01-28T19:55:32.440Z",
-  "updatedAt": "2026-01-28T20:18:36.950Z",
+  "startedAt": "2026-01-29T10:10:15.879Z",
+  "updatedAt": "2026-01-29T10:10:15.879Z",
   "agentPlugin": "claude",
   "trackerPlugin": "json",
-  "prdPath": "tasks/prd3.json",
-  "currentIteration": 8,
+  "prdPath": "tasks/prd4.json",
+  "currentIteration": 0,
   "maxIterations": 10,
   "totalTasks": 0,
-  "tasksCompleted": 8,
+  "tasksCompleted": 0,
   "cwd": "/home/danuve/repos/album-usa94"
 }
