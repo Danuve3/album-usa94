@@ -92,7 +92,7 @@
 
                                 {{-- Card Front (revealed) --}}
                                 <div
-                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-lg shadow-lg overflow-hidden
+                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 shadow-lg overflow-hidden
                                     {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
                                 >
                                     @if (!empty($sticker['image_path']))
@@ -152,7 +152,7 @@
 
                 {{-- Actions --}}
                 <div class="flex flex-col gap-3">
-                    {{-- Reveal All Button (only when not all revealed) --}}
+                    {{-- Reveal All Button (hidden when all revealed) --}}
                     <button
                         x-show="!allRevealed"
                         x-cloak
@@ -162,13 +162,8 @@
                         Revelar todos
                     </button>
 
-                    {{-- Continue Button (only when all revealed) --}}
+                    {{-- Continue Button (always visible) --}}
                     <button
-                        x-show="allRevealed"
-                        x-cloak
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 transform scale-95"
-                        x-transition:enter-end="opacity-100 transform scale-100"
                         wire:click="finishReveal"
                         class="w-full rounded-lg bg-emerald-500 px-4 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:scale-[1.02] shadow-lg shadow-emerald-500/30"
                     >
