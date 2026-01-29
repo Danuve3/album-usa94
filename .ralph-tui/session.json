@@ -3,10 +3,10 @@
   "sessionId": "41af4ef2-1b25-43d6-852f-770e84a169aa",
   "status": "running",
   "startedAt": "2026-01-29T10:10:17.551Z",
-  "updatedAt": "2026-01-29T10:16:11.305Z",
-  "currentIteration": 2,
+  "updatedAt": "2026-01-29T10:19:24.040Z",
+  "currentIteration": 3,
   "maxIterations": 10,
-  "tasksCompleted": 2,
+  "tasksCompleted": 3,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -29,8 +29,8 @@
       {
         "id": "US-021",
         "title": "Arreglar error Page Expired al desloguearse",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-022",
@@ -60,10 +60,20 @@
       "durationMs": 127384,
       "startedAt": "2026-01-29T10:12:07.100Z",
       "endedAt": "2026-01-29T10:14:14.484Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-021",
+      "taskTitle": "Arreglar error Page Expired al desloguearse",
+      "taskCompleted": true,
+      "durationMs": 115805,
+      "startedAt": "2026-01-29T10:14:15.496Z",
+      "endedAt": "2026-01-29T10:16:11.301Z"
     }
   ],
   "skippedTaskIds": [],
   "cwd": "/home/danuve/repos/album-usa94",
   "activeTaskIds": [],
-  "subagentPanelVisible": false
+  "subagentPanelVisible": true
 }

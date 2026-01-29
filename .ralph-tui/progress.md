@@ -27,3 +27,12 @@ estire\n- **Consistencia**: Actualicé el placeholder vacío (cuando no hay sobr
 ealed\"`, `x-cloak` y las transiciones del botón. Ahora aparece inmediatamente junto con las 5 cards verdes.\n\n2. **Cards sin bordes redondeados**: Removido `rounded-lg` del Card Front (la parte revelada del cromo).\n\n3. **Funcionalidad preservada**: \n   - El botón \"Revelar todos\" sigue funcionando y se oculta cuando todos están revelados\n   - La revelación automática e individual de cromos sigue funcionando correctamente\n\n✅ Tests pasando (15/15)\n✅ Linter pasando\n✅ Commit realizado\n\n
 
 ---
+## ✓ Iteration 3 - US-021: Arreglar error Page Expired al desloguearse
+*2026-01-29T10:16:11.344Z (116s)*
+
+**Status:** Completed
+
+**Notes:**
+rio.\n\n**Cambio realizado en `resources/views/components/header.blade.php:81`:**\n- Se agregó `x-data x-on:submit=\"$el.querySelector('input[name=_token]').value = document.querySelector('meta[name=csrf-token]').content\"` al formulario de logout\n\nEsto asegura que cuando el usuario hace click en \"Salir\", el token CSRF se obtiene del valor actual en la meta tag (que Livewire mantiene actualizado), en lugar de usar el valor estático que se renderizó cuando la página se cargó inicialmente.\n\n
+
+---
