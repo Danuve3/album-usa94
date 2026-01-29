@@ -78,7 +78,7 @@
                 </span>
 
                 {{-- Logout button --}}
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" x-data x-on:submit="$el.querySelector('input[name=_token]').value = document.querySelector('meta[name=csrf-token]').content">
                     @csrf
                     <button
                         type="submit"
