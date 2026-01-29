@@ -178,7 +178,7 @@
     {{-- Trade Detail Modal --}}
     @if ($selectedTrade)
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" wire:click.self="closeDetail">
-            <div class="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800">
+            <div class="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800" wire:click.stop>
                 {{-- Header --}}
                 <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-gray-700">
                     <div class="flex items-center gap-3">
@@ -361,8 +361,8 @@
 
     {{-- Confirm Modal --}}
     @if ($showConfirmModal)
-        <div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
-            <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800">
+        <div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4" wire:click.self="cancelConfirm">
+            <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800" wire:click.stop>
                 @php
                     $confirmData = [
                         'accept' => [

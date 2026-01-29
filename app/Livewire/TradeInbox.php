@@ -50,6 +50,12 @@ class TradeInbox extends Component
     {
         $this->selectedTradeId = null;
         $this->selectedTrade = null;
+
+        // Force computed properties to be recalculated
+        unset($this->receivedTrades);
+        unset($this->sentTrades);
+        unset($this->pendingReceivedCount);
+        unset($this->pendingSentCount);
     }
 
     public function confirmAction(string $action): void
