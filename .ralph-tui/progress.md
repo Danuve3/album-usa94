@@ -36,3 +36,12 @@ u sesión ha expirado. Por favor, inicia sesión nuevamente.\"\n\n### Cambios en
 atos** - El controlador ya guardaba correctamente. Mejoré el JavaScript para actualizar el contador de cromos sin posicionar y cambiar los estilos de azul a amarillo (o viceversa) según la posición.\n\n### Mejoras adicionales:\n- Fondo oscuro en el canvas para mejor contraste con la imagen\n- Contador de cromos sin posicionar en la lista lateral  \n- Indicador visual en la lista (borde amarillo) para cromos sin posicionar\n- Animación de pulso en cromos sin posicionar para llamar la atención\n\n
 
 ---
+## ✓ Iteration 4 - US-004: Implementar modal de confirmación para intercambios
+*2026-01-31T18:53:44.485Z (105s)*
+
+**Status:** Completed
+
+**Notes:**
+n al hacer clic en Rechazar\n- ✅ Ejecución de acciones solo al confirmar en el modal\n- ✅ Métodos del backend funcionando (`acceptTrade`, `rejectTrade`, `cancelTrade`)\n\nLo que faltaba y fue implementado:\n- ✅ **Mostrar detalles del intercambio en el modal** - Agregué un resumen visual con los números de cromos ofrecidos (en verde) y solicitados (en ámbar), limitados a 6 con indicador \"+X\" si hay más\n\nLos cambios se realizaron en `resources/views/livewire/trade-inbox.blade.php:413-478`.\n\n
+
+---
