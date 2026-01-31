@@ -30,10 +30,19 @@
 
                     @if($selectedPage && $stickers->count() > 0)
                         <hr>
-                        <h6>Cromos en esta página</h6>
+                        <h6>Cromos en esta página <small class="text-muted">({{ $stickers->count() }})</small></h6>
+                        @php
+                            $unpositionedCount = $stickers->filter(fn($s) => $s->position_x == 0 && $s->position_y == 0)->count();
+                        @endphp
+                        @if($unpositionedCount > 0)
+                            <div class="alert alert-warning py-1 px-2 small mb-2">
+                                <i class="la la-exclamation-circle"></i> {{ $unpositionedCount }} cromo(s) sin posicionar
+                            </div>
+                        @endif
                         <div class="list-group sticker-list" style="max-height: 400px; overflow-y: auto;">
                             @foreach($stickers as $sticker)
-                                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center sticker-list-item"
+                                @php $isUnpositioned = $sticker->position_x == 0 && $sticker->position_y == 0; @endphp
+                                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center sticker-list-item {{ $isUnpositioned ? 'unpositioned' : '' }}"
                                      data-sticker-id="{{ $sticker->id }}"
                                      style="cursor: pointer;">
                                     <div>
@@ -87,10 +96,16 @@
                         <div id="canvas-container" style="overflow: auto; max-height: 80vh; position: relative;">
                             <div id="page-canvas" style="position: relative; display: inline-block; transform-origin: top left;">
                                 @if($selectedPage->image_path)
-                                    <img src="{{ Storage::disk('public')->url($selectedPage->image_path) }}"
+                                    <img src="{{ asset('storage/' . $selectedPage->image_path) }}"
                                          alt="Página {{ $selectedPage->number }}"
                                          id="page-image"
-                                         style="display: block; max-width: none;">
+                                         style="display: block; max-width: none;"
+                                         onerror="this.style.display='none'; document.getElementById('image-error').style.display='flex';">
+                                    <div id="image-error" style="display: none; width: 800px; height: 1200px; background: #f8d7da; align-items: center; justify-content: center; flex-direction: column; border: 2px dashed #dc3545;">
+                                        <i class="la la-exclamation-triangle" style="font-size: 3rem; color: #dc3545;"></i>
+                                        <p class="text-danger mt-2 mb-1">Error al cargar la imagen</p>
+                                        <small class="text-muted">{{ $selectedPage->image_path }}</small>
+                                    </div>
                                 @else
                                     <div style="width: 800px; height: 1200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                                         <span class="text-muted">Sin imagen de página</span>
@@ -98,7 +113,12 @@
                                 @endif
 
                                 @foreach($stickers as $sticker)
-                                    <div class="sticker-draggable"
+                                    @php
+                                        $isUnpositioned = $sticker->position_x == 0 && $sticker->position_y == 0;
+                                        $borderColor = $isUnpositioned ? '#ffc107' : '#007bff';
+                                        $bgColor = $isUnpositioned ? 'rgba(255, 193, 7, 0.3)' : 'rgba(0, 123, 255, 0.2)';
+                                    @endphp
+                                    <div class="sticker-draggable {{ $isUnpositioned ? 'unpositioned' : '' }}"
                                          data-sticker-id="{{ $sticker->id }}"
                                          data-sticker-number="{{ $sticker->number }}"
                                          data-sticker-name="{{ $sticker->name }}"
@@ -108,19 +128,19 @@
                                                 top: {{ $sticker->position_y }}px;
                                                 width: {{ $sticker->width }}px;
                                                 height: {{ $sticker->height }}px;
-                                                border: 2px solid #007bff;
-                                                background: rgba(0, 123, 255, 0.2);
+                                                border: 2px solid {{ $borderColor }};
+                                                background: {{ $bgColor }};
                                                 cursor: move;
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: center;
                                                 font-size: 12px;
                                                 font-weight: bold;
-                                                color: #007bff;
+                                                color: {{ $borderColor }};
                                                 user-select: none;
                                                 box-sizing: border-box;">
                                         <span class="sticker-label">#{{ $sticker->number }}</span>
-                                        <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; background: #007bff; cursor: se-resize;"></div>
+                                        <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; background: {{ $borderColor }}; cursor: se-resize;"></div>
                                     </div>
                                 @endforeach
                             </div>
@@ -142,8 +162,26 @@
 
 @push('after_styles')
 <style>
+    /* Canvas container */
+    #canvas-container {
+        background: #2d3748;
+        border-radius: 0 0 4px 4px;
+    }
+    #page-canvas {
+        background-color: #4a5568;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        margin: 20px;
+    }
+    #page-image {
+        display: block;
+        max-width: none;
+        background: #fff;
+    }
+
+    /* Sticker draggable elements */
     .sticker-draggable {
-        transition: box-shadow 0.2s;
+        transition: box-shadow 0.2s, border-color 0.2s;
+        border-radius: 2px;
     }
     .sticker-draggable:hover {
         box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
@@ -164,6 +202,8 @@
         opacity: 0.8;
         z-index: 1000;
     }
+
+    /* List items */
     .sticker-list-item.active {
         background-color: #28a745 !important;
         color: white !important;
@@ -171,16 +211,41 @@
     .sticker-list-item.active .text-muted {
         color: rgba(255, 255, 255, 0.8) !important;
     }
+
+    /* Resize handle */
     .resize-handle {
         opacity: 0;
         transition: opacity 0.2s;
+        border-radius: 2px;
     }
     .sticker-draggable:hover .resize-handle,
     .sticker-draggable.selected .resize-handle {
         opacity: 1;
     }
-    #page-canvas {
-        background-color: #e9ecef;
+
+    /* Zoom controls */
+    #zoom-level {
+        min-width: 50px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* Unpositioned stickers indicator */
+    .sticker-draggable.unpositioned {
+        animation: pulse-warning 2s infinite;
+    }
+    @keyframes pulse-warning {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+    .sticker-draggable.unpositioned:hover,
+    .sticker-draggable.unpositioned.selected {
+        animation: none;
+    }
+
+    /* Sticker list unpositioned indicator */
+    .sticker-list-item.unpositioned {
+        border-left: 3px solid #ffc107;
     }
 </style>
 @endpush
@@ -409,6 +474,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                const isPositioned = x !== 0 || y !== 0;
+                const borderColor = isPositioned ? '#007bff' : '#ffc107';
+                const bgColor = isPositioned ? 'rgba(0, 123, 255, 0.2)' : 'rgba(255, 193, 7, 0.3)';
+
+                // Update the sticker element styles and data
+                const stickerEl = document.querySelector(`.sticker-draggable[data-sticker-id="${stickerId}"]`);
+                if (stickerEl) {
+                    stickerEl.dataset.isHorizontal = isHorizontal ? '1' : '0';
+                    stickerEl.style.borderColor = borderColor;
+                    stickerEl.style.background = bgColor;
+                    stickerEl.style.color = borderColor;
+                    stickerEl.querySelector('.resize-handle').style.background = borderColor;
+
+                    if (isPositioned) {
+                        stickerEl.classList.remove('unpositioned');
+                    } else {
+                        stickerEl.classList.add('unpositioned');
+                    }
+                }
+
                 // Update the list item position display
                 const listItem = document.querySelector(`.sticker-list-item[data-sticker-id="${stickerId}"]`);
                 if (listItem) {
@@ -416,13 +501,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (positionSpan) {
                         positionSpan.textContent = `${Math.round(x)}, ${Math.round(y)}`;
                     }
+                    if (isPositioned) {
+                        listItem.classList.remove('unpositioned');
+                    } else {
+                        listItem.classList.add('unpositioned');
+                    }
                 }
 
-                // Update the sticker element data
-                const stickerEl = document.querySelector(`.sticker-draggable[data-sticker-id="${stickerId}"]`);
-                if (stickerEl) {
-                    stickerEl.dataset.isHorizontal = isHorizontal ? '1' : '0';
-                }
+                // Update unpositioned count
+                updateUnpositionedCount();
 
                 showNotification('Posición guardada', 'success');
             } else {
@@ -433,6 +520,19 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
             showNotification('Error al guardar', 'danger');
         });
+    }
+
+    function updateUnpositionedCount() {
+        const unpositionedCount = document.querySelectorAll('.sticker-list-item.unpositioned').length;
+        const alertEl = document.querySelector('.alert-warning');
+
+        if (unpositionedCount > 0) {
+            if (alertEl) {
+                alertEl.innerHTML = `<i class="la la-exclamation-circle"></i> ${unpositionedCount} cromo(s) sin posicionar`;
+            }
+        } else if (alertEl) {
+            alertEl.remove();
+        }
     }
 
     function showNotification(message, type) {
