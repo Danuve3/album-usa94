@@ -413,9 +413,66 @@
                 <h3 class="mb-2 text-center text-xl font-semibold text-gray-900 dark:text-white">
                     {{ $data['title'] }}
                 </h3>
-                <p class="mb-6 text-center text-gray-600 dark:text-gray-400">
+                <p class="mb-4 text-center text-gray-600 dark:text-gray-400">
                     {{ $data['message'] }}
                 </p>
+
+                {{-- Trade Details Summary --}}
+                @if ($selectedTrade)
+                    <div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50">
+                        <div class="grid grid-cols-2 gap-4">
+                            {{-- Offered stickers --}}
+                            <div>
+                                <p class="mb-2 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                                    @if ($activeTab === 'received')
+                                        Te ofrecen
+                                    @else
+                                        Ofreces
+                                    @endif
+                                </p>
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach ($selectedTrade->offeredItems->take(6) as $item)
+                                        @if ($item->userSticker && $item->userSticker->sticker)
+                                            <span class="inline-flex items-center rounded bg-emerald-100 px-1.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+                                                #{{ $item->userSticker->sticker->number }}
+                                            </span>
+                                        @endif
+                                    @endforeach
+                                    @if ($selectedTrade->offeredItems->count() > 6)
+                                        <span class="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                                            +{{ $selectedTrade->offeredItems->count() - 6 }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Requested stickers --}}
+                            <div>
+                                <p class="mb-2 text-xs font-medium text-amber-600 dark:text-amber-400">
+                                    @if ($activeTab === 'received')
+                                        Te piden
+                                    @else
+                                        Solicitas
+                                    @endif
+                                </p>
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach ($selectedTrade->requestedItems->take(6) as $item)
+                                        @if ($item->userSticker && $item->userSticker->sticker)
+                                            <span class="inline-flex items-center rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+                                                #{{ $item->userSticker->sticker->number }}
+                                            </span>
+                                        @endif
+                                    @endforeach
+                                    @if ($selectedTrade->requestedItems->count() > 6)
+                                        <span class="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                                            +{{ $selectedTrade->requestedItems->count() - 6 }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="flex gap-3">
                     <button
                         type="button"
