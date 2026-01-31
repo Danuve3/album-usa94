@@ -1,902 +1,117 @@
 {
-  "name": "Álbum de Cromos Virtual - Mundial USA 94",
-  "description": "Aplicación web que recrea la experiencia de coleccionar el álbum de cromos del Mundial USA 1994 con Laravel, Livewire y Backpack.",
-  "branchName": "ralph/album-usa94",
+  "name": "Corrección de Errores Album USA 94",
+  "branchName": "feature/correccion-errores-album",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Inicializar proyecto Laravel",
-      "description": "Como desarrollador, quiero un proyecto Laravel limpio configurado para comenzar el desarrollo.",
+      "title": "Corregir error 419 Page Expired en panel admin",
+      "description": "As a administrador, I want to acceder al panel de administración sin errores de sesión expirada so that puedo gestionar el contenido del álbum.",
       "acceptanceCriteria": [
-        "Proyecto Laravel 11 creado en el directorio actual",
-        "Configuración de .env.example con variables necesarias",
-        "Base de datos SQLite configurada para desarrollo",
-        "composer install ejecuta sin errores",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Identificar la causa del error 419 (tokens CSRF, configuración de sesiones)",
+        "Corregir la configuración de sesiones en base de datos SQLite",
+        "Verificar que todas las rutas admin funcionan tras login",
+        "El token CSRF se regenera correctamente en cada petición"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "",
       "dependsOn": [],
       "completionNotes": "Completed by agent"
     },
     {
       "id": "US-002",
-      "title": "Instalar y configurar Livewire",
-      "description": "Como desarrollador, quiero Livewire instalado para crear componentes reactivos.",
+      "title": "Corregir error 500 en /admin/sticker",
+      "description": "As a administrador, I want to acceder a la gestión de cromos sin errores so that puedo ver y administrar todos los cromos del álbum.",
       "acceptanceCriteria": [
-        "Livewire 3 instalado via Composer",
-        "Assets de Livewire publicados",
-        "Componente de prueba Hello World funciona correctamente",
-        "Layout base incluye directivas @livewireStyles y @livewireScripts",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Identificar la causa del error 500 (probablemente Backpack PRO filters)",
+        "Eliminar o reemplazar dependencias de Backpack PRO",
+        "Implementar filtros básicos sin dependencias de pago si es necesario",
+        "La página /admin/sticker carga correctamente mostrando la lista de cromos"
       ],
-      "priority": 2,
-      "passes": true,
-      "notes": "",
+      "priority": 1,
+      "passes": false,
       "dependsOn": [
         "US-001"
-      ],
-      "completionNotes": "Completed by agent"
+      ]
     },
     {
       "id": "US-003",
-      "title": "Instalar y configurar Backpack",
-      "description": "Como desarrollador, quiero Backpack instalado para el panel de administración.",
+      "title": "Corregir sticker-mapper para definir posiciones de cromos",
+      "description": "As a administrador, I want to usar el sticker-mapper para definir las posiciones de los cromos so that los cromos se muestren correctamente en las páginas del álbum.",
       "acceptanceCriteria": [
-        "Backpack CRUD instalado y configurado",
-        "Ruta /admin accesible",
-        "Usuario admin creado con seeder",
-        "Dashboard básico de Backpack funcional",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Revisar el CSS del mapper para que la imagen de fondo se muestre correctamente",
+        "Los cromos existentes se muestran en sus posiciones guardadas",
+        "Se pueden ajustar las posiciones de los cromos (arrastrar o editar coordenadas)",
+        "Los cambios se guardan correctamente en la base de datos"
       ],
-      "priority": 3,
-      "passes": true,
-      "notes": "",
+      "priority": 2,
+      "passes": false,
       "dependsOn": [
-        "US-001"
-      ],
-      "completionNotes": "Completed by agent"
+        "US-002"
+      ]
     },
     {
       "id": "US-004",
-      "title": "Configurar Tailwind CSS",
-      "description": "Como desarrollador, quiero Tailwind CSS para estilar la aplicación.",
+      "title": "Implementar modal de confirmación para intercambios",
+      "description": "As a usuario, I want to ver un modal de confirmación antes de aceptar o rechazar un intercambio so that no hago acciones accidentales.",
       "acceptanceCriteria": [
-        "Tailwind CSS instalado y configurado con Vite",
-        "Archivo tailwind.config.js configurado para Laravel/Livewire",
-        "Estilos base aplicados correctamente",
-        "npm run build compila sin errores",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Al hacer clic en Aceptar intercambio aparece modal de confirmación",
+        "Al hacer clic en Rechazar intercambio aparece modal de confirmación",
+        "El modal muestra los detalles del intercambio (qué cromos se intercambian)",
+        "Solo se ejecuta la acción al confirmar en el modal",
+        "Los botones ejecutan correctamente los métodos del backend"
       ],
-      "priority": 4,
-      "passes": true,
-      "notes": "",
+      "priority": 2,
+      "passes": false,
       "dependsOn": [
         "US-001"
-      ],
-      "completionNotes": "Completed by agent"
+      ]
     },
     {
       "id": "US-005",
-      "title": "Crear migración y modelo de Stickers (Cromos)",
-      "description": "Como sistema, necesito almacenar información de cada cromo del álbum.",
+      "title": "Añadir efecto abanico a cromos sin pegar",
+      "description": "As a usuario, I want to ver mis cromos sin pegar con efecto abanico superpuestos so that tenga una experiencia visual más atractiva similar a cartas en mano.",
       "acceptanceCriteria": [
-        "Migración stickers con campos: id, number (1-444), name, page_number, position_x, position_y, width, height, is_horizontal, rarity (enum: common, shiny), image_path",
-        "Modelo Sticker con fillables y casts apropiados",
-        "Relación con UserSticker definida",
-        "Factory para testing creada",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Los cromos sin pegar se muestran con superposición ~40%",
+        "Cada cromo tiene una ligera rotación aleatoria para efecto natural",
+        "Al pasar el cursor sobre un cromo, se eleva y destaca",
+        "El efecto funciona correctamente en móvil y desktop"
       ],
-      "priority": 5,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-001"
-      ],
-      "completionNotes": "Completed by agent"
+      "priority": 3,
+      "passes": false,
+      "dependsOn": []
     },
     {
       "id": "US-006",
-      "title": "Crear migración y modelo de Pages (Páginas del álbum)",
-      "description": "Como sistema, necesito almacenar información de cada página del álbum.",
+      "title": "Añadir efecto abanico a cromos repetidos",
+      "description": "As a usuario, I want to ver mis cromos repetidos con efecto abanico so that pueda visualizar cuántos duplicados tengo de forma atractiva.",
       "acceptanceCriteria": [
-        "Migración pages con campos: id, number (orden), image_path",
-        "Modelo Page con relación a stickers de esa página",
-        "Scope para ordenar por número de página",
-        "Factory para testing creada",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
+        "Los cromos repetidos se muestran con superposición ~40%",
+        "Se indica visualmente la cantidad de repetidos",
+        "El efecto es consistente con el de cromos sin pegar",
+        "Se puede interactuar con los cromos para seleccionarlos para intercambio"
       ],
-      "priority": 6,
-      "passes": true,
-      "notes": "",
+      "priority": 3,
+      "passes": false,
       "dependsOn": [
-        "US-001"
-      ],
-      "completionNotes": "Completed by agent"
+        "US-005"
+      ]
     },
     {
       "id": "US-007",
-      "title": "Crear migración y modelo de UserSticker (Cromos del usuario)",
-      "description": "Como sistema, necesito trackear qué cromos tiene cada usuario y su estado.",
+      "title": "Mostrar imagen y cantidad en página Mis Cromos",
+      "description": "As a usuario, I want to ver la imagen y cantidad de cada cromo en la página Mis Cromos so that pueda gestionar mi colección fácilmente.",
       "acceptanceCriteria": [
-        "Migración user_stickers con campos: id, user_id, sticker_id, is_glued (pegado), obtained_at, timestamps",
-        "Índice único en [user_id, sticker_id, obtained_at] para permitir repetidos",
-        "Modelo con relaciones a User y Sticker",
-        "Scopes: glued(), unglued(), duplicates()",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-005"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-008",
-      "title": "Crear migración y modelo de Packs (Sobres)",
-      "description": "Como sistema, necesito trackear los sobres disponibles y abiertos por usuario.",
-      "acceptanceCriteria": [
-        "Migración packs con campos: id, user_id, opened_at (nullable), created_at",
-        "Modelo Pack con relación a User",
-        "Scopes: unopened(), opened(), today()",
-        "Constante configurable: STICKERS_PER_PACK = 5",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 8,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-001"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-009",
-      "title": "Crear migración para configuración del sistema",
-      "description": "Como admin, necesito poder configurar parámetros del sistema en BD.",
-      "acceptanceCriteria": [
-        "Migración settings con campos: key, value, type",
-        "Modelo Setting con métodos estáticos get() y set()",
-        "Seeder con configuraciones iniciales: packs_per_day (5), stickers_per_pack (5), shiny_probability (0.05)",
-        "Cache de settings para rendimiento",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 9,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-001"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-010",
-      "title": "Implementar registro de usuarios",
-      "description": "Como visitante, quiero registrarme para comenzar mi colección.",
-      "acceptanceCriteria": [
-        "Formulario de registro con: nombre, email, contraseña, confirmación",
-        "Validación de campos con mensajes en español",
-        "Hash seguro de contraseña con bcrypt",
-        "Redirección al álbum tras registro exitoso",
-        "Protección CSRF activa",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 10,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-002",
-        "US-004"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-011",
-      "title": "Implementar login de usuarios",
-      "description": "Como usuario registrado, quiero iniciar sesión para acceder a mi colección.",
-      "acceptanceCriteria": [
-        "Formulario de login con email y contraseña",
-        "Opción Recordarme funcional",
-        "Rate limiting: máximo 5 intentos por minuto",
-        "Mensaje de error genérico (no revelar si email existe)",
-        "Redirección al álbum tras login exitoso",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 11,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-010"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-012",
-      "title": "Implementar logout y protección de rutas",
-      "description": "Como usuario, quiero cerrar sesión de forma segura.",
-      "acceptanceCriteria": [
-        "Botón de logout visible en header",
-        "Logout invalida sesión completamente",
-        "Middleware auth protege rutas del álbum",
-        "Redirección a login si no autenticado",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 12,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-011"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-013",
-      "title": "Crear comando para asignar sobres diarios",
-      "description": "Como sistema, debo asignar sobres diarios a cada usuario activo.",
-      "acceptanceCriteria": [
-        "Comando php artisan packs:daily creado",
-        "Asigna 5 sobres (configurable) a cada usuario",
-        "No duplica si ya se asignaron hoy",
-        "Loggea cantidad de usuarios procesados",
-        "Puede programarse en scheduler",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 13,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-008",
-        "US-009"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-014",
-      "title": "Crear lógica de apertura de sobre",
-      "description": "Como sistema, necesito generar cromos aleatorios al abrir un sobre.",
-      "acceptanceCriteria": [
-        "Service PackService con método open(Pack $pack)",
-        "Genera 5 cromos aleatorios respetando probabilidad de shiny",
-        "Marca el sobre como abierto con timestamp",
-        "Crea registros en user_stickers",
-        "Retorna colección de cromos obtenidos",
-        "Transacción DB para atomicidad",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 14,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-007",
-        "US-008",
-        "US-009"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-015",
-      "title": "Crear componente Livewire de pila de sobres",
-      "description": "Como usuario, quiero ver mis sobres sin abrir en pantalla.",
-      "acceptanceCriteria": [
-        "Componente PackPile muestra sobres apilados visualmente",
-        "Muestra contador de sobres disponibles",
-        "Click en pila inicia proceso de apertura",
-        "Actualiza en tiempo real al abrir sobres",
-        "Muestra mensaje si no hay sobres disponibles",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 15,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-014",
-        "US-012"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-016",
-      "title": "Crear animación de apertura de sobre",
-      "description": "Como usuario, quiero una animación satisfactoria al abrir sobres arrastrando.",
-      "acceptanceCriteria": [
-        "Modal/overlay al iniciar apertura de sobre",
-        "Imagen del sobre visible y arrastrable",
-        "Gesto de arrastrar hacia abajo rompe el sobre",
-        "Animación de sobre rasgándose con CSS/JS",
-        "Transición fluida a revelación de cromos",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 16,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-015"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-017",
-      "title": "Crear animación de revelación de cromos",
-      "description": "Como usuario, quiero ver los cromos del sobre revelarse uno a uno.",
-      "acceptanceCriteria": [
-        "Cromos aparecen uno a uno con delay de 0.5s",
-        "Efecto de flip o slide-in para cada cromo",
-        "Cromos shiny tienen efecto brillante distintivo",
-        "Indicador si el cromo es repetido",
-        "Botón Continuar al terminar revelación",
-        "Cromos se añaden automáticamente a pila de sin pegar",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 17,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-016"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-018",
-      "title": "Integrar librería de flip de páginas",
-      "description": "Como desarrollador, necesito una librería para el efecto de libro.",
-      "acceptanceCriteria": [
-        "StPageFlip (o similar compatible) instalada via npm",
-        "Wrapper de JavaScript que se integra con Livewire",
-        "Efecto de pasar página realista funcionando",
-        "Eventos de cambio de página capturables",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 18,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-004"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-019",
-      "title": "Crear componente Livewire del álbum",
-      "description": "Como usuario, quiero ver mi álbum como un libro con páginas pasables.",
-      "acceptanceCriteria": [
-        "Componente Album renderiza todas las páginas",
-        "Imágenes de páginas cargan desde storage",
-        "Navegación con click en esquinas o swipe",
-        "Indicador de página actual Página X de Y",
-        "Botones de ir a primera/última página",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 19,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-018",
-        "US-006",
-        "US-012"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-020",
-      "title": "Renderizar cromos pegados en páginas",
-      "description": "Como usuario, quiero ver mis cromos pegados en sus posiciones correctas.",
-      "acceptanceCriteria": [
-        "Cromos pegados se superponen en su posición exacta",
-        "Posición definida por position_x, position_y del sticker",
-        "Cromos horizontales rotados correctamente",
-        "Tamaño de cromo respeta width/height definidos",
-        "Rendimiento optimizado (lazy loading por página visible)",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 20,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-019",
-        "US-007"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-021",
-      "title": "Mostrar huecos vacíos de cromos",
-      "description": "Como usuario, quiero ver qué cromos me faltan en cada página.",
-      "acceptanceCriteria": [
-        "Huecos sin cromo muestran silueta o número",
-        "Tooltip al hover muestra nombre del cromo faltante",
-        "Contador de cromos: X/Y en esta página",
-        "Visual diferenciado entre pegado, vacío y disponible para pegar",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 21,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-020"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-022",
-      "title": "Crear componente de pila de cromos sin pegar",
-      "description": "Como usuario, quiero ver mis cromos obtenidos pendientes de pegar.",
-      "acceptanceCriteria": [
-        "Componente UngluedStickers visible junto al álbum",
-        "Muestra cromos apilados o en grid scrolleable",
-        "Cada cromo es arrastrable (draggable)",
-        "Contador total de cromos sin pegar",
-        "Filtro/búsqueda por número o nombre",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 22,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-017",
-        "US-007"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-023",
-      "title": "Crear componente de pila de cromos repetidos",
-      "description": "Como usuario, quiero ver mis cromos repetidos separados.",
-      "acceptanceCriteria": [
-        "Componente DuplicateStickers visible en pantalla",
-        "Muestra cromos con contador de cantidad (ej: x3)",
-        "Separado visualmente de cromos sin pegar",
-        "Acceso rápido a funciones de intercambio",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 23,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-022"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-024",
-      "title": "Implementar drag & drop para pegar cromos",
-      "description": "Como usuario, quiero arrastrar cromos a su lugar en el álbum para pegarlos.",
-      "acceptanceCriteria": [
-        "Cromo arrastrable desde pila de sin pegar",
-        "Drop zone activa solo en la posición correcta del cromo",
-        "Feedback visual al acercar cromo a posición válida",
-        "Si suelta en posición incorrecta, vuelve a la pila",
-        "Animación de pegado al soltar en lugar correcto",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 24,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-022",
-        "US-021"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-025",
-      "title": "Persistir cromo pegado en base de datos",
-      "description": "Como sistema, debo guardar cuando un usuario pega un cromo.",
-      "acceptanceCriteria": [
-        "Endpoint/action Livewire glueSticker(stickerId)",
-        "Actualiza is_glued = true en user_stickers",
-        "Validación: usuario posee el cromo y no está pegado",
-        "Actualización optimista en UI",
-        "Manejo de errores con rollback visual",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 25,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-024"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-026",
-      "title": "CRUD de Cromos en Backpack",
-      "description": "Como admin, quiero gestionar los cromos del álbum.",
-      "acceptanceCriteria": [
-        "Listado de cromos con filtros por página, rareza",
-        "Crear/editar cromo con todos sus campos",
-        "Upload de imagen de cromo",
-        "Preview de imagen en formulario",
-        "Importación masiva desde CSV (opcional)",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 26,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-003",
-        "US-005"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-027",
-      "title": "CRUD de Páginas en Backpack",
-      "description": "Como admin, quiero gestionar las páginas del álbum.",
-      "acceptanceCriteria": [
-        "Listado de páginas ordenadas por número",
-        "Crear/editar página con número e imagen",
-        "Upload de imagen de página",
-        "Preview de página con posiciones de cromos",
-        "Reordenar páginas con drag & drop",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 27,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-003",
-        "US-006"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-028",
-      "title": "Gestión de Usuarios en Backpack",
-      "description": "Como admin, quiero gestionar usuarios del sistema.",
-      "acceptanceCriteria": [
-        "Listado de usuarios con búsqueda",
-        "Ver estadísticas: cromos totales, pegados, repetidos",
-        "Banear/desbanear usuario",
-        "Dar sobres manualmente a usuario",
-        "Ver historial de actividad",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 28,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-003",
-        "US-007",
-        "US-008"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-029",
-      "title": "Panel de Configuración del Sistema",
-      "description": "Como admin, quiero configurar parámetros del sistema.",
-      "acceptanceCriteria": [
-        "Página de settings en Backpack",
-        "Editar: sobres por día, cromos por sobre",
-        "Editar: probabilidad de cromo shiny (0-1)",
-        "Cambios aplican inmediatamente",
-        "Log de cambios de configuración",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 29,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-003",
-        "US-009"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-030",
-      "title": "Gestión de Rareza de Cromos",
-      "description": "Como admin, quiero definir qué cromos son shiny/brillantes.",
-      "acceptanceCriteria": [
-        "En CRUD de cromos, campo rareza editable",
-        "Bulk action para marcar múltiples como shiny",
-        "Vista de todos los shiny con sus probabilidades",
-        "Preview de cómo se ve el efecto shiny",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 30,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-026"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-031",
-      "title": "Crear migración para trades (intercambios)",
-      "description": "Como sistema, necesito almacenar propuestas de intercambio.",
-      "acceptanceCriteria": [
-        "Migración trades con: id, sender_id, receiver_id, status (pending/accepted/rejected/cancelled), created_at, expires_at",
-        "Migración trade_items con: trade_id, user_sticker_id, direction (offered/requested)",
-        "Modelo Trade con relaciones y scopes",
-        "Status enum con transiciones válidas",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 31,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-007"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-032",
-      "title": "Crear interfaz de intercambio directo",
-      "description": "Como usuario, quiero proponer intercambio a otro usuario específico.",
-      "acceptanceCriteria": [
-        "Buscar usuario por nombre",
-        "Ver cromos repetidos del otro usuario (públicos)",
-        "Seleccionar cromos que ofrezco",
-        "Seleccionar cromos que solicito",
-        "Enviar propuesta de intercambio",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 32,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-031",
-        "US-023"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-033",
-      "title": "Crear mercado público de cromos",
-      "description": "Como usuario, quiero publicar cromos en un mercado para intercambio.",
-      "acceptanceCriteria": [
-        "Componente Market con listado de ofertas",
-        "Publicar cromo repetido con precio (en otros cromos)",
-        "Filtrar por cromo específico buscado",
-        "Ver quién ofrece cromos que necesito",
-        "Iniciar intercambio desde mercado",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 33,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-032"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-034",
-      "title": "Crear bandeja de intercambios pendientes",
-      "description": "Como usuario, quiero ver y gestionar mis intercambios.",
-      "acceptanceCriteria": [
-        "Listado de intercambios enviados y recibidos",
-        "Ver detalle de cada propuesta",
-        "Aceptar/rechazar propuestas recibidas",
-        "Cancelar propuestas enviadas",
-        "Notificación visual de pendientes",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 34,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-032"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-035",
-      "title": "Implementar ejecución de intercambio",
-      "description": "Como sistema, debo transferir cromos al aceptar intercambio.",
-      "acceptanceCriteria": [
-        "Service TradeService con método execute(Trade)",
-        "Transferencia atómica de cromos entre usuarios",
-        "Validación de que ambos aún poseen los cromos",
-        "Actualización de estado a accepted",
-        "Notificación a ambas partes",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 35,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-034"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-036",
-      "title": "Crear layout principal del coleccionista",
-      "description": "Como usuario, quiero una interfaz integrada con álbum, cromos y sobres.",
-      "acceptanceCriteria": [
-        "Layout responsive con álbum centrado",
-        "Panel lateral izquierdo: pila de cromos sin pegar",
-        "Panel lateral derecho: cromos repetidos",
-        "Header: logo, usuario, sobres disponibles, logout",
-        "Footer: enlaces a mercado, intercambios, stats",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 36,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-025",
-        "US-023",
-        "US-017"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-037",
-      "title": "Crear página de estadísticas del usuario",
-      "description": "Como usuario, quiero ver mi progreso de colección.",
-      "acceptanceCriteria": [
-        "Porcentaje de álbum completado",
-        "Cromos por categoría/página",
-        "Cromos shiny obtenidos",
-        "Historial de sobres abiertos",
-        "Gráfico de progreso en el tiempo",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 37,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-036"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-038",
-      "title": "Implementar notificaciones en tiempo real",
-      "description": "Como usuario, quiero recibir notificaciones de intercambios.",
-      "acceptanceCriteria": [
-        "Icono de notificaciones en header",
-        "Badge con contador de no leídas",
-        "Notificación al recibir propuesta de intercambio",
-        "Notificación al aceptar/rechazar mi propuesta",
-        "Usar Laravel Echo + Pusher/Reverb o polling",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 38,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-035",
-        "US-036"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-039",
-      "title": "Crear seeder de páginas del álbum",
-      "description": "Como desarrollador, necesito poblar las páginas del álbum.",
-      "acceptanceCriteria": [
-        "Seeder lee imágenes de carpeta de páginas",
-        "Crea registros de Page con número e imagen",
-        "Orden basado en nombre de archivo (1.webp, 2.webp...)",
-        "Copia imágenes a storage público",
-        "Idempotente (puede re-ejecutarse)",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 39,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-006"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-040",
-      "title": "Crear seeder de cromos",
-      "description": "Como desarrollador, necesito poblar los 444 cromos.",
-      "acceptanceCriteria": [
-        "Seeder lee imágenes de carpeta de cromos",
-        "Crea registros con número, imagen, rareza default",
-        "Posiciones X/Y iniciales (ajustables después)",
-        "Detecta orientación horizontal/vertical por dimensiones",
-        "Asocia cromo a página correspondiente",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes"
-      ],
-      "priority": 40,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-005",
-        "US-039"
-      ],
-      "completionNotes": "Completed by agent"
-    },
-    {
-      "id": "US-041",
-      "title": "Crear herramienta de mapeo de posiciones",
-      "description": "Como admin, necesito posicionar los cromos en sus páginas exactas.",
-      "acceptanceCriteria": [
-        "Vista especial en admin para mapear cromos",
-        "Mostrar página con cromos arrastrables",
-        "Guardar posición X/Y al soltar cromo",
-        "Ajustar tamaño del cromo visualmente",
-        "Marcar como horizontal si aplica",
-        "php artisan test passes",
-        "./vendor/bin/pint --test passes",
-        "Verificar funcionamiento en navegador"
-      ],
-      "priority": 41,
-      "passes": true,
-      "notes": "",
-      "dependsOn": [
-        "US-027",
-        "US-040"
-      ],
-      "completionNotes": "Completed by agent"
+        "Cada cromo muestra su imagen correctamente",
+        "Se muestra la cantidad de unidades de cada cromo",
+        "El diseño es responsive y se adapta a diferentes tamaños de pantalla",
+        "Los cromos se organizan de forma clara y navegable"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": []
     }
   ],
   "metadata": {
-    "updatedAt": "2026-01-27T22:22:09.450Z"
+    "updatedAt": "2026-01-31T18:45:59.786Z"
   }
 }
