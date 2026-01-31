@@ -30,6 +30,12 @@
                     Album
                 </a>
                 <a
+                    href="{{ route('my-stickers') }}"
+                    class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('my-stickers') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' }}"
+                >
+                    Mis Cromos
+                </a>
+                <a
                     href="{{ route('trades') }}"
                     class="relative rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('trades') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' }}"
                 >
@@ -94,33 +100,39 @@
         </div>
 
         {{-- Mobile navigation --}}
-        <nav class="mt-3 flex items-center justify-center gap-1 border-t border-gray-100 pt-3 sm:hidden dark:border-gray-700">
+        <nav class="mt-3 flex flex-wrap items-center justify-center gap-1 border-t border-gray-100 pt-3 sm:hidden dark:border-gray-700">
             <a
                 href="{{ route('album') }}"
-                class="flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('album') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+                class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('album') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Album
             </a>
             <a
+                href="{{ route('my-stickers') }}"
+                class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('my-stickers') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+            >
+                Cromos
+            </a>
+            <a
                 href="{{ route('trades') }}"
-                class="relative flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('trades') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+                class="relative rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('trades') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Intercambios
                 @if ($pendingTradesCount > 0)
-                    <span class="absolute right-2 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
+                    <span class="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
                         {{ $pendingTradesCount > 9 ? '9+' : $pendingTradesCount }}
                     </span>
                 @endif
             </a>
             <a
                 href="{{ route('market') }}"
-                class="flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('market') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+                class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('market') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Mercado
             </a>
             <a
                 href="{{ route('stats') }}"
-                class="flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('stats') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+                class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('stats') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Stats
             </a>

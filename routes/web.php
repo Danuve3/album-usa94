@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/album', function () {
         return view('album');
     })->name('album');
+    Route::get('/mis-cromos', function () {
+        return view('my-stickers');
+    })->name('my-stickers');
     Route::get('/intercambios', function () {
         return view('trades');
     })->name('trades');
