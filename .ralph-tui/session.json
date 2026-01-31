@@ -3,10 +3,10 @@
   "sessionId": "9ac9a4d9-720a-4cd3-b374-96335d39cb46",
   "status": "running",
   "startedAt": "2026-01-31T18:41:45.145Z",
-  "updatedAt": "2026-01-31T18:45:59.789Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-01-31T18:47:41.512Z",
+  "currentIteration": 1,
   "maxIterations": 10,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -17,8 +17,8 @@
       {
         "id": "US-001",
         "title": "Corregir error 419 Page Expired en panel admin",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-002",
@@ -58,7 +58,18 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-001",
+      "taskTitle": "Corregir error 419 Page Expired en panel admin",
+      "taskCompleted": true,
+      "durationMs": 242560,
+      "startedAt": "2026-01-31T18:41:57.225Z",
+      "endedAt": "2026-01-31T18:45:59.785Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/danuve/repos/album-usa94",
   "activeTaskIds": [],
