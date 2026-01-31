@@ -40,21 +40,39 @@
         </div>
     </div>
 
-    {{-- Duplicates Grid --}}
+    {{-- Duplicates Fan Display --}}
     @if (count($filteredStickers) > 0)
-        <div class="duplicates-pile max-h-80 overflow-y-auto rounded-lg border-2 border-dashed border-amber-300 bg-amber-50/50 p-3 dark:border-amber-700 dark:bg-amber-900/10">
-            <div class="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-4">
-                @foreach ($filteredStickers as $sticker)
+        <div
+            class="duplicates-pile max-h-96 overflow-y-auto rounded-lg border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 dark:border-amber-800 dark:from-amber-900/20 dark:to-orange-900/20"
+            x-data="duplicateStickers()"
+        >
+            {{-- Fan container with flex-wrap for multiple rows --}}
+            <div class="duplicates-fan flex flex-wrap justify-center gap-y-8 py-4">
+                @foreach ($filteredStickers as $index => $sticker)
+                    @php
+                        // Generate pseudo-random rotation based on sticker ID for consistency
+                        $seed = $sticker['id'] * 7;
+                        $rotation = (($seed % 17) - 8); // Range: -8 to 8 degrees
+                    @endphp
                     <div
-                        class="duplicate-sticker group relative aspect-[3/4] cursor-pointer select-none rounded-lg shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
+                        class="fan-card duplicate-card group relative aspect-[3/4] w-16 cursor-pointer select-none rounded-lg shadow-lg transition-all duration-300 ease-out sm:w-20 {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
+                        style="
+                            --rotation: {{ $rotation }}deg;
+                            margin-left: {{ $index === 0 ? '0' : '-24px' }};
+                            transform: rotate(var(--rotation));
+                            z-index: {{ $index + 1 }};
+                        "
                         data-sticker-id="{{ $sticker['id'] }}"
                         data-sticker-number="{{ $sticker['number'] }}"
                         data-sticker-name="{{ $sticker['name'] }}"
+                        data-extra-count="{{ $sticker['extra_count'] }}"
                         x-data="{ showActions: false }"
                         @click="showActions = !showActions"
+                        @mouseenter="$el.style.zIndex = 999"
+                        @mouseleave="if (!showActions) $el.style.zIndex = {{ $index + 1 }}"
                     >
                         {{-- Sticker Content --}}
-                        <div class="flex h-full flex-col items-center justify-center p-1">
+                        <div class="flex h-full flex-col items-center justify-center overflow-hidden rounded-lg p-1">
                             @if ($sticker['image_path'])
                                 <img
                                     src="{{ Storage::url($sticker['image_path']) }}"
@@ -70,12 +88,12 @@
                         </div>
 
                         {{-- Number Badge --}}
-                        <div class="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                        <div class="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
                             #{{ $sticker['number'] }}
                         </div>
 
                         {{-- Duplicate Count Badge (x3, x4, etc) --}}
-                        <div class="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-amber-500 px-1.5 text-[11px] font-bold text-white shadow-md">
+                        <div class="duplicate-badge absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-amber-500 px-1.5 text-[11px] font-bold text-white shadow-md ring-2 ring-white dark:ring-gray-800">
                             x{{ $sticker['extra_count'] }}
                         </div>
 
@@ -88,13 +106,13 @@
 
                         {{-- Shiny Badge --}}
                         @if ($sticker['rarity'] === 'shiny')
-                            <div class="absolute left-1 top-1 text-[10px] font-bold text-amber-700">
+                            <div class="absolute left-1 top-1 text-[8px] font-bold text-amber-700">
                                 ✦
                             </div>
                         @endif
 
                         {{-- Tooltip --}}
-                        <div class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+                        <div class="pointer-events-none absolute bottom-full left-1/2 z-[1000] mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
                             {{ $sticker['name'] }}
                             <span class="text-gray-400">(x{{ $sticker['extra_count'] }} repetidos)</span>
                             <div class="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
@@ -109,7 +127,7 @@
                             x-transition:leave="transition ease-in duration-100"
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-95"
-                            @click.away="showActions = false"
+                            @click.away="showActions = false; $el.parentElement.style.zIndex = {{ $index + 1 }}"
                             class="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-lg bg-black/80 p-1"
                         >
                             <button
@@ -125,7 +143,7 @@
                             <button
                                 type="button"
                                 class="flex w-full items-center justify-center gap-1 rounded bg-gray-600 px-2 py-1.5 text-[10px] font-semibold text-white transition hover:bg-gray-700"
-                                @click.stop="$dispatch('view-sticker-detail', { stickerId: {{ $sticker['id'] }} }); showActions = false"
+                                @click.stop="$dispatch('view-sticker-detail', { stickerId: {{ $sticker['id'] }} }); showActions = false; $el.closest('.fan-card').style.zIndex = {{ $index + 1 }}"
                             >
                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -164,6 +182,17 @@
         </div>
     @endif
 
+    <script>
+        function duplicateStickers() {
+            return {
+                // Alpine component for duplicate stickers management
+                init() {
+                    // Any initialization logic if needed
+                }
+            }
+        }
+    </script>
+
     <style>
         .duplicates-pile::-webkit-scrollbar {
             width: 6px;
@@ -188,6 +217,62 @@
 
         .dark .duplicates-pile::-webkit-scrollbar-thumb:hover {
             background-color: rgba(180, 83, 9, 0.6);
+        }
+
+        /* Fan card styles for duplicate stickers */
+        .duplicate-card {
+            touch-action: none;
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                -2px 0 8px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .duplicate-card:hover {
+            transform: rotate(0deg) translateY(-20px) scale(1.15) !important;
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.2),
+                0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments for fan overlap */
+        @media (max-width: 640px) {
+            .duplicates-fan .duplicate-card {
+                margin-left: -20px !important;
+            }
+            .duplicates-fan .duplicate-card:first-child {
+                margin-left: 0 !important;
+            }
+        }
+
+        /* Duplicate badge pulse animation */
+        .duplicate-badge {
+            animation: duplicate-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes duplicate-pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Shiny sticker animation */
+        .sticker-shiny {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
     </style>
 </div>
