@@ -40,16 +40,28 @@
         </div>
     </div>
 
-    {{-- Stickers Grid --}}
+    {{-- Stickers Fan Display --}}
     @if (count($filteredStickers) > 0)
         <div
-            class="stickers-pile max-h-80 overflow-y-auto rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-800/50"
+            class="stickers-pile max-h-96 overflow-y-auto rounded-lg border border-gray-200 bg-gradient-to-br from-emerald-50 to-gray-100 p-4 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
             x-data="ungluedStickers()"
         >
-            <div class="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
-                @foreach ($filteredStickers as $sticker)
+            {{-- Fan container with flex-wrap for multiple rows --}}
+            <div class="stickers-fan flex flex-wrap justify-center gap-y-8 py-4">
+                @foreach ($filteredStickers as $index => $sticker)
+                    @php
+                        // Generate pseudo-random rotation based on sticker ID for consistency
+                        $seed = $sticker['id'] * 7;
+                        $rotation = (($seed % 17) - 8); // Range: -8 to 8 degrees
+                    @endphp
                     <div
-                        class="unglued-sticker group relative aspect-[3/4] cursor-grab select-none rounded-lg shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg active:cursor-grabbing {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
+                        class="fan-card group relative aspect-[3/4] w-16 cursor-grab select-none rounded-lg shadow-lg transition-all duration-300 ease-out sm:w-20 {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
+                        style="
+                            --rotation: {{ $rotation }}deg;
+                            margin-left: {{ $index === 0 ? '0' : '-24px' }};
+                            transform: rotate(var(--rotation));
+                            z-index: {{ $index + 1 }};
+                        "
                         draggable="true"
                         data-sticker-id="{{ $sticker['id'] }}"
                         data-user-sticker-id="{{ $sticker['user_sticker_id'] }}"
@@ -58,9 +70,11 @@
                         data-page-number="{{ $sticker['page_number'] }}"
                         @dragstart="onDragStart($event, {{ json_encode($sticker) }})"
                         @dragend="onDragEnd($event)"
+                        @mouseenter="$el.style.zIndex = 999"
+                        @mouseleave="$el.style.zIndex = {{ $index + 1 }}"
                     >
                         {{-- Sticker Content --}}
-                        <div class="flex h-full flex-col items-center justify-center p-1">
+                        <div class="flex h-full flex-col items-center justify-center overflow-hidden rounded-lg p-1">
                             @if ($sticker['image_path'])
                                 <img
                                     src="{{ Storage::url($sticker['image_path']) }}"
@@ -76,13 +90,13 @@
                         </div>
 
                         {{-- Number Badge --}}
-                        <div class="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                        <div class="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
                             #{{ $sticker['number'] }}
                         </div>
 
                         {{-- Count Badge (if more than 1) --}}
                         @if ($sticker['count'] > 1)
-                            <div class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white shadow-md">
+                            <div class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white shadow-md ring-2 ring-white dark:ring-gray-800">
                                 {{ $sticker['count'] }}
                             </div>
                         @endif
@@ -95,7 +109,7 @@
                         @endif
 
                         {{-- Tooltip --}}
-                        <div class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+                        <div class="pointer-events-none absolute bottom-full left-1/2 z-[1000] mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
                             {{ $sticker['name'] }}
                             <span class="text-gray-400">(Pág. {{ $sticker['page_number'] }})</span>
                             <div class="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
@@ -193,13 +207,51 @@
             background-color: rgba(75, 85, 99, 0.7);
         }
 
-        .unglued-sticker {
+        /* Fan card styles */
+        .fan-card {
             touch-action: none;
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                -2px 0 8px -2px rgba(0, 0, 0, 0.1);
         }
 
-        .unglued-sticker.dragging {
+        .fan-card:hover {
+            transform: rotate(0deg) translateY(-20px) scale(1.15) !important;
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.2),
+                0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .fan-card.dragging {
             opacity: 0.5;
-            transform: scale(0.95);
+            transform: rotate(0deg) scale(0.95) !important;
+        }
+
+        /* Responsive adjustments for fan overlap */
+        @media (max-width: 640px) {
+            .stickers-fan .fan-card {
+                margin-left: -20px !important;
+            }
+            .stickers-fan .fan-card:first-child {
+                margin-left: 0 !important;
+            }
+        }
+
+        /* Shiny sticker animation */
+        .sticker-shiny {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
     </style>
 </div>
