@@ -3,10 +3,10 @@
   "sessionId": "9ac9a4d9-720a-4cd3-b374-96335d39cb46",
   "status": "running",
   "startedAt": "2026-01-31T18:41:45.145Z",
-  "updatedAt": "2026-01-31T19:01:01.488Z",
-  "currentIteration": 5,
+  "updatedAt": "2026-01-31T19:04:06.930Z",
+  "currentIteration": 6,
   "maxIterations": 10,
-  "tasksCompleted": 5,
+  "tasksCompleted": 6,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -41,8 +41,8 @@
       {
         "id": "US-005",
         "title": "Añadir efecto abanico a cromos sin pegar",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-006",
@@ -108,6 +108,16 @@
       "durationMs": 261182,
       "startedAt": "2026-01-31T18:53:45.573Z",
       "endedAt": "2026-01-31T18:58:06.755Z"
+    },
+    {
+      "iteration": 6,
+      "status": "completed",
+      "taskId": "US-005",
+      "taskTitle": "Añadir efecto abanico a cromos sin pegar",
+      "taskCompleted": true,
+      "durationMs": 173588,
+      "startedAt": "2026-01-31T18:58:07.897Z",
+      "endedAt": "2026-01-31T19:01:01.485Z"
     }
   ],
   "skippedTaskIds": [],

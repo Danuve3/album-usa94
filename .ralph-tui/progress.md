@@ -54,3 +54,12 @@ n al hacer clic en Rechazar\n- ✅ Ejecución de acciones solo al confirmar en e
 c. en cada tarjeta\n- ✅ **El diseño es responsive** - Grid adaptativo de 3 a 8 columnas según pantalla\n- ✅ **Los cromos se organizan de forma clara y navegable** - Ordenados por número, con filtros (Todos/Pegados/Sin pegar/Repetidos) y búsqueda\n\n### Características adicionales:\n- Tarjetas de estadísticas (total cromos, únicos, pegados, repetidos)\n- Hover con información detallada (nombre, página, conteo pegados/sin pegar)\n- Indicador visual para cromos shiny\n- Soporte para modo oscuro\n\n
 
 ---
+## ✓ Iteration 6 - US-005: Añadir efecto abanico a cromos sin pegar
+*2026-01-31T19:01:01.523Z (174s)*
+
+**Status:** Completed
+
+**Notes:**
+e un cromo, se eleva 20px, escala a 115%, se endereza (rotación 0°) y aumenta su z-index\n- **Responsive móvil/desktop**: Ajustes de tamaño y superposición para pantallas pequeñas (sm:w-20 vs w-16, -20px vs -24px overlap)\n\n**Cambios adicionales:**\n- Fondo con gradiente sutil para mejor contraste visual\n- Sombras mejoradas que dan profundidad al efecto de cartas\n- Z-index dinámico para que el cromo activo siempre esté al frente\n- Badge de cantidad con borde blanco para mejor visibilidad\n\n
+
+---
