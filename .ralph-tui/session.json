@@ -3,10 +3,10 @@
   "sessionId": "9ac9a4d9-720a-4cd3-b374-96335d39cb46",
   "status": "running",
   "startedAt": "2026-01-31T18:41:45.145Z",
-  "updatedAt": "2026-01-31T18:47:41.512Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-01-31T18:51:58.511Z",
+  "currentIteration": 2,
   "maxIterations": 10,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "claude",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-002",
         "title": "Corregir error 500 en /admin/sticker",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-003",
@@ -68,10 +68,20 @@
       "durationMs": 242560,
       "startedAt": "2026-01-31T18:41:57.225Z",
       "endedAt": "2026-01-31T18:45:59.785Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-002",
+      "taskTitle": "Corregir error 500 en /admin/sticker",
+      "taskCompleted": true,
+      "durationMs": 100569,
+      "startedAt": "2026-01-31T18:46:00.939Z",
+      "endedAt": "2026-01-31T18:47:41.508Z"
     }
   ],
   "skippedTaskIds": [],
   "cwd": "/home/danuve/repos/album-usa94",
   "activeTaskIds": [],
-  "subagentPanelVisible": false
+  "subagentPanelVisible": true
 }
