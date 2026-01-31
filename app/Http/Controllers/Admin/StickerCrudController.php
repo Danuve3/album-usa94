@@ -72,47 +72,6 @@ class StickerCrudController extends CrudController
             ->type('boolean');
 
         CRUD::orderBy('number', 'asc');
-
-        $this->setupFilters();
-    }
-
-    protected function setupFilters()
-    {
-        CRUD::filter('page_number')
-            ->type('dropdown')
-            ->label('Página')
-            ->values(function () {
-                return Sticker::select('page_number')
-                    ->distinct()
-                    ->orderBy('page_number')
-                    ->pluck('page_number', 'page_number')
-                    ->toArray();
-            })
-            ->whenActive(function ($value) {
-                CRUD::addClause('where', 'page_number', $value);
-            });
-
-        CRUD::filter('rarity')
-            ->type('dropdown')
-            ->label('Rareza')
-            ->values([
-                'common' => 'Común',
-                'shiny' => 'Brillante',
-            ])
-            ->whenActive(function ($value) {
-                CRUD::addClause('where', 'rarity', $value);
-            });
-
-        CRUD::filter('is_horizontal')
-            ->type('dropdown')
-            ->label('Orientación')
-            ->values([
-                '1' => 'Horizontal',
-                '0' => 'Vertical',
-            ])
-            ->whenActive(function ($value) {
-                CRUD::addClause('where', 'is_horizontal', $value);
-            });
     }
 
     protected function setupCreateOperation()
