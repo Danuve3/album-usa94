@@ -45,3 +45,12 @@ atos** - El controlador ya guardaba correctamente. Mejoré el JavaScript para ac
 n al hacer clic en Rechazar\n- ✅ Ejecución de acciones solo al confirmar en el modal\n- ✅ Métodos del backend funcionando (`acceptTrade`, `rejectTrade`, `cancelTrade`)\n\nLo que faltaba y fue implementado:\n- ✅ **Mostrar detalles del intercambio en el modal** - Agregué un resumen visual con los números de cromos ofrecidos (en verde) y solicitados (en ámbar), limitados a 6 con indicador \"+X\" si hay más\n\nLos cambios se realizaron en `resources/views/livewire/trade-inbox.blade.php:413-478`.\n\n
 
 ---
+## ✓ Iteration 5 - US-007: Mostrar imagen y cantidad en página Mis Cromos
+*2026-01-31T18:58:06.802Z (261s)*
+
+**Status:** Completed
+
+**Notes:**
+c. en cada tarjeta\n- ✅ **El diseño es responsive** - Grid adaptativo de 3 a 8 columnas según pantalla\n- ✅ **Los cromos se organizan de forma clara y navegable** - Ordenados por número, con filtros (Todos/Pegados/Sin pegar/Repetidos) y búsqueda\n\n### Características adicionales:\n- Tarjetas de estadísticas (total cromos, únicos, pegados, repetidos)\n- Hover con información detallada (nombre, página, conteo pegados/sin pegar)\n- Indicador visual para cromos shiny\n- Soporte para modo oscuro\n\n
+
+---
