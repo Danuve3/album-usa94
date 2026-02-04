@@ -31,19 +31,42 @@ class Album extends Component
 
         $allStickersWithStatus = $this->getAllStickersWithStatusGroupedByPage();
 
-        $this->pages = $pagesCollection->map(function (Page $page) use ($allStickersWithStatus) {
+        // Add cover page
+        $pages = [[
+            'number' => 0,
+            'type' => 'cover',
+            'image_path' => 'pages/cover.webp',
+            'stickers' => [],
+            'glued_count' => 0,
+            'total_count' => 0,
+        ]];
+
+        // Add content pages
+        foreach ($pagesCollection as $page) {
             $pageStickers = $allStickersWithStatus[$page->number] ?? [];
             $gluedCount = collect($pageStickers)->where('status', 'glued')->count();
 
-            return [
+            $pages[] = [
                 'number' => $page->number,
+                'type' => 'content',
                 'image_path' => $page->image_path,
                 'stickers' => $pageStickers,
                 'glued_count' => $gluedCount,
                 'total_count' => count($pageStickers),
             ];
-        })->toArray();
+        }
 
+        // Add back cover page
+        $pages[] = [
+            'number' => 999,
+            'type' => 'back_cover',
+            'image_path' => 'pages/back_cover.webp',
+            'stickers' => [],
+            'glued_count' => 0,
+            'total_count' => 0,
+        ];
+
+        $this->pages = $pages;
         $this->totalPages = count($this->pages);
     }
 

@@ -40,29 +40,47 @@
             <div
                 x-ref="albumContainer"
                 class="album-container bg-amber-900/20 rounded-lg shadow-2xl overflow-hidden"
+                wire:ignore
             >
                 @if ($totalPages > 0)
                     @foreach ($pages as $index => $page)
-                        <div class="page bg-amber-50 dark:bg-amber-100" data-page-number="{{ $page['number'] }}" data-page-index="{{ $index }}">
+                        @php
+                            $pageType = $page['type'] ?? 'content';
+                            $isCover = $pageType === 'cover' || $pageType === 'back_cover';
+                        @endphp
+                        <div class="page {{ $isCover ? 'bg-emerald-900' : 'bg-amber-50 dark:bg-amber-100' }}" data-page-number="{{ $page['number'] }}" data-page-index="{{ $index }}" data-page-type="{{ $pageType }}">
                             <div class="page-content relative w-full h-full">
                                 @if ($page['image_path'])
                                     <img
                                         src="{{ Storage::url($page['image_path']) }}"
-                                        alt="Página {{ $page['number'] }}"
-                                        class="absolute inset-0 w-full h-full object-cover"
+                                        alt="{{ $isCover ? ($pageType === 'cover' ? 'Portada' : 'Contraportada') : 'Página ' . $page['number'] }}"
+                                        class="absolute inset-0 w-full h-full object-contain"
                                         loading="lazy"
                                     />
                                 @else
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center text-amber-800/50">
-                                        <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                        <span class="text-sm">Página {{ $page['number'] }}</span>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center {{ $isCover ? 'text-white/70' : 'text-amber-800/50' }}">
+                                        @if ($pageType === 'cover')
+                                            <svg class="w-20 h-20 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            </svg>
+                                            <span class="text-2xl font-bold">USA 94</span>
+                                            <span class="text-sm mt-1">Álbum de Cromos</span>
+                                        @elseif ($pageType === 'back_cover')
+                                            <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            <span class="text-lg font-medium">Contraportada</span>
+                                        @else
+                                            <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span class="text-sm">Página {{ $page['number'] }}</span>
+                                        @endif
                                     </div>
                                 @endif
 
-                                {{-- Stickers Layer (all states: glued, available, empty) --}}
-                                @if (!empty($page['stickers']))
+                                {{-- Stickers Layer (only for content pages) --}}
+                                @if (!$isCover && !empty($page['stickers']))
                                     @foreach ($page['stickers'] as $sticker)
                                         @if ($sticker['status'] === 'glued')
                                             {{-- Glued Sticker --}}
@@ -145,8 +163,8 @@
                                     @endforeach
                                 @endif
 
-                                {{-- Sticker Counter --}}
-                                @if ($page['total_count'] > 0)
+                                {{-- Sticker Counter (only for content pages) --}}
+                                @if (!$isCover && $page['total_count'] > 0)
                                     <div class="absolute top-2 left-2 bg-black/40 text-white text-xs px-2 py-1 rounded z-10 flex items-center gap-1">
                                         <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
@@ -155,10 +173,12 @@
                                     </div>
                                 @endif
 
-                                {{-- Page Number Overlay --}}
-                                <div class="absolute bottom-2 right-2 bg-black/20 text-white/80 text-xs px-2 py-1 rounded z-10">
-                                    {{ $page['number'] }}
-                                </div>
+                                {{-- Page Number Overlay (only for content pages) --}}
+                                @if (!$isCover)
+                                    <div class="absolute bottom-2 right-2 bg-black/20 text-white/80 text-xs px-2 py-1 rounded z-10">
+                                        {{ $page['number'] }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -274,9 +294,9 @@
                         height: 500,
                         size: 'stretch',
                         minWidth: 280,
-                        maxWidth: 1200,
+                        maxWidth: 800,
                         minHeight: 350,
-                        maxHeight: 1500,
+                        maxHeight: 1000,
                         drawShadow: true,
                         flippingTime: 800,
                         usePortrait: true,
