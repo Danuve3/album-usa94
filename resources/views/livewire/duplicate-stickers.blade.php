@@ -43,41 +43,29 @@
     {{-- Duplicates Fan Display --}}
     @if (count($filteredStickers) > 0)
         <div
-            class="duplicates-pile max-h-96 overflow-y-auto rounded-lg border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 dark:border-amber-800 dark:from-amber-900/20 dark:to-orange-900/20"
+            class="duplicates-pile overflow-hidden rounded-lg border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 dark:border-amber-800 dark:from-amber-900/20 dark:to-orange-900/20"
             x-data="duplicateStickers()"
         >
-            {{-- Fan container with flex-wrap for multiple rows --}}
-            <div class="duplicates-fan flex flex-wrap justify-center gap-y-8 py-4">
+            {{-- Horizontal scrollable row --}}
+            <div class="duplicates-fan flex flex-nowrap items-end overflow-x-auto py-2 pl-2 pr-8">
                 @foreach ($filteredStickers as $index => $sticker)
-                    @php
-                        // Generate pseudo-random rotation based on sticker ID for consistency
-                        $seed = $sticker['id'] * 7;
-                        $rotation = (($seed % 17) - 8); // Range: -8 to 8 degrees
-                    @endphp
                     <div
-                        class="fan-card duplicate-card group relative aspect-[3/4] w-16 cursor-pointer select-none rounded-lg shadow-lg transition-all duration-300 ease-out sm:w-20 {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
-                        style="
-                            --rotation: {{ $rotation }}deg;
-                            margin-left: {{ $index === 0 ? '0' : '-24px' }};
-                            transform: rotate(var(--rotation));
-                            z-index: {{ $index + 1 }};
-                        "
+                        class="fan-card duplicate-card group relative flex-shrink-0 cursor-pointer select-none shadow-lg transition-all duration-300 ease-out {{ $sticker['is_horizontal'] ? 'h-20 w-28 sm:h-24 sm:w-32' : 'h-28 w-20 sm:h-32 sm:w-24' }} {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
+                        style="margin-left: {{ $index === 0 ? '0' : '-35px' }}; z-index: {{ $index + 1 }};"
                         data-sticker-id="{{ $sticker['id'] }}"
                         data-sticker-number="{{ $sticker['number'] }}"
                         data-sticker-name="{{ $sticker['name'] }}"
                         data-extra-count="{{ $sticker['extra_count'] }}"
                         x-data="{ showActions: false }"
                         @click="showActions = !showActions"
-                        @mouseenter="$el.style.zIndex = 999"
-                        @mouseleave="if (!showActions) $el.style.zIndex = {{ $index + 1 }}"
                     >
                         {{-- Sticker Content --}}
-                        <div class="flex h-full flex-col items-center justify-center overflow-hidden rounded-lg p-1">
+                        <div class="flex h-full w-full items-center justify-center overflow-hidden">
                             @if ($sticker['image_path'])
                                 <img
                                     src="{{ Storage::url($sticker['image_path']) }}"
                                     alt="{{ $sticker['name'] }}"
-                                    class="h-full w-full rounded object-contain"
+                                    class="h-full w-full object-cover"
                                     loading="lazy"
                                 />
                             @else
@@ -127,7 +115,7 @@
                             x-transition:leave="transition ease-in duration-100"
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-95"
-                            @click.away="showActions = false; $el.parentElement.style.zIndex = {{ $index + 1 }}"
+                            @click.away="showActions = false"
                             class="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-lg bg-black/80 p-1"
                         >
                             <button
@@ -143,7 +131,7 @@
                             <button
                                 type="button"
                                 class="flex w-full items-center justify-center gap-1 rounded bg-gray-600 px-2 py-1.5 text-[10px] font-semibold text-white transition hover:bg-gray-700"
-                                @click.stop="$dispatch('view-sticker-detail', { stickerId: {{ $sticker['id'] }} }); showActions = false; $el.closest('.fan-card').style.zIndex = {{ $index + 1 }}"
+                                @click.stop="$dispatch('view-sticker-detail', { stickerId: {{ $sticker['id'] }} }); showActions = false"
                             >
                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -194,28 +182,28 @@
     </script>
 
     <style>
-        .duplicates-pile::-webkit-scrollbar {
-            width: 6px;
+        .duplicates-fan::-webkit-scrollbar {
+            height: 6px;
         }
 
-        .duplicates-pile::-webkit-scrollbar-track {
+        .duplicates-fan::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .duplicates-pile::-webkit-scrollbar-thumb {
+        .duplicates-fan::-webkit-scrollbar-thumb {
             background-color: rgba(245, 158, 11, 0.4);
             border-radius: 3px;
         }
 
-        .duplicates-pile::-webkit-scrollbar-thumb:hover {
+        .duplicates-fan::-webkit-scrollbar-thumb:hover {
             background-color: rgba(245, 158, 11, 0.6);
         }
 
-        .dark .duplicates-pile::-webkit-scrollbar-thumb {
+        .dark .duplicates-fan::-webkit-scrollbar-thumb {
             background-color: rgba(180, 83, 9, 0.4);
         }
 
-        .dark .duplicates-pile::-webkit-scrollbar-thumb:hover {
+        .dark .duplicates-fan::-webkit-scrollbar-thumb:hover {
             background-color: rgba(180, 83, 9, 0.6);
         }
 
@@ -229,20 +217,11 @@
         }
 
         .duplicate-card:hover {
-            transform: rotate(0deg) translateY(-20px) scale(1.15) !important;
+            transform: translateY(-12px) scale(1.08);
+            z-index: 999 !important;
             box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.2),
                 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Responsive adjustments for fan overlap */
-        @media (max-width: 640px) {
-            .duplicates-fan .duplicate-card {
-                margin-left: -20px !important;
-            }
-            .duplicates-fan .duplicate-card:first-child {
-                margin-left: 0 !important;
-            }
         }
 
         /* Duplicate badge pulse animation */

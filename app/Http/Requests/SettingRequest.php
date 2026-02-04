@@ -25,11 +25,14 @@ class SettingRequest extends FormRequest
             'shiny_probability' => [
                 'value' => ['required', 'numeric', 'min:0', 'max:1'],
             ],
-            'packs_per_day' => [
-                'value' => ['required', 'integer', 'min:1', 'max:100'],
-            ],
             'stickers_per_pack' => [
                 'value' => ['required', 'integer', 'min:1', 'max:20'],
+            ],
+            'pack_delivery_interval_minutes' => [
+                'value' => ['required', 'integer', 'min:1', 'max:1440'],
+            ],
+            'packs_per_delivery' => [
+                'value' => ['required', 'integer', 'min:1', 'max:10'],
             ],
             default => [
                 'value' => ['required'],

@@ -11,7 +11,7 @@ class UserCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
 
     public function setup()
     {
@@ -60,6 +60,7 @@ class UserCrudController extends CrudController
         CRUD::column('is_banned')
             ->label('Estado')
             ->type('closure')
+            ->escaped(false)
             ->function(fn ($entry) => $entry->is_banned
                 ? '<span class="badge bg-danger">Baneado</span>'
                 : '<span class="badge bg-success">Activo</span>');
@@ -70,6 +71,9 @@ class UserCrudController extends CrudController
 
         CRUD::addButtonFromView('line', 'ban_user', 'ban_user', 'beginning');
         CRUD::addButtonFromView('line', 'give_packs', 'give_packs', 'beginning');
+
+        // Mass actions button at the top
+        CRUD::addButtonFromView('top', 'give_packs_all', 'give_packs_all', 'end');
     }
 
     protected function setupShowOperation()
@@ -86,6 +90,7 @@ class UserCrudController extends CrudController
         CRUD::column('stats')
             ->label('Estadísticas')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 $total = $entry->total_stickers_count;
                 $glued = $entry->glued_stickers_count;
@@ -133,6 +138,7 @@ class UserCrudController extends CrudController
         CRUD::column('is_banned')
             ->label('Estado de cuenta')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 if ($entry->is_banned) {
                     $bannedAt = $entry->banned_at ? $entry->banned_at->format('d/m/Y H:i') : 'N/A';
@@ -153,6 +159,7 @@ class UserCrudController extends CrudController
         CRUD::column('activity_logs')
             ->label('Historial de Actividad')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 $logs = $entry->activityLogs()->orderBy('created_at', 'desc')->limit(20)->get();
 
@@ -168,6 +175,7 @@ class UserCrudController extends CrudController
                     'banned' => '<span class="badge bg-danger">Baneado</span>',
                     'unbanned' => '<span class="badge bg-success">Desbaneado</span>',
                     'packs_given' => '<span class="badge bg-info">Sobres otorgados</span>',
+                    'packs_removed' => '<span class="badge bg-warning text-dark">Sobres eliminados</span>',
                     'pack_opened' => '<span class="badge bg-secondary">Sobre abierto</span>',
                     'sticker_glued' => '<span class="badge bg-primary">Cromo pegado</span>',
                 ];
@@ -207,6 +215,61 @@ class UserCrudController extends CrudController
         CRUD::field('email')
             ->label('Email')
             ->type('email');
+
+        CRUD::field('separator')
+            ->type('custom_html')
+            ->value('<hr><h5 class="mb-3">Gestión de sobres</h5>');
+
+        CRUD::field('unopened_packs_count')
+            ->label('Sobres disponibles')
+            ->type('number')
+            ->attributes(['min' => 0, 'max' => 9999])
+            ->hint('Modifica este valor para ajustar el número de sobres sin abrir del usuario');
+    }
+
+    public function update()
+    {
+        $user = $this->crud->getCurrentEntry();
+        $newPackCount = (int) request('unopened_packs_count');
+        $currentPackCount = $user->unopened_packs_count;
+
+        // Remove the virtual field before standard update
+        request()->request->remove('unopened_packs_count');
+
+        // Perform the standard update
+        $response = $this->traitUpdate();
+
+        // Adjust pack count if changed
+        if ($newPackCount !== $currentPackCount) {
+            $this->adjustUserPacks($user, $currentPackCount, $newPackCount);
+        }
+
+        return $response;
+    }
+
+    private function adjustUserPacks(User $user, int $currentCount, int $newCount): void
+    {
+        $difference = $newCount - $currentCount;
+
+        if ($difference > 0) {
+            // Add packs
+            $user->givePacks($difference);
+        } elseif ($difference < 0) {
+            // Remove packs (delete the most recent unopened ones)
+            $packsToRemove = abs($difference);
+            $user->packs()
+                ->unopened()
+                ->orderBy('created_at', 'desc')
+                ->limit($packsToRemove)
+                ->delete();
+
+            \App\Models\ActivityLog::log(
+                $user,
+                'packs_removed',
+                "Se eliminaron {$packsToRemove} sobres",
+                ['count' => $packsToRemove]
+            );
+        }
     }
 
     public function banUser($id)
@@ -235,6 +298,7 @@ class UserCrudController extends CrudController
     {
         $user = User::findOrFail($id);
         $count = (int) request('count', 1);
+        $message = request('message');
 
         if ($count < 1 || $count > 100) {
             return response()->json([
@@ -245,9 +309,44 @@ class UserCrudController extends CrudController
 
         $user->givePacks($count);
 
+        // Send notification to user
+        $user->notify(new \App\Notifications\PacksGiftedNotification($count, $message));
+
         return response()->json([
             'success' => true,
             'message' => "Se otorgaron {$count} sobres al usuario",
+        ]);
+    }
+
+    public function givePacksToAll()
+    {
+        $count = (int) request('count', 1);
+        $message = request('message');
+
+        if ($count < 1 || $count > 100) {
+            return response()->json([
+                'success' => false,
+                'message' => 'La cantidad debe ser entre 1 y 100',
+            ], 422);
+        }
+
+        // Get all non-banned users
+        $users = User::where('is_banned', false)->get();
+        $totalUsers = $users->count();
+
+        foreach ($users as $user) {
+            // Give packs
+            $user->givePacks($count);
+
+            // Send notification
+            $user->notify(new \App\Notifications\PacksGiftedNotification($count, $message));
+        }
+
+        $totalPacks = $totalUsers * $count;
+
+        return response()->json([
+            'success' => true,
+            'message' => "Se otorgaron {$totalPacks} sobres a {$totalUsers} usuarios",
         ]);
     }
 }

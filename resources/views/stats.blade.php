@@ -6,10 +6,10 @@
             {{-- Page Title --}}
             <div class="mb-6 text-center">
                 <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
-                    Mis Estadisticas
+                    Mis Estadísticas
                 </h1>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Seguimiento de tu progreso en el album USA 94
+                    Seguimiento de tu progreso en el álbum USA 94
                 </p>
             </div>
 

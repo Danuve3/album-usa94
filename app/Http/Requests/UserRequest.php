@@ -29,6 +29,12 @@ class UserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
+            'unopened_packs_count' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:9999',
+            ],
         ];
     }
 
@@ -37,6 +43,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'nombre',
             'email' => 'correo electrónico',
+            'unopened_packs_count' => 'sobres disponibles',
         ];
     }
 

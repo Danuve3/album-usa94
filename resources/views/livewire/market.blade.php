@@ -126,7 +126,7 @@
             </div>
             @if (count($listingsIWant) > 6)
                 <p class="mt-3 text-center text-sm text-white/80">
-                    Y {{ count($listingsIWant) - 6 }} cromos mas que necesitas...
+                    Y {{ count($listingsIWant) - 6 }} cromos más que necesitas...
                 </p>
             @endif
         </div>
@@ -331,7 +331,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <h3 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white">No hay ofertas disponibles</h3>
-                <p class="text-gray-500 dark:text-gray-400">Se el primero en publicar un cromo en el mercado</p>
+                <p class="text-gray-500 dark:text-gray-400">Sé el primero en publicar un cromo en el mercado</p>
             </div>
         @endif
     </div>
@@ -388,7 +388,7 @@
                         @endforeach
                     </select>
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                        Si seleccionas un cromo especifico, solo apareceran ofertas de usuarios que lo tengan disponible.
+                        Si seleccionas un cromo específico, solo aparecerán ofertas de usuarios que lo tengan disponible.
                     </p>
                 </div>
 
@@ -428,7 +428,7 @@
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
                         </svg>
-                        Recibiras
+                        Recibirás
                     </h4>
                     <div class="flex items-center gap-4">
                         <div class="flex h-16 w-14 items-center justify-center rounded-lg {{ $selectedListing->userSticker->sticker->rarity->value === 'shiny' ? 'bg-amber-100' : 'bg-gray-200' }}">
@@ -567,7 +567,7 @@
                     </div>
                 </div>
                 <h3 class="mb-2 text-center text-xl font-semibold text-gray-900 dark:text-white">
-                    Exito
+                    Éxito
                 </h3>
                 <p class="mb-6 text-center text-gray-600 dark:text-gray-400">
                     {{ $successMessage }}

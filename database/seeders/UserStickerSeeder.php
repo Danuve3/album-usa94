@@ -105,11 +105,12 @@ class UserStickerSeeder extends Seeder
             $duplicateStickerIdIndex = array_rand($ownedStickerIds);
             $duplicateStickerId = $ownedStickerIds[$duplicateStickerIdIndex];
 
+            // Use unique timestamp to avoid constraint violation
             UserSticker::create([
                 'user_id' => $user->id,
                 'sticker_id' => $duplicateStickerId,
                 'is_glued' => false,
-                'obtained_at' => now()->subDays(rand(1, 7)),
+                'obtained_at' => now()->subDays(rand(1, 7))->subSeconds($i + rand(1, 3600)),
             ]);
         }
     }

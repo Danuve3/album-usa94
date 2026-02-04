@@ -8,4 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('packs:daily')->daily();
+// Deliver scheduled packs to all users every minute
+Schedule::command('packs:deliver')->everyMinute()->withoutOverlapping();

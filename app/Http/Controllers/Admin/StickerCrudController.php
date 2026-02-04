@@ -61,11 +61,10 @@ class StickerCrudController extends CrudController
 
         CRUD::column('rarity')
             ->label('Rareza')
-            ->type('select_from_array')
-            ->options([
-                'common' => 'Común',
-                'shiny' => 'Brillante',
-            ]);
+            ->type('closure')
+            ->function(function ($entry) {
+                return $entry->rarity === StickerRarity::Shiny ? 'Brillante' : 'Común';
+            });
 
         CRUD::column('is_horizontal')
             ->label('Horizontal')
@@ -263,11 +262,10 @@ class StickerCrudController extends CrudController
 
         CRUD::column('rarity')
             ->label('Rareza')
-            ->type('select_from_array')
-            ->options([
-                'common' => 'Común',
-                'shiny' => 'Brillante',
-            ]);
+            ->type('closure')
+            ->function(function ($entry) {
+                return $entry->rarity === StickerRarity::Shiny ? 'Brillante' : 'Común';
+            });
 
         CRUD::column('is_horizontal')
             ->label('Horizontal')

@@ -13,6 +13,8 @@ class MyStickers extends Component
 
     public string $filter = 'all'; // all, glued, unglued, duplicates
 
+    public string $gridSize = '6'; // list, 6, 8, 12
+
     /**
      * @var array<int, array{id: int, number: int, name: string, page_number: int, image_path: string|null, rarity: string, total_count: int, glued_count: int, unglued_count: int, is_glued: bool}>
      */
@@ -103,6 +105,11 @@ class MyStickers extends Component
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;
+    }
+
+    public function setGridSize(string $size): void
+    {
+        $this->gridSize = $size;
     }
 
     public function render(): View

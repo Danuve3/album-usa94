@@ -22,7 +22,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store']);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::get('/album', function () {
         return view('album');
     })->name('album');
@@ -38,5 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/estadisticas', function () {
         return view('stats');
     })->name('stats');
+    Route::get('/ajustes', function () {
+        return view('settings');
+    })->name('settings');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });

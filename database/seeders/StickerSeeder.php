@@ -16,19 +16,14 @@ class StickerSeeder extends Seeder
     protected string $sourceDirectory = 'database/data/stickers';
 
     /**
+     * JSON file with sticker data.
+     */
+    protected string $dataFile = 'database/data/stickers.json';
+
+    /**
      * Target directory in public storage.
      */
     protected string $targetDirectory = 'stickers';
-
-    /**
-     * Total number of stickers in the album.
-     */
-    protected int $totalStickers = 444;
-
-    /**
-     * Stickers per page (approximate for initial distribution).
-     */
-    protected int $stickersPerPage = 7;
 
     /**
      * Default sticker dimensions.
@@ -42,42 +37,43 @@ class StickerSeeder extends Seeder
      */
     public function run(): void
     {
+        $dataPath = base_path($this->dataFile);
+
+        if (! File::exists($dataPath)) {
+            $this->command->error("Data file not found: {$this->dataFile}");
+
+            return;
+        }
+
+        $stickersData = json_decode(File::get($dataPath), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->command->error('Invalid JSON in stickers data file.');
+
+            return;
+        }
+
+        // Index sticker data by number for quick lookup
+        $stickersData = collect($stickersData)->keyBy('number');
+
         $sourcePath = base_path($this->sourceDirectory);
+        $imageFiles = collect();
 
-        if (! File::isDirectory($sourcePath)) {
-            $this->command->warn("Source directory not found: {$this->sourceDirectory}");
-            $this->command->info('Please create the directory and add sticker images (1.webp, 2.webp, etc.)');
-
-            return;
-        }
-
-        $files = File::files($sourcePath);
-
-        if (empty($files)) {
-            $this->command->warn('No image files found in source directory.');
-
-            return;
-        }
-
-        // Filter and sort image files by numeric filename
-        $imageFiles = collect($files)
-            ->filter(fn ($file) => in_array(
-                strtolower($file->getExtension()),
-                ['webp', 'jpg', 'jpeg', 'png', 'gif']
-            ))
-            ->keyBy(fn ($file) => (int) pathinfo($file->getFilename(), PATHINFO_FILENAME));
-
-        if ($imageFiles->isEmpty()) {
-            $this->command->warn('No valid image files found.');
-
-            return;
+        if (File::isDirectory($sourcePath)) {
+            $files = File::files($sourcePath);
+            $imageFiles = collect($files)
+                ->filter(fn ($file) => in_array(
+                    strtolower($file->getExtension()),
+                    ['webp', 'jpg', 'jpeg', 'png', 'gif']
+                ))
+                ->keyBy(fn ($file) => (int) pathinfo($file->getFilename(), PATHINFO_FILENAME));
         }
 
         // Ensure target directory exists
         Storage::disk('public')->makeDirectory($this->targetDirectory);
 
         $count = 0;
-        for ($stickerNumber = 1; $stickerNumber <= $this->totalStickers; $stickerNumber++) {
+        foreach ($stickersData as $stickerNumber => $data) {
             $file = $imageFiles->get($stickerNumber);
             $imagePath = null;
             $isHorizontal = false;
@@ -101,21 +97,18 @@ class StickerSeeder extends Seeder
                 }
             }
 
-            // Calculate page number based on sticker number
-            $pageNumber = $this->calculatePageNumber($stickerNumber);
-
             // Create or update sticker record (idempotent)
             Sticker::updateOrCreate(
                 ['number' => $stickerNumber],
                 [
-                    'name' => "Sticker {$stickerNumber}",
-                    'page_number' => $pageNumber,
-                    'position_x' => 0,
-                    'position_y' => 0,
+                    'name' => $data['name'] ?: "Sticker {$stickerNumber}",
+                    'page_number' => $data['page_number'],
+                    'position_x' => $data['position_x'] ?? 0,
+                    'position_y' => $data['position_y'] ?? 0,
                     'width' => $width,
                     'height' => $height,
                     'is_horizontal' => $isHorizontal,
-                    'rarity' => StickerRarity::Common,
+                    'rarity' => StickerRarity::tryFrom($data['rarity'] ?? 'common') ?? StickerRarity::Common,
                     'image_path' => $imagePath,
                 ]
             );
@@ -125,18 +118,5 @@ class StickerSeeder extends Seeder
 
         $withImages = $imageFiles->count();
         $this->command->info("Seeded {$count} stickers ({$withImages} with images).");
-    }
-
-    /**
-     * Calculate the page number for a given sticker number.
-     *
-     * This provides a simple initial distribution.
-     * Page assignments can be adjusted later via the admin panel.
-     */
-    protected function calculatePageNumber(int $stickerNumber): int
-    {
-        // Simple calculation: distribute stickers across pages
-        // Stickers 1-7 go to page 1, 8-14 to page 2, etc.
-        return (int) ceil($stickerNumber / $this->stickersPerPage);
     }
 }

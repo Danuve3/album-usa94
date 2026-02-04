@@ -31,6 +31,7 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::post('user/{id}/ban', 'UserCrudController@banUser')->name('user.ban');
     Route::post('user/{id}/give-packs', 'UserCrudController@givePacks')->name('user.give-packs');
+    Route::post('user/give-packs-all', 'UserCrudController@givePacksToAll')->name('user.give-packs-all');
     Route::crud('setting', 'SettingCrudController');
 
     // Sticker Mapper Tool
@@ -38,6 +39,11 @@ Route::group([
     Route::put('sticker-mapper/{sticker}/position', 'StickerMapperController@updatePosition')->name('sticker-mapper.update-position');
     Route::put('sticker-mapper/{sticker}/dimensions', 'StickerMapperController@updateDimensions')->name('sticker-mapper.update-dimensions');
     Route::post('sticker-mapper/{sticker}/toggle-horizontal', 'StickerMapperController@toggleHorizontal')->name('sticker-mapper.toggle-horizontal');
+
+    // Sticker Assigner Tool
+    Route::get('sticker-assigner', 'StickerAssignerController@index')->name('sticker-assigner.index');
+    Route::post('sticker-assigner/assign', 'StickerAssignerController@assignStickers')->name('sticker-assigner.assign');
+    Route::post('sticker-assigner/unassign', 'StickerAssignerController@unassignStickers')->name('sticker-assigner.unassign');
 }); // this should be the absolute last line of this file
 
 /**

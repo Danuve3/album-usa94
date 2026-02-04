@@ -70,6 +70,11 @@
                                         'text' => 'text-red-600 dark:text-red-400',
                                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
                                     ],
+                                    'packs_gifted' => [
+                                        'bg' => 'bg-amber-100 dark:bg-amber-900/30',
+                                        'text' => 'text-amber-600 dark:text-amber-400',
+                                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />',
+                                    ],
                                     default => [
                                         'bg' => 'bg-gray-100 dark:bg-gray-700',
                                         'text' => 'text-gray-600 dark:text-gray-400',
@@ -77,8 +82,14 @@
                                     ],
                                 };
                             @endphp
+                            @php
+                                $notificationUrl = match($type) {
+                                    'packs_gifted' => route('album'),
+                                    default => route('trades'),
+                                };
+                            @endphp
                             <a
-                                href="{{ route('trades') }}"
+                                href="{{ $notificationUrl }}"
                                 wire:click="markAsRead('{{ $notification->id }}')"
                                 class="flex gap-3 px-4 py-3 transition hover:bg-gray-50 dark:hover:bg-gray-700/50 {{ is_null($notification->read_at) ? 'bg-blue-50/50 dark:bg-blue-900/10' : '' }}"
                             >

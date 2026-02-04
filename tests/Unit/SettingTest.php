@@ -26,9 +26,9 @@ class SettingTest extends TestCase
 
     public function test_can_set_and_get_integer_setting(): void
     {
-        Setting::set('packs_per_day', 5);
+        Setting::set('stickers_per_pack', 5);
 
-        $value = Setting::get('packs_per_day');
+        $value = Setting::get('stickers_per_pack');
 
         $this->assertSame(5, $value);
         $this->assertIsInt($value);

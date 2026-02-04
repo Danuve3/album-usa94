@@ -13,11 +13,18 @@ class SettingSeeder extends Seeder
      * @var array<string, array{value: mixed, type: string, name: string, description: string, group: string}>
      */
     protected array $settings = [
-        'packs_per_day' => [
-            'value' => 5,
+        'pack_delivery_interval_minutes' => [
+            'value' => 240,
             'type' => 'integer',
-            'name' => 'Sobres por día',
-            'description' => 'Cantidad de sobres que recibe cada usuario diariamente.',
+            'name' => 'Intervalo de entrega (minutos)',
+            'description' => 'Cada cuántos minutos recibe el usuario un nuevo sobre. Ejemplos: 60 = 1 hora, 240 = 4 horas, 30 = media hora.',
+            'group' => 'packs',
+        ],
+        'packs_per_delivery' => [
+            'value' => 1,
+            'type' => 'integer',
+            'name' => 'Sobres por entrega',
+            'description' => 'Cantidad de sobres que recibe el usuario en cada entrega.',
             'group' => 'packs',
         ],
         'stickers_per_pack' => [

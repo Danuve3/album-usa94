@@ -12,7 +12,7 @@ class SettingCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
 
     public function setup()
     {
@@ -25,6 +25,9 @@ class SettingCrudController extends CrudController
 
     protected function setupListOperation()
     {
+        // Hide deprecated settings
+        CRUD::addClause('where', 'key', '!=', 'packs_per_day');
+
         CRUD::column('name')
             ->label('Nombre')
             ->type('closure')
@@ -33,11 +36,13 @@ class SettingCrudController extends CrudController
         CRUD::column('key')
             ->label('Clave')
             ->type('closure')
+            ->escaped(false)
             ->function(fn ($entry) => '<code>'.$entry->key.'</code>');
 
         CRUD::column('value')
             ->label('Valor')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 $value = $entry->value;
                 if ($entry->type === 'float' && $entry->key === 'shiny_probability') {
@@ -130,52 +135,46 @@ class SettingCrudController extends CrudController
     {
         CRUD::setValidation(SettingRequest::class);
 
+        $entry = $this->crud->getCurrentEntry();
+        $name = $entry->name ?? $entry->key;
+        $description = $entry->description ?? '';
+
         CRUD::field('info')
             ->type('custom_html')
-            ->value(function () {
-                $entry = $this->crud->getCurrentEntry();
-                $name = $entry->name ?? $entry->key;
-                $description = $entry->description ?? '';
+            ->value("
+                <div class='alert alert-info'>
+                    <strong>{$name}</strong>
+                    <p class='mb-0'>{$description}</p>
+                </div>
+            ");
 
-                return "
-                    <div class='alert alert-info'>
-                        <strong>{$name}</strong>
-                        <p class='mb-0'>{$description}</p>
-                    </div>
-                ";
-            });
+        $fieldType = match ($entry->key) {
+            'shiny_probability' => 'number',
+            'stickers_per_pack', 'pack_delivery_interval_minutes', 'packs_per_delivery' => 'number',
+            default => 'text',
+        };
+
+        $fieldAttributes = match ($entry->key) {
+            'shiny_probability' => ['step' => '0.01', 'min' => '0', 'max' => '1'],
+            'stickers_per_pack' => ['min' => '1', 'max' => '20'],
+            'pack_delivery_interval_minutes' => ['min' => '1', 'max' => '1440'],
+            'packs_per_delivery' => ['min' => '1', 'max' => '10'],
+            default => [],
+        };
+
+        $fieldHint = match ($entry->key) {
+            'shiny_probability' => 'Valor entre 0 y 1 (ej: 0.05 = 5%)',
+            'stickers_per_pack' => 'Cantidad de cromos en cada sobre',
+            'pack_delivery_interval_minutes' => 'Minutos entre entregas (1-1440). Ejemplos: 1=cada minuto, 30=media hora, 60=1 hora, 240=4 horas',
+            'packs_per_delivery' => 'Cantidad de sobres por cada entrega (1-10)',
+            default => '',
+        };
 
         CRUD::field('value')
             ->label('Valor')
-            ->type(function () {
-                $entry = $this->crud->getCurrentEntry();
-
-                return match ($entry->key) {
-                    'shiny_probability' => 'number',
-                    'packs_per_day', 'stickers_per_pack' => 'number',
-                    default => 'text',
-                };
-            })
-            ->attributes(function () {
-                $entry = $this->crud->getCurrentEntry();
-
-                return match ($entry->key) {
-                    'shiny_probability' => ['step' => '0.01', 'min' => '0', 'max' => '1'],
-                    'packs_per_day' => ['min' => '1', 'max' => '100'],
-                    'stickers_per_pack' => ['min' => '1', 'max' => '20'],
-                    default => [],
-                };
-            })
-            ->hint(function () {
-                $entry = $this->crud->getCurrentEntry();
-
-                return match ($entry->key) {
-                    'shiny_probability' => 'Valor entre 0 y 1 (ej: 0.05 = 5%)',
-                    'packs_per_day' => 'Cantidad de sobres que recibe cada usuario por día',
-                    'stickers_per_pack' => 'Cantidad de cromos en cada sobre',
-                    default => '',
-                };
-            });
+            ->type($fieldType)
+            ->attributes($fieldAttributes)
+            ->hint($fieldHint);
     }
 
     public function update()

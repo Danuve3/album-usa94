@@ -16,27 +16,26 @@ class AlbumPageFlip {
         }
 
         this.options = {
-            width: options.width || 400,
-            height: options.height || 500,
-            size: options.size || 'stretch',
-            minWidth: options.minWidth || 300,
-            maxWidth: options.maxWidth || 600,
-            minHeight: options.minHeight || 400,
-            maxHeight: options.maxHeight || 800,
-            drawShadow: options.drawShadow !== false,
-            flippingTime: options.flippingTime || 800,
-            usePortrait: options.usePortrait !== false,
-            startZIndex: options.startZIndex || 0,
-            autoSize: options.autoSize !== false,
-            maxShadowOpacity: options.maxShadowOpacity || 0.5,
-            showCover: options.showCover !== false,
-            mobileScrollSupport: options.mobileScrollSupport !== false,
-            swipeDistance: options.swipeDistance || 30,
-            clickEventForward: options.clickEventForward !== false,
-            useMouseEvents: options.useMouseEvents !== false,
-            showPageCorners: options.showPageCorners !== false,
-            disableFlipByClick: options.disableFlipByClick || false,
-            ...options
+            width: options.width ?? 400,
+            height: options.height ?? 500,
+            size: options.size ?? 'stretch',
+            minWidth: options.minWidth ?? 300,
+            maxWidth: options.maxWidth ?? 600,
+            minHeight: options.minHeight ?? 400,
+            maxHeight: options.maxHeight ?? 800,
+            drawShadow: options.drawShadow ?? true,
+            flippingTime: options.flippingTime ?? 800,
+            usePortrait: options.usePortrait ?? true,
+            startZIndex: options.startZIndex ?? 0,
+            autoSize: options.autoSize ?? true,
+            maxShadowOpacity: options.maxShadowOpacity ?? 0.5,
+            showCover: options.showCover ?? true,
+            mobileScrollSupport: options.mobileScrollSupport ?? true,
+            swipeDistance: options.swipeDistance ?? 30,
+            clickEventForward: options.clickEventForward ?? true,
+            useMouseEvents: options.useMouseEvents ?? true,
+            showPageCorners: options.showPageCorners ?? true,
+            disableFlipByClick: options.disableFlipByClick ?? false
         };
 
         this.pageFlip = null;

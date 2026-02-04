@@ -25,7 +25,8 @@ class UngluedStickers extends Component
     }
 
     #[On('sticker-glued')]
-    public function onStickerGlued(): void
+    #[On('pack-opened')]
+    public function refresh(): void
     {
         $this->loadStickers();
     }
@@ -60,6 +61,7 @@ class UngluedStickers extends Component
                 'page_number' => $sticker->page_number,
                 'image_path' => $sticker->image_path,
                 'rarity' => $sticker->rarity->value,
+                'is_horizontal' => $sticker->is_horizontal,
                 'count' => $group->count(),
             ];
         })

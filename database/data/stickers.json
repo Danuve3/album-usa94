@@ -1,0 +1,3554 @@
+[
+    {
+        "number": 1,
+        "name": "San Francisco",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 2,
+        "name": "Boston",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 3,
+        "name": "Orlando",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 4,
+        "name": "Dallas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 5,
+        "name": "Detroit",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 6,
+        "name": "Chicago",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 7,
+        "name": "Soldier Field",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 8,
+        "name": "Pontiac Silverdome",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 9,
+        "name": "Giants Stadium",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 10,
+        "name": "Foxboro Stadium",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 11,
+        "name": "Cotton Bowl",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 12,
+        "name": "Citrus Bowl",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 13,
+        "name": "RFK Memorial Stadium",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 14,
+        "name": "Stanford Stadium",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 15,
+        "name": "Rose Bowl",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 16,
+        "name": "Tony Meola",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 17,
+        "name": "Marcelo Balboa",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 18,
+        "name": "John Doyle",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 19,
+        "name": "Desmond Armstrong",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 20,
+        "name": "Escudo EEUU",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 21,
+        "name": "Alexi Lalas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 22,
+        "name": "Paul Caligiuri",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 23,
+        "name": "Mike Lapper",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 24,
+        "name": "Thomas Dooley",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 25,
+        "name": "John Harkes",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 26,
+        "name": "Tab Ramos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 27,
+        "name": "Chris Henderson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 28,
+        "name": "Cobi Jones",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 29,
+        "name": "Equipo EEUU",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 30,
+        "name": "Dominic Kinnear",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 31,
+        "name": "Roy Wegerle",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 32,
+        "name": "Eric Wynalda",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 33,
+        "name": "Joe-Max Moore",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 34,
+        "name": "Brad Friedel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 35,
+        "name": "Marco Pascolo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 36,
+        "name": "Marc Hottiger",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 37,
+        "name": "Alain Geiger",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 38,
+        "name": "Dominique Herr",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 39,
+        "name": "Escudo Suiza",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 40,
+        "name": "Yvan Quentin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 41,
+        "name": "Andy Egli",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 42,
+        "name": "Christophe Ohrel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 43,
+        "name": "Georges Bregy",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 44,
+        "name": "Ciriaco Sforza",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 45,
+        "name": "Thomas Bickel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 46,
+        "name": "Alain Sutter",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 47,
+        "name": "Adrian Knup",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 48,
+        "name": "Equipo Suiza",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 49,
+        "name": "Stephane Chapuisat",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 50,
+        "name": "Kubilay Turkyilmaz",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 51,
+        "name": "Marco Grassi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 52,
+        "name": "Christophe Bonvin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 53,
+        "name": "Stephan Lehmann",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 54,
+        "name": "Óscar Eduardo Cordoba",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 55,
+        "name": "Luis Fernando Herrera",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 56,
+        "name": "Luis Carlos Perea",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 57,
+        "name": "Alexis Antonio Mendoza",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 58,
+        "name": "Escudo Colombia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 59,
+        "name": "Wilson Enrique Perez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 60,
+        "name": "Gabriel Jaime Gomez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 61,
+        "name": "Leonel De Jesús Álvarez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 62,
+        "name": "Carlos Alberto Valderrama",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 63,
+        "name": "Freddy Eusebio Rincón",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 64,
+        "name": "Alexis Enrique Garcia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 65,
+        "name": "John Harold Lozano",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 66,
+        "name": "Jose Adolfo Valencia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 67,
+        "name": "Equipo Colombia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 68,
+        "name": "Faustino Hernan Asprilla",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 69,
+        "name": "Ivan Rene Valenciano",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 70,
+        "name": "Victor Hugo Aristizabal",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 71,
+        "name": "John Jairo Trellez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 72,
+        "name": "Faryd Camilo Mondragón",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 73,
+        "name": "Florian Prunea",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 74,
+        "name": "Dan Petrescu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 75,
+        "name": "Miodrag Belodedici",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 76,
+        "name": "Gheorghe Popescu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 77,
+        "name": "Escudo Rumanía",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 78,
+        "name": "Daniel Prodan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 79,
+        "name": "Gheorghe Mihali",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 80,
+        "name": "Ioan Lupescu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 81,
+        "name": "Tibor Selymes",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 82,
+        "name": "Ioan Ovidiu Sabau",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 83,
+        "name": "Dorinel Munteanu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 84,
+        "name": "Dorin Mateut",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 85,
+        "name": "Gheorghe Hagi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 86,
+        "name": "Equipo Rumanía",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 87,
+        "name": "Nica Panduru",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 88,
+        "name": "Ilie Dumitrescu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 89,
+        "name": "Florin Raducioiu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 90,
+        "name": "Marius Lacatus",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 91,
+        "name": "Bogdan Stelea",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 92,
+        "name": "Taffarel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 93,
+        "name": "Jorginho",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 94,
+        "name": "Cafú",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 95,
+        "name": "Ricardo Rocha",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 96,
+        "name": "Escudo Brasil",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 97,
+        "name": "Ricardo Gomes",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 98,
+        "name": "Marcio Santos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 99,
+        "name": "Branco",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 100,
+        "name": "Dunga",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 101,
+        "name": "Mauro Silva",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 102,
+        "name": "Raí",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 103,
+        "name": "Zinho",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 104,
+        "name": "Palhinha",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 105,
+        "name": "Equipo Brasil",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 106,
+        "name": "Bebeto",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 107,
+        "name": "Romario",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 108,
+        "name": "Muller",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 109,
+        "name": "Evair",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 110,
+        "name": "Zetti",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 111,
+        "name": "Stanislav Cherchesov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 112,
+        "name": "Dmitri Khlestov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 113,
+        "name": "Viktor Onopko",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 114,
+        "name": "Andrei Ivanov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 115,
+        "name": "Escudo Rusia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 116,
+        "name": "Yuri Nikiforov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 117,
+        "name": "Vasili Kulkov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 118,
+        "name": "Sergei Gorlukovich",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 119,
+        "name": "Dmitri Popov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 120,
+        "name": "Igor Shalimov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 121,
+        "name": "Igor Dobrovolskiy",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 122,
+        "name": "Andrei Kanchelskis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 123,
+        "name": "Sergei Kiryakov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 124,
+        "name": "Equipo Rusia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 125,
+        "name": "Igor Kolyvanov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 126,
+        "name": "Sergeij Yuran",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 127,
+        "name": "Oleg Salenko",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 128,
+        "name": "Dmitri Radchenko",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 129,
+        "name": "Dmitri Kharin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 130,
+        "name": "Joseph-Antoine Bell",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 131,
+        "name": "Victor Ndip Akem",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 132,
+        "name": "Hans Agbo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 133,
+        "name": "Ayakan Alphonse Yombi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 134,
+        "name": "Escudo Camerún",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 135,
+        "name": "Denis Tchantal Nde",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 136,
+        "name": "Stephen Tataw",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 137,
+        "name": "Emile M`Bouh",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 138,
+        "name": "Jean-Claude Pagal",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 139,
+        "name": "Cyrille Makanaky",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 140,
+        "name": "Serge Paul Loga",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 141,
+        "name": "Emmanuel Maboang Kessack",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 142,
+        "name": "Joseph Andre Mbarga",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 143,
+        "name": "Equipo Camerún",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 144,
+        "name": "Roger Milla",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 145,
+        "name": "David Embe",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 146,
+        "name": "Francois Omam-Biyik",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 147,
+        "name": "Alphonse Tchami",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 148,
+        "name": "Williams Andem",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 149,
+        "name": "Thomas Ravelli",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 150,
+        "name": "Roland Nilsson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 151,
+        "name": "Patrik Andersson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 152,
+        "name": "Jan Eriksson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 153,
+        "name": "Escudo Suecia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 154,
+        "name": "Roger Ljung",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 155,
+        "name": "Pontus Kamark",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 156,
+        "name": "Joachim Bjorklund",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 157,
+        "name": "Stefan Landberg",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 158,
+        "name": "Klas Ingesson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 159,
+        "name": "Jonas Thern",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 160,
+        "name": "Stefan Schwarz",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 161,
+        "name": "Anders Limpar",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 162,
+        "name": "Equipo Suecia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 163,
+        "name": "Stefan Rehn",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 164,
+        "name": "Tomas Brolin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 165,
+        "name": "Martin Dahlin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 166,
+        "name": "Henrik Larsson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 167,
+        "name": "Lars Eriksson",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 168,
+        "name": "Bodo Illgner",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 169,
+        "name": "Thomas Helmer",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 170,
+        "name": "Jurgen Kohler",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 171,
+        "name": "Guido Buchwald",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 172,
+        "name": "Escudo Alemania",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 173,
+        "name": "Andreas Brehme",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 174,
+        "name": "Christian Ziege",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 175,
+        "name": "Lothar Matthaus",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 176,
+        "name": "Stefan Effenberg",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 177,
+        "name": "Matthias Sammer",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 178,
+        "name": "Maurizio Gaudino",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 179,
+        "name": "Andreas Moller",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 180,
+        "name": "Thomas Hassler",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 181,
+        "name": "Equipo Alemania",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 182,
+        "name": "Thomas Strunz",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 183,
+        "name": "Jurgen Klinsmann",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 184,
+        "name": "Karlheinz Riedle",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 185,
+        "name": "Ulf Kirsten",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 186,
+        "name": "Andreas Kopke",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 187,
+        "name": "Andoni Zubizarreta",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 188,
+        "name": "Albert Ferrer",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 189,
+        "name": "Francisco Jose Camarasa",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 190,
+        "name": "Rafael Alcorta",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 191,
+        "name": "Escudo España",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 192,
+        "name": "Fernando Giner",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 193,
+        "name": "Sergi Barjuan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 194,
+        "name": "Miguel Angel Nadal",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 195,
+        "name": "Josep Guardiola",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 196,
+        "name": "Jose Maria Baquero",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 197,
+        "name": "Fernando Hierro",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 198,
+        "name": "Julen Guerrero",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 199,
+        "name": "Jose Luis Perez Caminero",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 200,
+        "name": "Equipo España",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 201,
+        "name": "Luis Enrique Martinez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 202,
+        "name": "Juan Antonio Goicoechea",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 203,
+        "name": "Julio Salinas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 204,
+        "name": "Juanele Juan Castano",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 205,
+        "name": "Jose Santiago Canizares",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 206,
+        "name": "In Young Choi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 207,
+        "name": "Jung Bae Park",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 208,
+        "name": "Jong Son Chung",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 209,
+        "name": "Pan Keun Kim",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 210,
+        "name": "Escudo Corea del Sur",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 211,
+        "name": "Myung Bo Hong",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 212,
+        "name": "Hong Gi Shin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 213,
+        "name": "Sang Bum Gu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 214,
+        "name": "Jung Yoon Noh",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 215,
+        "name": "Moon Sik Choi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 216,
+        "name": "Hyun Seok Kim",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 217,
+        "name": "Jeong Woon Ko",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 218,
+        "name": "Joo Sung Kim",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 219,
+        "name": "Equipo Corea del Sur",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 220,
+        "name": "Seok Ju Ha",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 221,
+        "name": "Jung Won Seo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 222,
+        "name": "Sun Hong Hwang",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 223,
+        "name": "Jeong Hyeok Kim",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 224,
+        "name": "Bum Chul Sin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 225,
+        "name": "Escudo Bolivia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 226,
+        "name": "Carlos Leonel Trucco / Gustavo Quinteros",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 227,
+        "name": "Marco Sandy / Miguel Angel Rimba",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 228,
+        "name": "Juan Manuel Pena / Luis Cristaldo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 229,
+        "name": "Carlos Borja / Julio Cesar Baldivieso",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 230,
+        "name": "Milton Melgar / Johnny Villarroel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 231,
+        "name": "Marco Etcheverry / Ramiro Castillo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 232,
+        "name": "Erwin Sanchez / William Ramallo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 233,
+        "name": "Alvaro Pena / Dario Rojas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 234,
+        "name": "Equipo Bolivia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 235,
+        "name": "Escudo Nigeria",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 236,
+        "name": "Wilfred Agbonavbare / Augustine Eguavon",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 237,
+        "name": "Stephen Keshi / Benedict Iroha",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 238,
+        "name": "Uche Okechukwu / Isaac Semitoje",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 239,
+        "name": "Abdul Sule / Thompson Oliha",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 240,
+        "name": "George Finidi / Mutiu Adepoju",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 241,
+        "name": "Augustine Okocha / Emmanuel Amuneke",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 242,
+        "name": "Daniel Amokachi / Rashidi Yekini",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 243,
+        "name": "Samson Siasia / Alloy Agu",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 244,
+        "name": "Equipo Nigeria",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 245,
+        "name": "Sergio Javier Goycochea",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 246,
+        "name": "Jose Antonio Chamot",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 247,
+        "name": "Sergio Fabian Vazquez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 248,
+        "name": "Óscar Alfredo Ruggeri",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 249,
+        "name": "Escudo Argentina",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 250,
+        "name": "Carlos Javier Macallister",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 251,
+        "name": "Jorge Horacio Borelli",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 252,
+        "name": "Fernando Carlos Redondo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 253,
+        "name": "Diego Pablo Simeone",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 254,
+        "name": "Hugo Leonardo Perez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 255,
+        "name": "Leonardo Adrian Rodriguez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 256,
+        "name": "Gustavo Miguel Zapata",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 257,
+        "name": "Diego Armando Maradona",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 258,
+        "name": "Equipo Argentina",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 259,
+        "name": "Abel Eduardo Balbo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 260,
+        "name": "Gabriel Omar Batistuta",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 261,
+        "name": "Claudio Paul Caniggia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 262,
+        "name": "Ramon Ismael Medina Bello",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 263,
+        "name": "Luis Alberto Islas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 264,
+        "name": "Antonis Minou",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 265,
+        "name": "Stratos Apostolakis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 266,
+        "name": "Stylianos Manolas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 267,
+        "name": "Vassilios Ioannidis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 268,
+        "name": "Escudo Grecia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 269,
+        "name": "Ioannis Kalitzakis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 270,
+        "name": "Kyriakos Karataidis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 271,
+        "name": "Athanasios Kolitsidakis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 272,
+        "name": "Panagiotis Tsaloukidis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 273,
+        "name": "Nikolaos Nioplias",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 274,
+        "name": "Anastasios Mitropoulos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 275,
+        "name": "Spyridon Maragos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 276,
+        "name": "Nikolaos Tsiantakis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 277,
+        "name": "Equipo Grecia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 278,
+        "name": "Alexios Alexandris",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 279,
+        "name": "Dimitris Saravakos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 280,
+        "name": "Nikolaos Machlas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 281,
+        "name": "Vassilios Dimitriadis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 282,
+        "name": "Kostas Chaniotakis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 283,
+        "name": "Borislav Mihailov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 284,
+        "name": "Emil Kremenliev",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 285,
+        "name": "Trifon Ivanov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 286,
+        "name": "Petar Hubchev",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 287,
+        "name": "Escudo Bulgaria",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 288,
+        "name": "Zanko Zvetanov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 289,
+        "name": "Ilian Kiriakov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 290,
+        "name": "Zlatko Yankov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 291,
+        "name": "Nikolai Todorov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 292,
+        "name": "Krasimir Balakov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 293,
+        "name": "Yordan Lechkov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 294,
+        "name": "Daniel Borimirov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 295,
+        "name": "Hristo Stoichkov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 296,
+        "name": "Equipo Bulgaria",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 297,
+        "name": "Emil Kostadinov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 298,
+        "name": "Petar Alexandrov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 299,
+        "name": "Nasko Sirakov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 300,
+        "name": "Ivailo Yordanov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 301,
+        "name": "Dimitar Popov",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 302,
+        "name": "Gianluca Pagliuca",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 303,
+        "name": "Antonio Benarrivo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 304,
+        "name": "Franco Baresi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 305,
+        "name": "Alessandro Costacurta",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 306,
+        "name": "Escudo Italia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 307,
+        "name": "Paolo Maldini",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 308,
+        "name": "Christian Panucci",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 309,
+        "name": "Stefano Eranio",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 310,
+        "name": "Dino Baggio",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 311,
+        "name": "Demetrio Albertini",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 312,
+        "name": "Roberto Donadoni",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 313,
+        "name": "Alberigo Evani",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 314,
+        "name": "Roberto Baggio",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 315,
+        "name": "Equipo Italia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 316,
+        "name": "Roberto Mancini",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 317,
+        "name": "Pier Luigi Casiraghi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 318,
+        "name": "Giuseppe Signori",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 319,
+        "name": "Andrea Silenzi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 320,
+        "name": "Luca Marchegiani",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 321,
+        "name": "Pat Bonner",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 322,
+        "name": "Denis Irwin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 323,
+        "name": "Kevin Moran",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 324,
+        "name": "Alan Kernaghan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 325,
+        "name": "Escudo Irlanda",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 326,
+        "name": "Terry Phelan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 327,
+        "name": "Paul McGrath",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 328,
+        "name": "Steve Staunton",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 329,
+        "name": "Eddie McGoldrick",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 330,
+        "name": "Roy Keane",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 331,
+        "name": "Andy Townsend",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 332,
+        "name": "Ray Houghton",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 333,
+        "name": "John Sheridan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 334,
+        "name": "Equipo Irlanda",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 335,
+        "name": "Alan Mcloughlin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 336,
+        "name": "Ronnie Whelan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 337,
+        "name": "John Aldridge",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 338,
+        "name": "Tony Cascarino",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 339,
+        "name": "Alan Kelly",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 340,
+        "name": "Erik Thorstvedt",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 341,
+        "name": "Henning Berg",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 342,
+        "name": "Rune Bratseth",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 343,
+        "name": "Tore Pedersen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 344,
+        "name": "Escudo Noruega",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 345,
+        "name": "Ronny Johnsen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 346,
+        "name": "Stig Inge Bjornebye",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 347,
+        "name": "Roger Nilsen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 348,
+        "name": "Geirmund Brendesaeter",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 349,
+        "name": "Oyvind Leonhardsen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 350,
+        "name": "Erik Mykland",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 351,
+        "name": "Gunnar Halle",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 352,
+        "name": "Kjetil Rekdal",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 353,
+        "name": "Equipo Noruega",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 354,
+        "name": "Lars Bohinen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 355,
+        "name": "Jahn Ivar Jakobsen",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 356,
+        "name": "Jan Age Fjortoft",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 357,
+        "name": "Jostein Flo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 358,
+        "name": "Frode Grodas",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 359,
+        "name": "Jorge Campos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 360,
+        "name": "Claudio Suárez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 361,
+        "name": "Juan Ramirez Perales",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 362,
+        "name": "Ignacio Ambriz",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 363,
+        "name": "Escudo México",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 364,
+        "name": "Miguel Herrera",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 365,
+        "name": "Raul Gutierrez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 366,
+        "name": "Ramon Ramirez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 367,
+        "name": "David Patiño",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 368,
+        "name": "Alberto Garcia Aspe",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 369,
+        "name": "Miguel Espana",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 370,
+        "name": "Benjamin Galindo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 371,
+        "name": "Marcelino Bernal",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 372,
+        "name": "Equipo México",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 373,
+        "name": "Hugo Sanchez",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 374,
+        "name": "Luis Garcia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 375,
+        "name": "Luis Roberto Alves",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 376,
+        "name": "Luis Miguel Salvador",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 377,
+        "name": "Alejandro Garcia",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 378,
+        "name": "Michel Preud'Homme",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 379,
+        "name": "Dirk Medved",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 380,
+        "name": "Georges Grun",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 381,
+        "name": "Philippe Albert",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 382,
+        "name": "Escudo Bélgica",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 383,
+        "name": "Rudy Smidts",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 384,
+        "name": "Lorenzo Staelens",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 385,
+        "name": "Franky Van Der Elst",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 386,
+        "name": "Bruno Versavel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 387,
+        "name": "Vincenzo Scifo",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 388,
+        "name": "Danny Boffin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 389,
+        "name": "Marc Emmers",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 390,
+        "name": "Marc Degryse",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 391,
+        "name": "Equipo Bélgica",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 392,
+        "name": "Luc Nilis",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 393,
+        "name": "Luis Airton Oliveira",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 394,
+        "name": "Alex Czerniatynski",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 395,
+        "name": "Marc Wilmots",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 396,
+        "name": "Filip De Wilde",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 397,
+        "name": "Khalil Azmi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 398,
+        "name": "Abdelkrim El Hadrioui",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 399,
+        "name": "Noureddine Naybet",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 400,
+        "name": "Lahcen Abrami",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 401,
+        "name": "Escudo Marruecos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 402,
+        "name": "Mustapha Khalif",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 403,
+        "name": "Ahmed Masbahi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 404,
+        "name": "Tahar El Khalej",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 405,
+        "name": "Nacer Abdellah",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 406,
+        "name": "Rachid Daoudi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 407,
+        "name": "Mohammed Aziz Samadi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 408,
+        "name": "Mustapha El Haddaoui",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 409,
+        "name": "Mustapha Hadji",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 410,
+        "name": "Equipo Marruecos",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 411,
+        "name": "Abdelmajid Bouyboud",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 412,
+        "name": "Mohamed Chaouch",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 413,
+        "name": "Youssef Fertout",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 414,
+        "name": "Abdeslam El Ghrissi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 415,
+        "name": "Abdelkader El Brazi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 416,
+        "name": "Ed De Goey",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 417,
+        "name": "Ulrich Van Gobbel",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 418,
+        "name": "Ronald Koeman",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 419,
+        "name": "John De Wolf",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 420,
+        "name": "Escudo Holanda",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 421,
+        "name": "Frank De Boer",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 422,
+        "name": "Frank Rijkaard",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 423,
+        "name": "Erwin Koeman",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 424,
+        "name": "Jan Wouters",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 425,
+        "name": "Wim Jonk",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 426,
+        "name": "Aron Winter",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 427,
+        "name": "Ruud Gullit",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 428,
+        "name": "Johnny Bosman",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 429,
+        "name": "Equipo Holanda",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 430,
+        "name": "Marc Overmars",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 431,
+        "name": "Dennis Bergkamp",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 432,
+        "name": "Ronald De Boer",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 433,
+        "name": "Bryan Roy",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 434,
+        "name": "Theo Snelders",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 435,
+        "name": "Escudo Arabia Saudí",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "shiny"
+    },
+    {
+        "number": 436,
+        "name": "Mohammed Al Deayea / Abdullah Al Dsari",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 437,
+        "name": "Mohammed Al Khlawi / Mohamed Al Jawad",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 438,
+        "name": "Ahmed Madani / Fuad Amin",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 439,
+        "name": "Mansour Al Muainea / Khalid Al Muwallid",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 440,
+        "name": "Mansour Al Mosa / Khalid Al Temawi",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 441,
+        "name": "Majed Mohammed / Saeed Owairan",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 442,
+        "name": "Fahad Mehalel / Sami Al Jaber",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 443,
+        "name": "Hamzah Falatah / Hussein Al Sadig",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    },
+    {
+        "number": 444,
+        "name": "Equipo Arabia Saudí",
+        "page_number": null,
+        "position_x": 0,
+        "position_y": 0,
+        "rarity": "common"
+    }
+]

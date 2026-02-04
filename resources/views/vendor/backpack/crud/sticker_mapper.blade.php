@@ -47,7 +47,7 @@
                                      style="cursor: pointer;">
                                     <div>
                                         <strong>#{{ $sticker->number }}</strong>
-                                        <small class="d-block text-muted">{{ Str::limit($sticker->name, 20) }}</small>
+                                        <span class="d-block sticker-name">{{ Str::limit($sticker->name, 20) }}</span>
                                     </div>
                                     <div class="text-end">
                                         <small class="text-muted">{{ $sticker->position_x }}, {{ $sticker->position_y }}</small>
@@ -88,7 +88,7 @@
                                 <i class="la la-plus"></i>
                             </button>
                             <button type="button" class="btn btn-sm btn-outline-primary ms-2" id="reset-zoom">
-                                <i class="la la-compress"></i> Reset
+                                <i class="la la-compress"></i> Restablecer
                             </button>
                         </div>
                     </div>
@@ -204,12 +204,17 @@
     }
 
     /* List items */
+    .sticker-list-item .sticker-name {
+        color: #343a40;
+        font-weight: 500;
+    }
     .sticker-list-item.active {
         background-color: #28a745 !important;
         color: white !important;
     }
+    .sticker-list-item.active .sticker-name,
     .sticker-list-item.active .text-muted {
-        color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
     }
 
     /* Resize handle */

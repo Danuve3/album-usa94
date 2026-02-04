@@ -35,11 +35,30 @@ class PageCrudController extends CrudController
             ->disk('public')
             ->height('80px');
 
-        CRUD::column('stickers_count')
+        CRUD::column('stickers_status')
             ->label('Cromos')
             ->type('closure')
             ->function(function ($entry) {
-                return $entry->stickers()->count();
+                $stickers = $entry->stickers;
+                $total = $stickers->count();
+
+                if ($total === 0) {
+                    return '<span class="badge bg-secondary">0 cromos</span>';
+                }
+
+                $positioned = $stickers->filter(fn($s) => $s->position_x > 0 || $s->position_y > 0)->count();
+                $unpositioned = $total - $positioned;
+
+                $html = '<span class="badge bg-primary">' . $total . ' cromos</span>';
+
+                if ($positioned > 0) {
+                    $html .= ' <span class="badge bg-success" title="Posicionados">' . $positioned . '</span>';
+                }
+                if ($unpositioned > 0) {
+                    $html .= ' <span class="badge bg-warning" title="Sin posicionar">' . $unpositioned . '</span>';
+                }
+
+                return $html;
             });
 
         CRUD::column('created_at')
@@ -47,6 +66,9 @@ class PageCrudController extends CrudController
             ->type('datetime');
 
         CRUD::orderBy('number', 'asc');
+
+        // Add button to manage stickers
+        CRUD::addButtonFromView('line', 'manage_stickers', 'manage_stickers', 'beginning');
     }
 
     protected function setupCreateOperation()

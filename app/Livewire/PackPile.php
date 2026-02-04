@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Pack;
+use App\Services\PackDeliveryService;
 use App\Services\PackService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -18,18 +19,42 @@ class PackPile extends Component
 
     public bool $showRevealModal = false;
 
+    public bool $showRipAnimation = false;
+
     public int $revealedCount = 0;
 
-    public function mount(): void
+    public int $secondsUntilNextPack = 0;
+
+    public function mount(PackDeliveryService $packDeliveryService): void
     {
-        $this->refreshCount();
+        $this->deliverPendingPacksAndRefresh($packDeliveryService);
     }
 
-    public function refreshCount(): void
+    public function refreshCount(PackDeliveryService $packDeliveryService): void
     {
-        $this->unopenedCount = Pack::where('user_id', Auth::id())
+        $this->deliverPendingPacksAndRefresh($packDeliveryService);
+    }
+
+    private function deliverPendingPacksAndRefresh(PackDeliveryService $packDeliveryService): void
+    {
+        $user = Auth::user();
+
+        // Deliver any pending packs before counting
+        $delivered = $packDeliveryService->deliverPendingPacks($user);
+
+        // Refresh user to get updated last_pack_received_at
+        $user->refresh();
+
+        $this->unopenedCount = Pack::where('user_id', $user->id)
             ->unopened()
             ->count();
+
+        $this->secondsUntilNextPack = $packDeliveryService->getSecondsUntilNextPack($user);
+
+        // Notify other components if packs were delivered
+        if ($delivered > 0) {
+            $this->dispatch('packs-delivered');
+        }
     }
 
     public function revealNextSticker(): void
@@ -51,7 +76,7 @@ class PackPile extends Component
         $this->revealedCount = 0;
     }
 
-    public function openPack(PackService $packService): void
+    public function openPack(PackService $packService, PackDeliveryService $packDeliveryService): void
     {
         $pack = Pack::where('user_id', Auth::id())
             ->unopened()
@@ -77,12 +102,18 @@ class PackPile extends Component
             ];
         })->toArray();
 
-        $this->refreshCount();
+        $this->refreshCount($packDeliveryService);
         $this->isOpening = false;
-        $this->showRevealModal = true;
+        $this->showRipAnimation = true;
         $this->revealedCount = 0;
 
         $this->dispatch('pack-opened');
+    }
+
+    public function finishRipAnimation(): void
+    {
+        $this->showRipAnimation = false;
+        $this->showRevealModal = true;
     }
 
     public function clearLastOpened(): void

@@ -5,7 +5,7 @@
             <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Progreso del Album
+            Progreso del Álbum
         </h2>
         <div class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
             {{-- Circular Progress --}}
@@ -44,7 +44,7 @@
                     <span class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{{ $gluedStickers }}</span>
                     <span class="text-gray-500 dark:text-gray-400"> / {{ $totalStickers }}</span>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400">cromos pegados en el album</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">cromos pegados en el álbum</p>
                 <p class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Faltan <span class="font-bold text-amber-600 dark:text-amber-400">{{ $totalStickers - $gluedStickers }}</span> cromos
                 </p>
@@ -115,9 +115,9 @@
                     @endforeach
                 </div>
             </div>
-            <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">Ultimos 30 dias con actividad</p>
+            <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">Últimos 30 días con actividad</p>
         @else
-            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay sobres abiertos aun</p>
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay sobres abiertos aún</p>
         @endif
     </div>
 
@@ -192,9 +192,9 @@
                     @endif
                 </div>
             </div>
-            <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">Cromos unicos obtenidos (acumulativo)</p>
+            <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">Cromos únicos obtenidos (acumulativo)</p>
         @else
-            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay datos de progreso aun</p>
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay datos de progreso aún</p>
         @endif
     </div>
 
@@ -204,7 +204,7 @@
             <svg class="h-5 w-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
             </svg>
-            Progreso por Pagina
+            Progreso por Página
         </h2>
         @if (count($statsByPage) > 0)
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -229,7 +229,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay paginas disponibles</p>
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400">No hay páginas disponibles</p>
         @endif
     </div>
 </div>

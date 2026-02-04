@@ -54,11 +54,12 @@ class TradeInbox extends Component
         // Force computed properties to be recalculated
         unset($this->receivedTrades);
         unset($this->sentTrades);
+        unset($this->completedTrades);
         unset($this->pendingReceivedCount);
         unset($this->pendingSentCount);
     }
 
-    public function confirmAction(string $action): void
+    public function openConfirmModal(string $action): void
     {
         $this->confirmAction = $action;
         $this->showConfirmModal = true;
@@ -153,7 +154,7 @@ class TradeInbox extends Component
     }
 
     /**
-     * Get trades received by the current user.
+     * Get pending trades received by the current user.
      *
      * @return Collection<int, Trade>
      */
@@ -161,13 +162,14 @@ class TradeInbox extends Component
     {
         return Trade::with(['sender', 'offeredItems', 'requestedItems'])
             ->where('receiver_id', Auth::id())
-            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
+            ->pending()
+            ->active()
             ->orderBy('created_at', 'desc')
             ->get();
     }
 
     /**
-     * Get trades sent by the current user.
+     * Get pending trades sent by the current user.
      *
      * @return Collection<int, Trade>
      */
@@ -175,8 +177,34 @@ class TradeInbox extends Component
     {
         return Trade::with(['receiver', 'offeredItems', 'requestedItems'])
             ->where('sender_id', Auth::id())
-            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
+            ->pending()
+            ->active()
             ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * Get completed trades (accepted, rejected, cancelled, or expired).
+     *
+     * @return Collection<int, Trade>
+     */
+    public function getCompletedTradesProperty(): Collection
+    {
+        $userId = Auth::id();
+
+        return Trade::with(['sender', 'receiver', 'offeredItems', 'requestedItems'])
+            ->where(function ($query) use ($userId) {
+                $query->where('receiver_id', $userId)
+                    ->orWhere('sender_id', $userId);
+            })
+            ->where(function ($query) {
+                $query->whereIn('status', ['accepted', 'rejected', 'cancelled'])
+                    ->orWhere(function ($q) {
+                        $q->where('status', 'pending')
+                            ->where('expires_at', '<', now());
+                    });
+            })
+            ->orderBy('updated_at', 'desc')
             ->get();
     }
 
@@ -207,6 +235,7 @@ class TradeInbox extends Component
         return view('livewire.trade-inbox', [
             'receivedTrades' => $this->receivedTrades,
             'sentTrades' => $this->sentTrades,
+            'completedTrades' => $this->completedTrades,
             'pendingReceivedCount' => $this->pendingReceivedCount,
             'pendingSentCount' => $this->pendingSentCount,
         ]);

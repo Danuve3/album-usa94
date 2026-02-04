@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Setting;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -23,11 +26,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
         'is_admin',
         'is_banned',
         'ban_reason',
         'banned_at',
+        'last_pack_received_at',
     ];
 
     /**
@@ -38,6 +43,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'unopened_packs_count',
     ];
 
     /**
@@ -53,6 +67,7 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
             'is_banned' => 'boolean',
             'banned_at' => 'datetime',
+            'last_pack_received_at' => 'datetime',
         ];
     }
 
@@ -163,5 +178,31 @@ class User extends Authenticatable
         }
 
         ActivityLog::log($this, 'packs_given', "Se otorgaron {$count} sobres", ['count' => $count]);
+    }
+
+    /**
+     * Get the next pack delivery time.
+     */
+    public function getNextPackAt(): ?Carbon
+    {
+        $intervalMinutes = Setting::get('pack_delivery_interval_minutes', 240);
+        $lastReceived = $this->last_pack_received_at ?? $this->created_at;
+
+        return $lastReceived->copy()->addMinutes($intervalMinutes);
+    }
+
+    /**
+     * Get the avatar URL.
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar) {
+            return Storage::url($this->avatar);
+        }
+
+        // Default avatar using UI Avatars
+        $name = urlencode($this->name);
+
+        return "https://ui-avatars.com/api/?name={$name}&background=10b981&color=fff&size=128";
     }
 }

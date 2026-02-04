@@ -63,6 +63,7 @@ class DuplicateStickers extends Component
                 'page_number' => $sticker->page_number,
                 'image_path' => $sticker->image_path,
                 'rarity' => $sticker->rarity->value,
+                'is_horizontal' => $sticker->is_horizontal,
                 'count' => $totalCount,
                 'extra_count' => $extraCount,
                 'is_glued' => $gluedCount > 0,
