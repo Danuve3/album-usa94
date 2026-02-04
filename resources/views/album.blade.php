@@ -3,11 +3,11 @@
 
     <main class="flex-1 px-4 py-6">
         <div class="mx-auto max-w-[1920px]">
-            {{-- Two-column layout: Album (75%) | Sidebar (25%) --}}
+            {{-- Two-column layout: Album | Sidebar --}}
             <div class="flex flex-col gap-6 lg:flex-row">
-                {{-- Left: Album Viewer (75%) --}}
-                <div class="w-full lg:w-[75%]">
-                    <div class="rounded-2xl bg-white p-3 shadow-lg sm:p-4 dark:bg-gray-800">
+                {{-- Left: Album Viewer --}}
+                <div class="w-full min-w-0 lg:flex-1">
+                    <div class="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-gray-800">
                         <livewire:album />
                     </div>
 

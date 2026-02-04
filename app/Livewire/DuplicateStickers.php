@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Setting;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,8 @@ class DuplicateStickers extends Component
     {
         return view('livewire.duplicate-stickers', [
             'filteredStickers' => $this->filteredStickers,
+            'normalStyleEnabled' => Setting::get('sticker_style_normal_enabled', true),
+            'shinyStyleEnabled' => Setting::get('sticker_style_shiny_enabled', true),
         ]);
     }
 }

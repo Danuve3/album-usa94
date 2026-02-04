@@ -24,7 +24,8 @@ Route::group([
     Route::get('sticker/import', 'StickerCrudController@importForm')->name('sticker.import');
     Route::post('sticker/import', 'StickerCrudController@import')->name('sticker.import.store');
     Route::get('sticker/import/template', 'StickerCrudController@importTemplate')->name('sticker.import.template');
-    Route::get('sticker/shiny-manager', 'StickerCrudController@shinyManager')->name('sticker.shiny-manager');
+    Route::get('sticker/sticker-styles', 'StickerCrudController@stickerStyles')->name('sticker.sticker-styles');
+    Route::post('sticker/toggle-style-setting', 'StickerCrudController@toggleStyleSetting')->name('sticker.toggle-style-setting');
     Route::post('sticker/bulk-rarity', 'StickerCrudController@bulkSetRarity')->name('sticker.bulk-rarity');
     Route::post('sticker/{sticker}/toggle-shiny', 'StickerCrudController@toggleShiny')->name('sticker.toggle-shiny');
     Route::crud('sticker', 'StickerCrudController');

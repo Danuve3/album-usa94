@@ -43,25 +43,32 @@
     {{-- Stickers Fan Display --}}
     @if (count($filteredStickers) > 0)
         <div
-            class="stickers-pile max-h-96 overflow-y-auto rounded-lg border border-gray-200 bg-gradient-to-br from-emerald-50 to-gray-100 p-4 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
+            class="stickers-pile overflow-hidden rounded-lg border border-gray-200 bg-gradient-to-br from-emerald-50 to-gray-100 p-4 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
             x-data="ungluedStickers()"
         >
-            {{-- Fan container with flex-wrap for multiple rows --}}
-            <div class="stickers-fan flex flex-wrap justify-center gap-y-8 py-4">
+            {{-- Horizontal scrollable row --}}
+            <div
+                class="stickers-fan flex flex-nowrap items-end overflow-x-auto py-2 pl-2 pr-8"
+                @wheel.prevent="$el.scrollLeft += $event.deltaY"
+            >
                 @foreach ($filteredStickers as $index => $sticker)
-                    @php
-                        // Generate pseudo-random rotation based on sticker ID for consistency
-                        $seed = $sticker['id'] * 7;
-                        $rotation = (($seed % 17) - 8); // Range: -8 to 8 degrees
-                    @endphp
                     <div
-                        class="fan-card group relative aspect-[3/4] w-16 cursor-grab select-none rounded-lg shadow-lg transition-all duration-300 ease-out sm:w-20 {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
-                        style="
-                            --rotation: {{ $rotation }}deg;
-                            margin-left: {{ $index === 0 ? '0' : '-24px' }};
-                            transform: rotate(var(--rotation));
-                            z-index: {{ $index + 1 }};
-                        "
+                        @php
+                            $isHorizontal = $sticker['is_horizontal'] ?? false;
+                            $stickerClasses = 'fan-card group relative flex-shrink-0 cursor-grab select-none rounded-lg shadow-lg transition-all duration-300 ease-out';
+                            // Vertical: w-28/w-32 con aspect 3:4
+                            // Horizontal: mismo tamaño de papel rotado
+                            $stickerClasses .= $isHorizontal ? ' aspect-[4/3] w-[9.33rem] sm:w-[10.67rem]' : ' aspect-[3/4] w-28 sm:w-32';
+                            if ($sticker['rarity'] === 'shiny' && $shinyStyleEnabled) {
+                                $stickerClasses .= ' sticker-shiny ring-2 ring-amber-400';
+                            } elseif ($sticker['rarity'] !== 'shiny' && $normalStyleEnabled) {
+                                $stickerClasses .= ' bg-white dark:bg-gray-700';
+                            } else {
+                                $stickerClasses .= ' bg-transparent';
+                            }
+                        @endphp
+                        class="{{ $stickerClasses }}"
+                        style="margin-left: {{ $index === 0 ? '0' : '-64px' }}; z-index: {{ $index + 1 }};"
                         draggable="true"
                         data-sticker-id="{{ $sticker['id'] }}"
                         data-user-sticker-id="{{ $sticker['user_sticker_id'] }}"
@@ -182,29 +189,29 @@
     </script>
 
     <style>
-        .stickers-pile::-webkit-scrollbar {
-            width: 6px;
+        .stickers-fan::-webkit-scrollbar {
+            height: 6px;
         }
 
-        .stickers-pile::-webkit-scrollbar-track {
+        .stickers-fan::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .stickers-pile::-webkit-scrollbar-thumb {
-            background-color: rgba(156, 163, 175, 0.5);
+        .stickers-fan::-webkit-scrollbar-thumb {
+            background-color: rgba(16, 185, 129, 0.4);
             border-radius: 3px;
         }
 
-        .stickers-pile::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(156, 163, 175, 0.7);
+        .stickers-fan::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(16, 185, 129, 0.6);
         }
 
-        .dark .stickers-pile::-webkit-scrollbar-thumb {
-            background-color: rgba(75, 85, 99, 0.5);
+        .dark .stickers-fan::-webkit-scrollbar-thumb {
+            background-color: rgba(4, 120, 87, 0.4);
         }
 
-        .dark .stickers-pile::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(75, 85, 99, 0.7);
+        .dark .stickers-fan::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(4, 120, 87, 0.6);
         }
 
         /* Fan card styles */
@@ -217,7 +224,8 @@
         }
 
         .fan-card:hover {
-            transform: rotate(0deg) translateY(-20px) scale(1.15) !important;
+            transform: translateY(-12px) scale(1.1);
+            z-index: 999 !important;
             box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.2),
                 0 10px 10px -5px rgba(0, 0, 0, 0.1);
@@ -225,17 +233,7 @@
 
         .fan-card.dragging {
             opacity: 0.5;
-            transform: rotate(0deg) scale(0.95) !important;
-        }
-
-        /* Responsive adjustments for fan overlap */
-        @media (max-width: 640px) {
-            .stickers-fan .fan-card {
-                margin-left: -20px !important;
-            }
-            .stickers-fan .fan-card:first-child {
-                margin-left: 0 !important;
-            }
+            transform: scale(0.95);
         }
 
         /* Shiny sticker animation */

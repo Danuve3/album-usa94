@@ -1,20 +1,13 @@
 <div
-    class="flex flex-col items-center"
+    class="flex flex-col"
     x-data="albumViewer()"
     x-init="init()"
     @album-go-to-page.window="goToPage($event.detail.page)"
 >
     {{-- Album Container --}}
-    <div class="relative w-full max-w-4xl">
-        {{-- Page Indicator --}}
-        <div class="mb-4 text-center">
-            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Página <span x-text="currentPage + 1">{{ $currentPage + 1 }}</span> de {{ $totalPages }}
-            </span>
-        </div>
-
+    <div class="relative w-full">
         {{-- Album Book --}}
-        <div class="relative mx-auto" style="max-width: 800px;">
+        <div class="relative w-full">
             {{-- Navigation: Left Corner (Previous) --}}
             <button
                 @click="flipPrev()"
@@ -187,7 +180,7 @@
         </div>
 
         {{-- Navigation Controls --}}
-        <div class="mt-6 flex items-center justify-center gap-4">
+        <div class="mt-3 flex items-center justify-center gap-4">
             {{-- First Page Button --}}
             <button
                 wire:click="goToFirstPage"
@@ -243,7 +236,7 @@
         </div>
 
         {{-- Swipe Instructions (Mobile) --}}
-        <p class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400 sm:hidden">
+        <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400 sm:hidden">
             Desliza o toca las esquinas para pasar página
         </p>
     </div>
@@ -281,9 +274,9 @@
                         height: 500,
                         size: 'stretch',
                         minWidth: 280,
-                        maxWidth: 600,
+                        maxWidth: 1200,
                         minHeight: 350,
-                        maxHeight: 750,
+                        maxHeight: 1500,
                         drawShadow: true,
                         flippingTime: 800,
                         usePortrait: true,
@@ -478,11 +471,18 @@
 
         /* Page flip library overrides */
         .stf__parent {
-            margin: 0 auto;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         .stf__wrapper {
-            margin: 0 auto;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .stf__wrapper--landscape {
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         /* Dark mode adjustments */

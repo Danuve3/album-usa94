@@ -41,6 +41,20 @@ class SettingSeeder extends Seeder
             'description' => 'Probabilidad (0-1) de obtener un cromo brillante. Ejemplo: 0.05 = 5%.',
             'group' => 'stickers',
         ],
+        'sticker_style_normal_enabled' => [
+            'value' => true,
+            'type' => 'boolean',
+            'name' => 'Estilo visual cromos normales',
+            'description' => 'Activa/desactiva el fondo gris de los cromos normales.',
+            'group' => 'stickers',
+        ],
+        'sticker_style_shiny_enabled' => [
+            'value' => true,
+            'type' => 'boolean',
+            'name' => 'Estilo visual cromos brillantes',
+            'description' => 'Activa/desactiva el efecto dorado animado de los cromos brillantes.',
+            'group' => 'stickers',
+        ],
     ];
 
     /**

@@ -47,11 +47,28 @@
             x-data="duplicateStickers()"
         >
             {{-- Horizontal scrollable row --}}
-            <div class="duplicates-fan flex flex-nowrap items-end overflow-x-auto py-2 pl-2 pr-8">
+            <div
+                class="duplicates-fan flex flex-nowrap items-end overflow-x-auto py-2 pl-2 pr-8"
+                @wheel.prevent="$el.scrollLeft += $event.deltaY"
+            >
                 @foreach ($filteredStickers as $index => $sticker)
+                    @php
+                        $isHorizontal = $sticker['is_horizontal'] ?? false;
+                        $stickerClasses = 'fan-card duplicate-card group relative flex-shrink-0 cursor-pointer select-none shadow-lg transition-all duration-300 ease-out';
+                        // Vertical: w-28/w-32 con aspect 3:4
+                        // Horizontal: mismo tamaño de papel rotado
+                        $stickerClasses .= $isHorizontal ? ' aspect-[4/3] w-[9.33rem] sm:w-[10.67rem]' : ' aspect-[3/4] w-28 sm:w-32';
+                        if ($sticker['rarity'] === 'shiny' && $shinyStyleEnabled) {
+                            $stickerClasses .= ' sticker-shiny ring-2 ring-amber-400';
+                        } elseif ($sticker['rarity'] !== 'shiny' && $normalStyleEnabled) {
+                            $stickerClasses .= ' bg-white dark:bg-gray-700';
+                        } else {
+                            $stickerClasses .= ' bg-transparent';
+                        }
+                    @endphp
                     <div
-                        class="fan-card duplicate-card group relative flex-shrink-0 cursor-pointer select-none shadow-lg transition-all duration-300 ease-out {{ $sticker['is_horizontal'] ? 'h-20 w-28 sm:h-24 sm:w-32' : 'h-28 w-20 sm:h-32 sm:w-24' }} {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny ring-2 ring-amber-400' : 'bg-white dark:bg-gray-700' }}"
-                        style="margin-left: {{ $index === 0 ? '0' : '-35px' }}; z-index: {{ $index + 1 }};"
+                        class="{{ $stickerClasses }}"
+                        style="margin-left: {{ $index === 0 ? '0' : '-64px' }}; z-index: {{ $index + 1 }};"
                         data-sticker-id="{{ $sticker['id'] }}"
                         data-sticker-number="{{ $sticker['number'] }}"
                         data-sticker-name="{{ $sticker['name'] }}"

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Pack;
+use App\Models\Setting;
 use App\Services\PackDeliveryService;
 use App\Services\PackService;
 use Illuminate\Contracts\View\View;
@@ -125,6 +126,9 @@ class PackPile extends Component
 
     public function render(): View
     {
-        return view('livewire.pack-pile');
+        return view('livewire.pack-pile', [
+            'normalStyleEnabled' => Setting::get('sticker_style_normal_enabled', true),
+            'shinyStyleEnabled' => Setting::get('sticker_style_shiny_enabled', true),
+        ]);
     }
 }

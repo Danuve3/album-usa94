@@ -50,33 +50,101 @@
         </div>
     </div>
 
-    {{-- Shiny Preview Card --}}
+    {{-- Style Settings Card --}}
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="la la-palette"></i> Configuración de Estilos Visuales</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    Activa o desactiva los estilos visuales de fondo de los cromos. Cuando están desactivados, los cromos mostrarán solo su imagen sin efectos de fondo.
+                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card {{ $normalStyleEnabled ? 'border-success' : 'border-secondary' }}">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">
+                                        <i class="la la-square {{ $normalStyleEnabled ? 'text-success' : 'text-secondary' }}"></i>
+                                        Estilo Cromos Normales
+                                    </h6>
+                                    <small class="text-muted">Fondo gris para cromos comunes</small>
+                                </div>
+                                <form action="{{ url(config('backpack.base.route_prefix').'/sticker/toggle-style-setting') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="setting" value="sticker_style_normal_enabled">
+                                    <button type="submit" class="btn {{ $normalStyleEnabled ? 'btn-success' : 'btn-outline-secondary' }}">
+                                        <i class="la {{ $normalStyleEnabled ? 'la-toggle-on' : 'la-toggle-off' }}"></i>
+                                        {{ $normalStyleEnabled ? 'Activado' : 'Desactivado' }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card {{ $shinyStyleEnabled ? 'border-warning' : 'border-secondary' }}">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">
+                                        <i class="la la-star {{ $shinyStyleEnabled ? 'text-warning' : 'text-secondary' }}"></i>
+                                        Estilo Cromos Brillantes
+                                    </h6>
+                                    <small class="text-muted">Efecto dorado animado para cromos shiny</small>
+                                </div>
+                                <form action="{{ url(config('backpack.base.route_prefix').'/sticker/toggle-style-setting') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="setting" value="sticker_style_shiny_enabled">
+                                    <button type="submit" class="btn {{ $shinyStyleEnabled ? 'btn-warning' : 'btn-outline-secondary' }}">
+                                        <i class="la {{ $shinyStyleEnabled ? 'la-toggle-on' : 'la-toggle-off' }}"></i>
+                                        {{ $shinyStyleEnabled ? 'Activado' : 'Desactivado' }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Preview Card --}}
     <div class="col-md-12 mb-4">
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0"><i class="la la-eye"></i> Preview del Efecto Shiny</h5>
+                <h5 class="mb-0"><i class="la la-eye"></i> Preview de Estilos</h5>
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-md-4 text-center">
                         <p class="text-muted mb-2">Cromo Normal</p>
                         <div class="border rounded p-4 bg-light d-inline-block">
-                            <div style="width: 120px; height: 160px; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <div class="{{ $normalStyleEnabled ? 'sticker-normal' : '' }}" style="width: 120px; height: 160px; {{ !$normalStyleEnabled ? 'background: transparent; border: 2px dashed #ccc;' : '' }} border-radius: 8px; display: flex; align-items: center; justify-content: center;">
                                 <i class="la la-user" style="font-size: 48px; color: #64748b;"></i>
                             </div>
                         </div>
+                        <p class="mt-2">
+                            <span class="badge {{ $normalStyleEnabled ? 'bg-success' : 'bg-secondary' }}">
+                                {{ $normalStyleEnabled ? 'Estilo activo' : 'Sin estilo' }}
+                            </span>
+                        </p>
                     </div>
                     <div class="col-md-4 text-center">
                         <p class="text-muted mb-2">Cromo Brillante <span class="badge bg-warning text-dark">SHINY</span></p>
                         <div class="border rounded p-4 bg-light d-inline-block">
-                            <div class="sticker-shiny" style="width: 120px; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <div class="{{ $shinyStyleEnabled ? 'sticker-shiny' : '' }}" style="width: 120px; height: 160px; {{ !$shinyStyleEnabled ? 'background: transparent; border: 2px dashed #f59e0b;' : '' }} border-radius: 8px; display: flex; align-items: center; justify-content: center;">
                                 <i class="la la-user" style="font-size: 48px; color: #92400e;"></i>
                             </div>
                         </div>
+                        <p class="mt-2">
+                            <span class="badge {{ $shinyStyleEnabled ? 'bg-warning text-dark' : 'bg-secondary' }}">
+                                {{ $shinyStyleEnabled ? 'Estilo activo' : 'Sin estilo' }}
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <p class="text-center text-muted mt-3">
-                    <small>Los cromos brillantes tienen un efecto holográfico animado que los hace destacar en la colección.</small>
+                    <small>Los estilos afectan cómo se muestran los cromos en el álbum, sobres y todas las vistas.</small>
                 </p>
             </div>
         </div>
@@ -178,6 +246,10 @@
 
 @push('after_styles')
 <style>
+    .sticker-normal {
+        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    }
+
     @keyframes shiny-shimmer {
         0% { background-position: -200% center; }
         100% { background-position: 200% center; }

@@ -285,10 +285,17 @@
                                 </div>
 
                                 {{-- Card Front (revealed) --}}
-                                <div
-                                    class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 shadow-lg overflow-hidden
-                                    {{ $sticker['rarity'] === 'shiny' ? 'sticker-shiny' : 'bg-white dark:bg-gray-700' }}"
-                                >
+                                @php
+                                    $cardClasses = 'absolute inset-0 w-full h-full backface-hidden rotate-y-180 shadow-lg overflow-hidden';
+                                    if ($sticker['rarity'] === 'shiny' && $shinyStyleEnabled) {
+                                        $cardClasses .= ' sticker-shiny';
+                                    } elseif ($sticker['rarity'] !== 'shiny' && $normalStyleEnabled) {
+                                        $cardClasses .= ' bg-white dark:bg-gray-700';
+                                    } else {
+                                        $cardClasses .= ' bg-transparent';
+                                    }
+                                @endphp
+                                <div class="{{ $cardClasses }}">
                                     @if (!empty($sticker['image_path']))
                                         <img
                                             src="{{ Storage::url($sticker['image_path']) }}"

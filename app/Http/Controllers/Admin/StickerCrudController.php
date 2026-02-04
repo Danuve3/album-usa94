@@ -481,7 +481,7 @@ class StickerCrudController extends CrudController
         return redirect()->back()->with('success', "{$updated} cromos marcados como {$rarityLabel}.");
     }
 
-    public function shinyManager(): View
+    public function stickerStyles(): View
     {
         $this->crud->hasAccessOrFail('update');
 
@@ -497,14 +497,42 @@ class StickerCrudController extends CrudController
             ->orderBy('number')
             ->get();
 
-        return view('vendor.backpack.crud.shiny_manager', [
+        // Get style settings
+        $normalStyleEnabled = \App\Models\Setting::get('sticker_style_normal_enabled', true);
+        $shinyStyleEnabled = \App\Models\Setting::get('sticker_style_shiny_enabled', true);
+
+        return view('vendor.backpack.crud.sticker_styles', [
             'shinyStickers' => $shinyStickers,
             'commonStickers' => $commonStickers,
             'totalStickers' => $totalStickers,
             'shinyCount' => $shinyCount,
             'probability' => $probability,
-            'title' => 'Gestión de Cromos Brillantes',
+            'normalStyleEnabled' => $normalStyleEnabled,
+            'shinyStyleEnabled' => $shinyStyleEnabled,
+            'title' => 'Gestión de Estilos de Cromos',
         ]);
+    }
+
+    public function toggleStyleSetting(Request $request): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $setting = $request->input('setting');
+        $allowedSettings = ['sticker_style_normal_enabled', 'sticker_style_shiny_enabled'];
+
+        if (! in_array($setting, $allowedSettings)) {
+            return redirect()->back()->with('error', 'Configuración inválida.');
+        }
+
+        $currentValue = \App\Models\Setting::get($setting, true);
+        \App\Models\Setting::set($setting, ! $currentValue, 'boolean', backpack_user());
+
+        $settingName = $setting === 'sticker_style_normal_enabled'
+            ? 'estilo de cromos normales'
+            : 'estilo de cromos brillantes';
+        $newState = ! $currentValue ? 'activado' : 'desactivado';
+
+        return redirect()->back()->with('success', "El {$settingName} ha sido {$newState}.");
     }
 
     public function toggleShiny(Request $request, Sticker $sticker): RedirectResponse
