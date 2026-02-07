@@ -41,6 +41,8 @@ Route::group([
     Route::put('sticker-mapper/{sticker}/dimensions', 'StickerMapperController@updateDimensions')->name('sticker-mapper.update-dimensions');
     Route::post('sticker-mapper/{sticker}/toggle-horizontal', 'StickerMapperController@toggleHorizontal')->name('sticker-mapper.toggle-horizontal');
 
+    Route::crud('redeem-code', 'RedeemCodeCrudController');
+
     // Sticker Assigner Tool
     Route::get('sticker-assigner', 'StickerAssignerController@index')->name('sticker-assigner.index');
     Route::post('sticker-assigner/assign', 'StickerAssignerController@assignStickers')->name('sticker-assigner.assign');

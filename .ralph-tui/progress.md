@@ -63,3 +63,12 @@ c. en cada tarjeta\n- ✅ **El diseño es responsive** - Grid adaptativo de 3 a 
 e un cromo, se eleva 20px, escala a 115%, se endereza (rotación 0°) y aumenta su z-index\n- **Responsive móvil/desktop**: Ajustes de tamaño y superposición para pantallas pequeñas (sm:w-20 vs w-16, -20px vs -24px overlap)\n\n**Cambios adicionales:**\n- Fondo con gradiente sutil para mejor contraste visual\n- Sombras mejoradas que dan profundidad al efecto de cartas\n- Z-index dinámico para que el cromo activo siempre esté al frente\n- Badge de cantidad con borde blanco para mejor visibilidad\n\n
 
 ---
+## ✓ Iteration 7 - US-006: Añadir efecto abanico a cromos repetidos
+*2026-01-31T19:04:06.979Z (184s)*
+
+**Status:** Completed
+
+**Notes:**
+ión `duplicate-pulse` sutil\n- **Hover interactivo**: Al pasar el mouse, el cromo se levanta 20px, se endereza y escala 1.15x\n- **Z-index dinámico**: Manejo correcto de capas para que el cromo seleccionado esté siempre visible\n- **Interacción de intercambio preservada**: Click muestra overlay con botones \"Intercambiar\" y \"Ver detalle\"\n- **Consistencia visual**: Usa los mismos estilos `.fan-card` que `unglued-stickers.blade.php`\n- **Responsive**: Solapamiento reducido a -20px en móvil\n\n
+
+---

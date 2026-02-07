@@ -1,14 +1,15 @@
 {
   "id": "9ac9a4d9-720a-4cd3-b374-96335d39cb46",
-  "status": "running",
+  "status": "completed",
   "startedAt": "2026-01-31T18:41:43.218Z",
-  "updatedAt": "2026-01-31T19:01:01.529Z",
+  "updatedAt": "2026-01-31T19:31:07.936Z",
   "agentPlugin": "claude",
   "trackerPlugin": "json",
   "prdPath": "./tasks/prd.json",
-  "currentIteration": 6,
+  "currentIteration": 7,
   "maxIterations": 10,
   "totalTasks": 0,
-  "tasksCompleted": 6,
-  "cwd": "/home/danuve/repos/album-usa94"
+  "tasksCompleted": 7,
+  "cwd": "/home/danuve/repos/album-usa94",
+  "endedAt": "2026-01-31T19:31:07.936Z"
 }

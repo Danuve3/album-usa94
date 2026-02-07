@@ -56,6 +56,12 @@
                 >
                     Estadísticas
                 </a>
+                <a
+                    href="{{ route('get-packs') }}"
+                    class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('get-packs') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' }}"
+                >
+                    Obtener sobres
+                </a>
             </nav>
 
             {{-- User section --}}
@@ -162,6 +168,12 @@
                 class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('stats') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
             >
                 Stats
+            </a>
+            <a
+                href="{{ route('get-packs') }}"
+                class="rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors {{ request()->routeIs('get-packs') ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' }}"
+            >
+                Sobres
             </a>
         </nav>
     </div>

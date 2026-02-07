@@ -38,6 +38,9 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::get('/estadisticas', function () {
         return view('stats');
     })->name('stats');
+    Route::get('/obtener-sobres', function () {
+        return view('get-packs');
+    })->name('get-packs');
     Route::get('/ajustes', function () {
         return view('settings');
     })->name('settings');
