@@ -1,8 +1,8 @@
 <div
     class="flex flex-col"
-    x-data="albumViewer()"
-    x-init="init()"
+    x-data="albumViewer"
     @album-go-to-page.window="goToPage($event.detail.page)"
+    style="--glue-color: {{ $glueColor }};"
 >
     {{-- Album Container --}}
     <div class="relative w-full">
@@ -10,7 +10,7 @@
         <button
             @click="flipPrev()"
             class="absolute left-0 top-0 bottom-0 z-30 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-start pl-2"
-            :class="{ 'pointer-events-none': currentPage === 0 }"
+            :class="{ 'pointer-events-none': currentPage === 0 || draggingSticker }"
             x-show="currentPage > 0"
         >
             <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
@@ -24,7 +24,7 @@
         <button
             @click="flipNext()"
             class="absolute right-0 top-0 bottom-0 z-30 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-end pr-2"
-            :class="{ 'pointer-events-none': currentPage >= totalPages - 1 }"
+            :class="{ 'pointer-events-none': currentPage >= totalPages - 1 || draggingSticker }"
             x-show="currentPage < totalPages - 1"
         >
             <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
@@ -84,7 +84,6 @@
                                                     top: {{ $sticker['position_y'] }}%;
                                                     width: {{ $sticker['width'] }}%;
                                                     height: {{ $sticker['height'] }}%;
-                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
                                                 "
                                                 data-sticker-id="{{ $sticker['id'] }}"
                                                 data-sticker-number="{{ $sticker['number'] }}"
@@ -110,22 +109,18 @@
                                                     top: {{ $sticker['position_y'] }}%;
                                                     width: {{ $sticker['width'] }}%;
                                                     height: {{ $sticker['height'] }}%;
-                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
                                                 "
                                                 data-sticker-id="{{ $sticker['id'] }}"
                                                 data-sticker-number="{{ $sticker['number'] }}"
                                                 title="{{ $sticker['name'] }}"
                                             >
-                                                <div class="w-full h-full rounded border-2 border-dashed border-emerald-500 bg-emerald-500/20 flex flex-col items-center justify-center">
-                                                    <span class="text-emerald-700 dark:text-emerald-400 font-bold text-xs sm:text-sm">{{ $sticker['number'] }}</span>
-                                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 dark:text-emerald-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                                    </svg>
+                                                <div class="w-full h-full rounded border border-dashed border-gray-400/50 bg-gray-500/10 flex items-center justify-center">
+                                                    <span class="text-gray-500/70 dark:text-gray-400/50 font-medium text-xs sm:text-sm">{{ $sticker['number'] }}</span>
                                                 </div>
                                                 {{-- Tooltip --}}
-                                                <div class="sticker-tooltip opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-emerald-800 text-white text-xs rounded whitespace-nowrap z-20 pointer-events-none transition-opacity">
+                                                <div class="sticker-tooltip opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-20 pointer-events-none transition-opacity">
                                                     {{ $sticker['name'] }}
-                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-emerald-800"></div>
+                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                                 </div>
                                             </div>
                                         @else
@@ -137,7 +132,6 @@
                                                     top: {{ $sticker['position_y'] }}%;
                                                     width: {{ $sticker['width'] }}%;
                                                     height: {{ $sticker['height'] }}%;
-                                                    {{ $sticker['is_horizontal'] ? 'transform: rotate(90deg); transform-origin: center center;' : '' }}
                                                 "
                                                 data-sticker-id="{{ $sticker['id'] }}"
                                                 data-sticker-number="{{ $sticker['number'] }}"
@@ -200,19 +194,21 @@
         </div>
     </div>
 
+    @script
     <script>
-        function albumViewer() {
-            return {
+        Alpine.data('albumViewer', () => ({
                 pageFlip: null,
-                currentPage: @entangle('currentPage'),
-                totalPages: {{ $totalPages }},
+                currentPage: $wire.entangle('currentPage'),
+                totalPages: $wire.get('totalPages'),
                 loadedPages: new Set(),
                 stickerObserver: null,
+                draggingSticker: null,
 
                 init() {
                     this.$nextTick(() => {
                         this.initPageFlip();
                         this.initStickerLazyLoading();
+                        this.initDropZones();
                     });
                 },
 
@@ -253,7 +249,7 @@
                     // Listen for page flip events
                     this.pageFlip.on('flip', (data) => {
                         this.currentPage = data.page;
-                        @this.pageFlipped(data.page);
+                        $wire.pageFlipped(data.page);
                         this.loadStickersForVisiblePages(data.page);
                     });
 
@@ -332,6 +328,71 @@
                     }
                 },
 
+                initDropZones() {
+                    const container = this.$refs.albumContainer;
+                    if (!container) return;
+
+                    // Track which sticker is being dragged
+                    window.addEventListener('sticker-drag-start', (e) => {
+                        this.draggingSticker = e.detail;
+                        // Highlight matching slot (available or empty — DOM may be stale due to wire:ignore)
+                        const slot = container.querySelector(
+                            `.sticker-slot[data-sticker-number="${e.detail.number}"]`
+                        );
+                        if (slot) slot.classList.add('sticker-available', 'drop-target-highlight');
+                    });
+
+                    window.addEventListener('sticker-drag-end', () => {
+                        this.draggingSticker = null;
+                        container.querySelectorAll('.drop-target-highlight, .drop-target-hover')
+                            .forEach(el => el.classList.remove('drop-target-highlight', 'drop-target-hover'));
+                    });
+
+                    // Event delegation for drag events on sticker slots
+                    container.addEventListener('dragover', (e) => {
+                        const slot = e.target.closest('.sticker-slot');
+                        if (!slot || !this.draggingSticker) return;
+                        if (parseInt(slot.dataset.stickerNumber) !== this.draggingSticker.number) return;
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        slot.classList.add('drop-target-hover');
+                    });
+
+                    container.addEventListener('dragleave', (e) => {
+                        const slot = e.target.closest('.sticker-slot');
+                        if (slot) slot.classList.remove('drop-target-hover');
+                    });
+
+                    container.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        const slot = e.target.closest('.sticker-slot');
+                        if (!slot) return;
+
+                        let sticker;
+                        try {
+                            sticker = JSON.parse(e.dataTransfer.getData('application/json'));
+                        } catch { return; }
+
+                        const slotNumber = parseInt(slot.dataset.stickerNumber);
+                        if (slotNumber !== sticker.number) return;
+
+                        // Call Livewire to glue the sticker
+                        $wire.glueSticker(sticker.user_sticker_id, sticker.id).then((result) => {
+                            if (result && result.success) {
+                                // Update the DOM: replace slot with glued sticker
+                                slot.className = 'sticker-glued absolute';
+                                slot.innerHTML = sticker.image_path
+                                    ? `<img src="/storage/${sticker.image_path}" alt="${sticker.name}" class="w-full h-full object-contain sticker-image" />`
+                                    : `<div class="w-full h-full bg-gray-300 rounded flex items-center justify-center text-xs text-gray-500">${sticker.number}</div>`;
+                            }
+                        });
+
+                        // Remove highlights
+                        container.querySelectorAll('.drop-target-highlight, .drop-target-hover')
+                            .forEach(el => el.classList.remove('drop-target-highlight', 'drop-target-hover'));
+                    });
+                },
+
                 destroy() {
                     if (this.pageFlip) {
                         this.pageFlip.destroy();
@@ -342,9 +403,9 @@
                         this.stickerObserver = null;
                     }
                 }
-            }
-        }
+        }));
     </script>
+    @endscript
 
     <style>
         .album-container {
@@ -407,24 +468,34 @@
             background-color: rgba(107, 114, 128, 0.15);
         }
 
-        /* Available sticker slot (ready to be glued) */
+        /* Available sticker slot (looks like empty until drag) */
         .sticker-available > div {
             transition: all 0.2s ease;
-            animation: available-pulse 2s ease-in-out infinite;
         }
 
-        .sticker-available:hover > div {
-            border-color: rgb(16, 185, 129);
-            background-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        /* Drop target feedback (visible only during drag) */
+        .sticker-available.drop-target-highlight > div {
+            border-color: var(--glue-color);
+            border-width: 2px;
+            background-color: color-mix(in srgb, var(--glue-color) 25%, transparent);
+            box-shadow: 0 0 12px color-mix(in srgb, var(--glue-color) 50%, transparent);
+            animation: drop-pulse 1s ease-in-out infinite;
         }
 
-        @keyframes available-pulse {
+        .sticker-available.drop-target-hover > div {
+            border-color: var(--glue-color);
+            border-width: 2px;
+            background-color: color-mix(in srgb, var(--glue-color) 40%, transparent);
+            box-shadow: 0 0 20px color-mix(in srgb, var(--glue-color) 70%, transparent);
+            transform: scale(1.05);
+        }
+
+        @keyframes drop-pulse {
             0%, 100% {
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+                box-shadow: 0 0 8px color-mix(in srgb, var(--glue-color) 50%, transparent);
             }
             50% {
-                box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.3);
+                box-shadow: 0 0 20px color-mix(in srgb, var(--glue-color) 70%, transparent);
             }
         }
 

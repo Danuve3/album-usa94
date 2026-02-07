@@ -51,6 +51,9 @@ class SettingCrudController extends CrudController
                 if ($entry->type === 'integer') {
                     return '<span class="badge bg-primary">'.$value.'</span>';
                 }
+                if ($entry->key === 'sticker_glue_color') {
+                    return '<span class="badge" style="background-color: '.$value.'; color: #fff;">'.$value.'</span>';
+                }
 
                 return $value;
             });
@@ -151,6 +154,7 @@ class SettingCrudController extends CrudController
         $fieldType = match ($entry->key) {
             'shiny_probability' => 'number',
             'stickers_per_pack', 'pack_delivery_interval_minutes', 'packs_per_delivery' => 'number',
+            'sticker_glue_color' => 'color',
             default => 'text',
         };
 
@@ -167,6 +171,7 @@ class SettingCrudController extends CrudController
             'stickers_per_pack' => 'Cantidad de cromos en cada sobre',
             'pack_delivery_interval_minutes' => 'Minutos entre entregas (1-1440). Ejemplos: 1=cada minuto, 30=media hora, 60=1 hora, 240=4 horas',
             'packs_per_delivery' => 'Cantidad de sobres por cada entrega (1-10)',
+            'sticker_glue_color' => 'Color hex para resaltar el hueco al arrastrar un cromo',
             default => '',
         };
 

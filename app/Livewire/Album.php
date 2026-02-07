@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Page;
+use App\Models\Setting;
 use App\Models\Sticker;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
@@ -124,14 +125,15 @@ class Album extends Component
                     $status = 'available';
                 }
 
+                // Convert pixel coordinates (800x931 canvas) to percentages
                 return [
                     'id' => $sticker->id,
                     'number' => $sticker->number,
                     'name' => $sticker->name,
-                    'position_x' => $sticker->position_x,
-                    'position_y' => $sticker->position_y,
-                    'width' => $sticker->width,
-                    'height' => $sticker->height,
+                    'position_x' => round($sticker->position_x / 800 * 100, 4),
+                    'position_y' => round($sticker->position_y / 931 * 100, 4),
+                    'width' => round($sticker->width / 800 * 100, 4),
+                    'height' => round($sticker->height / 931 * 100, 4),
                     'is_horizontal' => $sticker->is_horizontal,
                     'image_path' => $sticker->image_path,
                     'status' => $status,
@@ -207,6 +209,8 @@ class Album extends Component
 
     public function render(): View
     {
-        return view('livewire.album');
+        return view('livewire.album', [
+            'glueColor' => Setting::get('sticker_glue_color', '#10b981'),
+        ]);
     }
 }

@@ -43,8 +43,16 @@ class UngluedStickers extends Component
             return;
         }
 
+        // Get sticker IDs that are already glued in the album
+        $gluedStickerIds = UserSticker::where('user_id', $user->id)
+            ->where('is_glued', true)
+            ->pluck('sticker_id')
+            ->unique();
+
+        // Get unglued stickers, excluding ones already glued (those are duplicates)
         $ungluedStickers = UserSticker::where('user_id', $user->id)
             ->where('is_glued', false)
+            ->whereNotIn('sticker_id', $gluedStickerIds)
             ->with('sticker')
             ->get();
 

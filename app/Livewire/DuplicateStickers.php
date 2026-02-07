@@ -6,6 +6,7 @@ use App\Models\Setting;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class DuplicateStickers extends Component
@@ -20,6 +21,13 @@ class DuplicateStickers extends Component
     public int $totalDuplicates = 0;
 
     public function mount(): void
+    {
+        $this->loadDuplicates();
+    }
+
+    #[On('sticker-glued')]
+    #[On('pack-opened')]
+    public function refresh(): void
     {
         $this->loadDuplicates();
     }

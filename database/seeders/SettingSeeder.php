@@ -55,6 +55,13 @@ class SettingSeeder extends Seeder
             'description' => 'Activa/desactiva el efecto dorado animado de los cromos brillantes.',
             'group' => 'stickers',
         ],
+        'sticker_glue_color' => [
+            'value' => '#10b981',
+            'type' => 'string',
+            'name' => 'Color de pegado de cromos',
+            'description' => 'Color que resalta el hueco del cromo al arrastrarlo para pegarlo.',
+            'group' => 'stickers',
+        ],
     ];
 
     /**
