@@ -101,6 +101,40 @@
         </div>
     </div>
 
+    {{-- Album background section --}}
+    @if (count($backgrounds) > 0)
+        <div class="rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800">
+            <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Fondo del álbum</h2>
+            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
+                Elige el fondo que se mostrará en las páginas de tu álbum.
+            </p>
+
+            <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+                @foreach ($backgrounds as $bg)
+                    <button
+                        wire:click="saveBackground('{{ $bg }}')"
+                        class="group relative aspect-[4/5] overflow-hidden rounded-lg border-2 transition-all hover:scale-105 {{ $selectedBg === $bg || ($selectedBg === null && $bg === 'bg-table.webp') ? 'border-emerald-500 ring-2 ring-emerald-500/50' : 'border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-400' }}"
+                    >
+                        <img
+                            src="/images/bg/{{ $bg }}"
+                            alt="{{ $bg }}"
+                            class="h-full w-full object-cover"
+                        >
+                        @if ($selectedBg === $bg || ($selectedBg === null && $bg === 'bg-table.webp'))
+                            <div class="absolute inset-0 flex items-center justify-center bg-emerald-500/20">
+                                <div class="rounded-full bg-emerald-500 p-1.5">
+                                    <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        @endif
+                    </button>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     {{-- Name section --}}
     <div class="rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800">
         <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Nombre de usuario</h2>

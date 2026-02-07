@@ -110,21 +110,48 @@ class AlbumPageFlip {
 
     flipNext() {
         if (this.pageFlip) {
-            this.pageFlip.flipNext();
+            // Workaround: library's flipNext()/flipPrev() use hardcoded
+            // coordinates without adding the book's viewport offset, so
+            // they fail when the album isn't at position (0,0). Additionally,
+            // when disableFlipByClick is enabled, flip() requires the point
+            // to land on a page corner — missing offsets cause that check
+            // to fail silently.
+            const rect = this.pageFlip.getRender().getRect();
+            this.pageFlip.flipController.flip({
+                x: rect.left + rect.pageWidth * 2 - 10,
+                y: rect.top + 1,
+            });
         }
         return this;
     }
 
     flipPrev() {
         if (this.pageFlip) {
-            this.pageFlip.flipPrev();
+            const rect = this.pageFlip.getRender().getRect();
+            this.pageFlip.flipController.flip({
+                x: rect.left + 10,
+                y: rect.top + 1,
+            });
         }
         return this;
     }
 
     flip(pageIndex) {
         if (this.pageFlip) {
-            this.pageFlip.flip(pageIndex);
+            const current = this.pageFlip.getCurrentPageIndex();
+            const pages = this.pageFlip.getPageCollection();
+            const targetSpread = pages.getSpreadIndexByPage(pageIndex);
+
+            if (pageIndex > current) {
+                // Workaround: PageFlip.flip() internally calls the buggy
+                // flipNext/flipPrev. Set the spread index manually and
+                // use our patched methods instead.
+                pages.setCurrentSpreadIndex(targetSpread - 1);
+                this.flipNext();
+            } else if (pageIndex < current) {
+                pages.setCurrentSpreadIndex(targetSpread + 1);
+                this.flipPrev();
+            }
         }
         return this;
     }

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'avatar',
+        'bg_preference',
         'password',
         'is_admin',
         'is_banned',

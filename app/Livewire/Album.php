@@ -7,6 +7,7 @@ use App\Models\Sticker;
 use App\Models\UserSticker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Album extends Component
@@ -15,6 +16,8 @@ class Album extends Component
 
     public int $totalPages = 0;
 
+    public string $bgImage = 'bg-table.webp';
+
     /**
      * @var array<int, array{number: int, image_path: string|null, stickers: array<int, array{id: int, number: int, name: string, position_x: int, position_y: int, width: int, height: int, is_horizontal: bool, image_path: string|null, status: string}>, glued_count: int, total_count: int}>
      */
@@ -22,6 +25,11 @@ class Album extends Component
 
     public function mount(): void
     {
+        $user = Auth::user();
+        if ($user && $user->bg_preference) {
+            $this->bgImage = $user->bg_preference;
+        }
+
         $this->loadPages();
     }
 
@@ -32,10 +40,11 @@ class Album extends Component
         $allStickersWithStatus = $this->getAllStickersWithStatusGroupedByPage();
 
         // Add cover page
+        $coverPath = 'pages/cover.webp';
         $pages = [[
             'number' => 0,
             'type' => 'cover',
-            'image_path' => 'pages/cover.webp',
+            'image_path' => Storage::disk('public')->exists($coverPath) ? $coverPath : null,
             'stickers' => [],
             'glued_count' => 0,
             'total_count' => 0,
@@ -57,10 +66,11 @@ class Album extends Component
         }
 
         // Add back cover page
+        $backCoverPath = 'pages/back_cover.webp';
         $pages[] = [
             'number' => 999,
             'type' => 'back_cover',
-            'image_path' => 'pages/back_cover.webp',
+            'image_path' => Storage::disk('public')->exists($backCoverPath) ? $backCoverPath : null,
             'stickers' => [],
             'glued_count' => 0,
             'total_count' => 0,

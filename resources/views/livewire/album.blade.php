@@ -6,40 +6,41 @@
 >
     {{-- Album Container --}}
     <div class="relative w-full">
+        {{-- Navigation: Left Corner (Previous) --}}
+        <button
+            @click="flipPrev()"
+            class="absolute left-0 top-0 bottom-0 z-30 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-start pl-2"
+            :class="{ 'pointer-events-none': currentPage === 0 }"
+            x-show="currentPage > 0"
+        >
+            <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
+                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </div>
+        </button>
+
+        {{-- Navigation: Right Corner (Next) --}}
+        <button
+            @click="flipNext()"
+            class="absolute right-0 top-0 bottom-0 z-30 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-end pr-2"
+            :class="{ 'pointer-events-none': currentPage >= totalPages - 1 }"
+            x-show="currentPage < totalPages - 1"
+        >
+            <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
+                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </div>
+        </button>
+
         {{-- Album Book --}}
-        <div class="relative w-full">
-            {{-- Navigation: Left Corner (Previous) --}}
-            <button
-                @click="flipPrev()"
-                class="absolute left-0 top-0 bottom-0 z-20 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-start pl-2"
-                :class="{ 'pointer-events-none': currentPage === 0 }"
-                x-show="currentPage > 0"
-            >
-                <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
-                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </div>
-            </button>
-
-            {{-- Navigation: Right Corner (Next) --}}
-            <button
-                @click="flipNext()"
-                class="absolute right-0 top-0 bottom-0 z-20 w-16 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-end pr-2"
-                :class="{ 'pointer-events-none': currentPage >= totalPages - 1 }"
-                x-show="currentPage < totalPages - 1"
-            >
-                <div class="bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors">
-                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </div>
-            </button>
-
+        <div class="relative z-0 w-full">
             {{-- Page Flip Container --}}
             <div
                 x-ref="albumContainer"
-                class="album-container bg-amber-900/20 rounded-lg shadow-2xl overflow-hidden"
+                class="album-container rounded-lg shadow-2xl overflow-hidden"
+                style="background-image: url('/images/bg/{{ $bgImage }}'); background-size: cover; background-position: center;"
                 wire:ignore
             >
                 @if ($totalPages > 0)
@@ -48,34 +49,26 @@
                             $pageType = $page['type'] ?? 'content';
                             $isCover = $pageType === 'cover' || $pageType === 'back_cover';
                         @endphp
-                        <div class="page {{ $isCover ? 'bg-emerald-900' : 'bg-amber-50 dark:bg-amber-100' }}" data-page-number="{{ $page['number'] }}" data-page-index="{{ $index }}" data-page-type="{{ $pageType }}">
+                        <div class="page {{ $isCover ? 'page-cover' : '' }}" data-page-number="{{ $page['number'] }}" data-page-index="{{ $index }}" data-page-type="{{ $pageType }}">
                             <div class="page-content relative w-full h-full">
-                                @if ($page['image_path'])
+                                @if ($isCover && $page['image_path'])
                                     <img
                                         src="{{ Storage::url($page['image_path']) }}"
-                                        alt="{{ $isCover ? ($pageType === 'cover' ? 'Portada' : 'Contraportada') : 'Página ' . $page['number'] }}"
-                                        class="absolute inset-0 w-full h-full object-contain"
-                                        loading="lazy"
+                                        alt="{{ $pageType === 'cover' ? 'Portada' : 'Contraportada' }}"
+                                        class="absolute inset-0 w-full h-full object-fill"
                                     />
-                                @else
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center {{ $isCover ? 'text-white/70' : 'text-amber-800/50' }}">
-                                        @if ($pageType === 'cover')
-                                            <svg class="w-20 h-20 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                            </svg>
-                                            <span class="text-2xl font-bold">USA 94</span>
-                                            <span class="text-sm mt-1">Álbum de Cromos</span>
-                                        @elseif ($pageType === 'back_cover')
-                                            <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            <span class="text-lg font-medium">Contraportada</span>
-                                        @else
-                                            <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <span class="text-sm">Página {{ $page['number'] }}</span>
-                                        @endif
+                                @elseif (!$isCover && $page['image_path'])
+                                    <img
+                                        src="{{ Storage::url($page['image_path']) }}"
+                                        alt="Página {{ $page['number'] }}"
+                                        class="absolute inset-0 w-full h-full object-fill"
+                                    />
+                                @elseif (!$isCover)
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center text-amber-800/50">
+                                        <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span class="text-sm">Página {{ $page['number'] }}</span>
                                     </div>
                                 @endif
 
@@ -199,66 +192,12 @@
             </div>
         </div>
 
-        {{-- Navigation Controls --}}
-        <div class="mt-3 flex items-center justify-center gap-4">
-            {{-- First Page Button --}}
-            <button
-                wire:click="goToFirstPage"
-                class="flex items-center gap-1 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="currentPage === 0"
-            >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                </svg>
-                <span class="hidden sm:inline">Primera</span>
-            </button>
-
-            {{-- Previous Page Button --}}
-            <button
-                wire:click="previousPage"
-                class="flex items-center gap-1 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="currentPage === 0"
-            >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-                <span class="hidden sm:inline">Anterior</span>
-            </button>
-
-            {{-- Page Indicator (Mobile) --}}
-            <div class="px-4 py-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-medium text-sm">
+        {{-- Page Indicator --}}
+        <div class="mt-1 flex justify-center">
+            <div class="px-3 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-medium text-xs">
                 <span x-text="currentPage + 1">{{ $currentPage + 1 }}</span> / {{ $totalPages }}
             </div>
-
-            {{-- Next Page Button --}}
-            <button
-                wire:click="nextPage"
-                class="flex items-center gap-1 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="currentPage >= totalPages - 1"
-            >
-                <span class="hidden sm:inline">Siguiente</span>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-
-            {{-- Last Page Button --}}
-            <button
-                wire:click="goToLastPage"
-                class="flex items-center gap-1 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="currentPage >= totalPages - 1"
-            >
-                <span class="hidden sm:inline">Última</span>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                </svg>
-            </button>
         </div>
-
-        {{-- Swipe Instructions (Mobile) --}}
-        <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400 sm:hidden">
-            Desliza o toca las esquinas para pasar página
-        </p>
     </div>
 
     <script>
@@ -290,8 +229,8 @@
                     }
 
                     this.pageFlip = new window.AlbumPageFlip(container, {
-                        width: 400,
-                        height: 500,
+                        width: 800,
+                        height: 931,
                         size: 'stretch',
                         minWidth: 280,
                         maxWidth: 800,
@@ -305,10 +244,10 @@
                         showCover: false,
                         mobileScrollSupport: true,
                         swipeDistance: 30,
-                        clickEventForward: true,
+                        clickEventForward: false,
                         useMouseEvents: true,
-                        showPageCorners: true,
-                        disableFlipByClick: false
+                        showPageCorners: false,
+                        disableFlipByClick: true
                     });
 
                     // Listen for page flip events
@@ -379,14 +318,17 @@
 
                 flipPrev() {
                     if (this.pageFlip) {
-                        this.pageFlip.flipPrev();
+                        const prevPage = this.pageFlip.getCurrentPage() - 1;
+                        if (prevPage >= 0) {
+                            this.pageFlip.flip(prevPage);
+                        }
                     }
                 },
 
                 goToPage(pageIndex) {
+                    if (pageIndex < 0 || pageIndex >= this.totalPages) return;
                     if (this.pageFlip) {
-                        this.pageFlip.turnToPage(pageIndex);
-                        this.loadStickersForVisiblePages(pageIndex);
+                        this.pageFlip.flip(pageIndex);
                     }
                 },
 
@@ -407,13 +349,25 @@
     <style>
         .album-container {
             width: 100%;
-            aspect-ratio: 4 / 5;
+            aspect-ratio: 800 / 931;
+            max-height: calc(100vh - 90px);
             position: relative;
+        }
+
+        @media (max-width: 639px) {
+            .album-container {
+                max-height: calc(100vh - 140px);
+            }
         }
 
         .album-container .page {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .album-container .page.page-cover {
+            background: transparent;
+            box-shadow: none;
         }
 
         .album-container .page-content {

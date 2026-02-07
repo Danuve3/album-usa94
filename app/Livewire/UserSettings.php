@@ -16,11 +16,14 @@ class UserSettings extends Component
 
     public string $name = '';
 
+    public ?string $selectedBg = null;
+
     public bool $showSuccessMessage = false;
 
     public function mount(): void
     {
         $this->name = Auth::user()->name;
+        $this->selectedBg = Auth::user()->bg_preference;
     }
 
     public function updatedAvatar(): void
@@ -77,10 +80,37 @@ class UserSettings extends Component
         $this->showSuccessMessage = true;
     }
 
+    public function getAvailableBackgrounds(): array
+    {
+        $bgPath = public_path('images/bg');
+
+        if (! is_dir($bgPath)) {
+            return [];
+        }
+
+        $files = glob($bgPath . '/*.{webp,jpg,jpeg,png}', GLOB_BRACE);
+
+        return array_map(fn ($file) => basename($file), $files);
+    }
+
+    public function saveBackground(string $filename): void
+    {
+        $filePath = public_path('images/bg/' . $filename);
+
+        if (! file_exists($filePath)) {
+            return;
+        }
+
+        Auth::user()->update(['bg_preference' => $filename]);
+        $this->selectedBg = $filename;
+        $this->showSuccessMessage = true;
+    }
+
     public function render(): View
     {
         return view('livewire.user-settings', [
             'user' => Auth::user(),
+            'backgrounds' => $this->getAvailableBackgrounds(),
         ]);
     }
 }

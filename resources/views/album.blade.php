@@ -1,13 +1,13 @@
 <x-layouts.app>
     <x-header />
 
-    <main class="flex-1 px-4 py-6">
+    <main class="flex-1 px-2 py-2 lg:px-3">
         <div class="mx-auto max-w-[1920px]">
             {{-- Two-column layout: Album | Sidebar --}}
-            <div class="flex flex-col gap-6 lg:flex-row">
+            <div class="flex flex-col gap-2 lg:flex-row lg:gap-3">
                 {{-- Left: Album Viewer --}}
                 <div class="w-full min-w-0 lg:flex-1">
-                    <div class="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-gray-800">
+                    <div class="overflow-hidden rounded-xl bg-white shadow-lg dark:bg-gray-800">
                         <livewire:album />
                     </div>
 
@@ -24,7 +24,7 @@
                 </div>
 
                 {{-- Right: Sidebar (25%) --}}
-                <aside class="w-full lg:w-[25%] lg:sticky lg:top-4 lg:h-[calc(100vh-6rem)] lg:self-start">
+                <aside class="w-full lg:w-[25%] lg:sticky lg:top-4 lg:h-[calc(100vh-5rem)] lg:self-start">
                     <div class="flex h-full flex-col gap-4">
                         {{-- Unglued Stickers --}}
                         <div class="flex-1 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-gray-800">
