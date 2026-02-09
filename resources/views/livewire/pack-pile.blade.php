@@ -255,7 +255,7 @@
                 revealAll() { this.revealed = this.revealed.map(() => true); }
             }"
         >
-            <div class="w-full max-w-4xl">
+            <div class="w-full max-w-6xl rounded-2xl bg-gray-900/80 backdrop-blur-sm p-8">
                 {{-- Title --}}
                 <h3 class="mb-6 text-center text-xl font-bold text-white drop-shadow-lg">
                     <template x-if="!allRevealed">
@@ -267,19 +267,31 @@
                 </h3>
 
                 {{-- Stickers Grid --}}
-                <div class="flex justify-center gap-3 mb-6">
+                <div class="flex justify-center items-center gap-3 mb-6">
                     @foreach ($lastOpenedStickers as $index => $sticker)
+                        @php
+                            $isHorizontal = ($sticker['width'] ?? 0) > ($sticker['height'] ?? 0);
+                            $backImage = $isHorizontal ? 'sticker_back_horizontal.webp' : 'sticker_back.webp';
+                        @endphp
                         <div
-                            class="sticker-card w-[150px] aspect-[3/4] perspective-1000 cursor-pointer"
+                            class="sticker-card perspective-1000 cursor-pointer {{ $isHorizontal ? 'w-[200px] aspect-[4/3]' : 'w-[150px] aspect-[3/4]' }}"
                             x-on:click="revealSticker({{ $index }})"
                         >
                             <div
                                 class="relative w-full h-full transition-transform duration-700 ease-out transform-style-preserve-3d"
                                 x-bind:class="{ 'rotate-y-180': revealed[{{ $index }}] }"
                             >
-                                {{-- Card Back (unrevealed) --}}
-                                <div class="absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-lg flex items-center justify-center border-2 border-emerald-400/50 hover:scale-105 transition-transform">
-                                    <div class="text-white/60 text-3xl font-bold">?</div>
+                                <div class="sticker-back-container absolute inset-0 w-full h-full backface-hidden shadow-lg overflow-hidden hover:scale-105 transition-transform">
+                                    <img src="{{ asset('images/stickers/' . $backImage) }}" alt="Reverso" class="w-full h-full object-cover">
+                                    @php
+                                        $backNumConfig = $isHorizontal ? $backNumberHorizontal : $backNumberVertical;
+                                    @endphp
+                                    @if ($backNumConfig['enabled'])
+                                        <span class="sticker-back-number"
+                                              style="left: {{ $backNumConfig['position_x'] }}%; top: {{ $backNumConfig['position_y'] }}%; font-size: {{ $backNumConfig['font_size'] }}cqi; font-weight: {{ $backNumConfig['font_weight'] }}; font-family: {{ $backNumConfig['font_family'] }}; color: {{ $backNumConfig['color'] }};">
+                                            {{ $sticker['number'] }}
+                                        </span>
+                                    @endif
                                 </div>
 
                                 {{-- Card Front (revealed) --}}
@@ -352,21 +364,18 @@
                 </template>
 
                 {{-- Actions --}}
-                <div class="flex flex-col gap-3">
-                    {{-- Reveal All Button (hidden when all revealed) --}}
-                    <template x-if="!allRevealed">
-                        <button
-                            x-on:click="revealAll()"
-                            class="w-full cursor-pointer rounded-lg bg-white/10 backdrop-blur px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
-                        >
-                            Revelar todos
-                        </button>
-                    </template>
+                <div class="flex gap-3">
+                    <button
+                        x-on:click="revealAll()"
+                        x-show="!allRevealed"
+                        class="flex-1 cursor-pointer rounded-lg bg-white/15 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/25"
+                    >
+                        Revelar todos
+                    </button>
 
-                    {{-- Continue Button (always visible) --}}
                     <button
                         wire:click="finishReveal"
-                        class="w-full cursor-pointer rounded-lg bg-emerald-500 px-4 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:scale-[1.02] shadow-lg shadow-emerald-500/30"
+                        class="flex-1 cursor-pointer rounded-lg bg-emerald-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-600"
                     >
                         Continuar
                     </button>

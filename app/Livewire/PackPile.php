@@ -99,6 +99,8 @@ class PackPile extends Component
                 'name' => $userSticker->sticker->name,
                 'rarity' => $userSticker->sticker->rarity->value,
                 'image_path' => $userSticker->sticker->image_path,
+                'width' => $userSticker->sticker->width ?? 0,
+                'height' => $userSticker->sticker->height ?? 0,
                 'is_duplicate' => $userSticker->is_duplicate ?? false,
             ];
         })->toArray();
@@ -126,9 +128,31 @@ class PackPile extends Component
 
     public function render(): View
     {
+        $defaultBackNumberConfig = [
+            'enabled' => false,
+            'position_x' => 15,
+            'position_y' => 85,
+            'font_size' => 12,
+            'font_weight' => 'bold',
+            'font_family' => 'Arial, sans-serif',
+            'color' => '#000000',
+        ];
+
+        $backNumberVertical = Setting::get('sticker_back_number_vertical', $defaultBackNumberConfig);
+        $backNumberHorizontal = Setting::get('sticker_back_number_horizontal', $defaultBackNumberConfig);
+
+        if (! is_array($backNumberVertical)) {
+            $backNumberVertical = $defaultBackNumberConfig;
+        }
+        if (! is_array($backNumberHorizontal)) {
+            $backNumberHorizontal = $defaultBackNumberConfig;
+        }
+
         return view('livewire.pack-pile', [
             'normalStyleEnabled' => Setting::get('sticker_style_normal_enabled', true),
             'shinyStyleEnabled' => Setting::get('sticker_style_shiny_enabled', true),
+            'backNumberVertical' => array_merge($defaultBackNumberConfig, $backNumberVertical),
+            'backNumberHorizontal' => array_merge($defaultBackNumberConfig, $backNumberHorizontal),
         ]);
     }
 }

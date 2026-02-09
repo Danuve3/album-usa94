@@ -90,6 +90,9 @@
                             <button type="button" class="btn btn-sm btn-outline-primary ms-2" id="reset-zoom">
                                 <i class="la la-compress"></i> Restablecer
                             </button>
+                            <a href="{{ backpack_url('sticker-mapper/back-number-config') }}" class="btn btn-sm btn-outline-info ms-2">
+                                <i class="la la-hashtag"></i> Config. Numero Reverso
+                            </a>
                         </div>
                     </div>
                     <div class="card-body p-0">

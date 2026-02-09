@@ -116,6 +116,20 @@
     transform: rotateY(180deg);
 }
 
+/* Sticker Back Number Overlay */
+.sticker-back-container {
+    container-type: inline-size;
+    position: relative;
+}
+
+.sticker-back-number {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1;
+}
+
 /* Sticker Card Slide-In Effect */
 @keyframes sticker-slide-in {
     0% {

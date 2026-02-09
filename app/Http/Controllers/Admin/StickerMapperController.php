@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Setting;
 use App\Models\Sticker;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,6 +12,16 @@ use Illuminate\View\View;
 
 class StickerMapperController extends Controller
 {
+    private const DEFAULT_BACK_NUMBER_CONFIG = [
+        'enabled' => false,
+        'position_x' => 15,
+        'position_y' => 85,
+        'font_size' => 12,
+        'font_weight' => 'bold',
+        'font_family' => 'Arial, sans-serif',
+        'color' => '#000000',
+    ];
+
     /**
      * Display the sticker mapper tool.
      */
@@ -90,6 +101,63 @@ class StickerMapperController extends Controller
             'success' => true,
             'message' => 'Orientación actualizada correctamente',
             'is_horizontal' => $sticker->is_horizontal,
+        ]);
+    }
+
+    /**
+     * Display the back number configuration page.
+     */
+    public function backNumberConfig(): View
+    {
+        $vertical = Setting::get('sticker_back_number_vertical', self::DEFAULT_BACK_NUMBER_CONFIG);
+        $horizontal = Setting::get('sticker_back_number_horizontal', self::DEFAULT_BACK_NUMBER_CONFIG);
+
+        if (! is_array($vertical)) {
+            $vertical = self::DEFAULT_BACK_NUMBER_CONFIG;
+        }
+        if (! is_array($horizontal)) {
+            $horizontal = self::DEFAULT_BACK_NUMBER_CONFIG;
+        }
+
+        return view('vendor.backpack.crud.sticker_back_number_config', [
+            'vertical' => array_merge(self::DEFAULT_BACK_NUMBER_CONFIG, $vertical),
+            'horizontal' => array_merge(self::DEFAULT_BACK_NUMBER_CONFIG, $horizontal),
+        ]);
+    }
+
+    /**
+     * Save the back number configuration.
+     */
+    public function saveBackNumberConfig(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'orientation' => 'required|in:vertical,horizontal',
+            'enabled' => 'required|boolean',
+            'position_x' => 'required|numeric|min:0|max:100',
+            'position_y' => 'required|numeric|min:0|max:100',
+            'font_size' => 'required|numeric|min:1|max:50',
+            'font_weight' => 'required|in:normal,500,600,bold,800,900',
+            'font_family' => 'required|string|max:100',
+            'color' => 'required|string|regex:/^#[0-9A-Fa-f]{6}$/',
+        ]);
+
+        $key = 'sticker_back_number_'.$validated['orientation'];
+
+        $config = [
+            'enabled' => $validated['enabled'],
+            'position_x' => $validated['position_x'],
+            'position_y' => $validated['position_y'],
+            'font_size' => $validated['font_size'],
+            'font_weight' => $validated['font_weight'],
+            'font_family' => $validated['font_family'],
+            'color' => $validated['color'],
+        ];
+
+        Setting::set($key, $config, 'json');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Configuración guardada correctamente',
         ]);
     }
 }

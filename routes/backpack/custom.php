@@ -37,6 +37,8 @@ Route::group([
 
     // Sticker Mapper Tool
     Route::get('sticker-mapper', 'StickerMapperController@index')->name('sticker-mapper.index');
+    Route::get('sticker-mapper/back-number-config', 'StickerMapperController@backNumberConfig')->name('sticker-mapper.back-number-config');
+    Route::post('sticker-mapper/back-number-config', 'StickerMapperController@saveBackNumberConfig')->name('sticker-mapper.save-back-number-config');
     Route::put('sticker-mapper/{sticker}/position', 'StickerMapperController@updatePosition')->name('sticker-mapper.update-position');
     Route::put('sticker-mapper/{sticker}/dimensions', 'StickerMapperController@updateDimensions')->name('sticker-mapper.update-dimensions');
     Route::post('sticker-mapper/{sticker}/toggle-horizontal', 'StickerMapperController@toggleHorizontal')->name('sticker-mapper.toggle-horizontal');
