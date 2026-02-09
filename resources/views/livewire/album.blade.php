@@ -150,22 +150,6 @@
                                     @endforeach
                                 @endif
 
-                                {{-- Sticker Counter (only for content pages) --}}
-                                @if (!$isCover && $page['total_count'] > 0)
-                                    <div class="absolute top-2 left-2 bg-black/40 text-white text-xs px-2 py-1 rounded z-10 flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
-                                        </svg>
-                                        <span>{{ $page['glued_count'] }}/{{ $page['total_count'] }}</span>
-                                    </div>
-                                @endif
-
-                                {{-- Page Number Overlay (only for content pages) --}}
-                                @if (!$isCover)
-                                    <div class="absolute bottom-2 right-2 bg-black/20 text-white/80 text-xs px-2 py-1 rounded z-10">
-                                        {{ $page['number'] }}
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     @endforeach
