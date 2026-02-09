@@ -22,12 +22,10 @@
                 {{-- Top pack --}}
                 <div class="relative z-10 w-64 aspect-[353/285] rounded shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:shadow-2xl group-active:scale-95 overflow-hidden">
                     <img src="{{ asset('images/packs/pack.webp') }}" alt="Sobre USA 94" class="h-full w-full object-contain">
-                    {{-- Open text overlay --}}
-                    <div class="absolute inset-0 flex items-end justify-center pb-2 bg-gradient-to-t from-black/50 to-transparent">
-                        <div class="text-xs font-semibold text-white drop-shadow-md">
-                            <span wire:loading.remove wire:target="openPack">Abrir</span>
-                            <span wire:loading wire:target="openPack">...</span>
-                        </div>
+                    {{-- Hover overlay --}}
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <span class="text-sm font-semibold text-white drop-shadow-md" wire:loading.remove wire:target="openPack">Abrir sobre</span>
+                        <span class="text-sm font-semibold text-white drop-shadow-md" wire:loading wire:target="openPack">Abriendo...</span>
                     </div>
                 </div>
             </button>
