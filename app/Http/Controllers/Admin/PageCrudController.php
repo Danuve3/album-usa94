@@ -38,6 +38,7 @@ class PageCrudController extends CrudController
         CRUD::column('stickers_status')
             ->label('Cromos')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 $stickers = $entry->stickers;
                 $total = $stickers->count();
@@ -52,10 +53,10 @@ class PageCrudController extends CrudController
                 $html = '<span class="badge bg-primary">' . $total . ' cromos</span>';
 
                 if ($positioned > 0) {
-                    $html .= ' <span class="badge bg-success" title="Posicionados">' . $positioned . '</span>';
+                    $html .= ' <span class="badge bg-success" title="Posicionados">' . $positioned . ' posicionados</span>';
                 }
                 if ($unpositioned > 0) {
-                    $html .= ' <span class="badge bg-warning" title="Sin posicionar">' . $unpositioned . '</span>';
+                    $html .= ' <span class="badge bg-warning" title="Sin posicionar">' . $unpositioned . ' sin posicionar</span>';
                 }
 
                 return $html;
@@ -109,6 +110,7 @@ class PageCrudController extends CrudController
         CRUD::column('stickers_preview')
             ->label('Cromos en esta página')
             ->type('closure')
+            ->escaped(false)
             ->function(function ($entry) {
                 $stickers = $entry->stickers()->orderBy('number')->get();
 
