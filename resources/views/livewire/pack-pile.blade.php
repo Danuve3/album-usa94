@@ -95,153 +95,137 @@
     {{-- Pack Rip Animation --}}
     @if ($showRipAnimation)
         <div
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-hidden"
             x-data="{
                 phase: 'enter',
+                tearProgress: 0,
+
                 init() {
-                    // Phase 1: Pack enters and shakes
-                    setTimeout(() => this.phase = 'shake', 300);
-                    // Phase 2: Start ripping
-                    setTimeout(() => this.phase = 'rip', 1000);
-                    // Phase 3: Finish and show stickers
-                    setTimeout(() => $wire.finishRipAnimation(), 2200);
+                    // enter(0-300) → tension(300-900) → tearing(900-1700) → open(1700-2700) → fadeout(2700-3100) → Livewire
+                    setTimeout(() => this.phase = 'tension', 300);
+                    setTimeout(() => {
+                        this.phase = 'tearing';
+                        this.animateTear();
+                    }, 900);
+                },
+
+                animateTear() {
+                    const start = performance.now();
+                    const duration = 800;
+                    const step = (now) => {
+                        let t = Math.min((now - start) / duration, 1);
+                        // Quadratic ease-in: slow start (resistance) then accelerates (rip)
+                        this.tearProgress = t * t * 100;
+                        if (t < 1) {
+                            requestAnimationFrame(step);
+                        } else {
+                            this.tearProgress = 100;
+                            this.phase = 'open';
+                            setTimeout(() => {
+                                this.phase = 'fadeout';
+                                setTimeout(() => $wire.finishRipAnimation(), 400);
+                            }, 1000);
+                        }
+                    };
+                    requestAnimationFrame(step);
                 }
             }"
         >
             <div class="relative">
-                {{-- Particles/Confetti effect --}}
+                {{-- Outer wrapper: scale & opacity transitions + micro-zoom --}}
                 <div
-                    class="absolute inset-0 pointer-events-none overflow-visible"
-                    x-show="phase === 'rip'"
-                    x-transition:enter="transition-opacity duration-300"
-                >
-                    @for ($i = 0; $i < 12; $i++)
-                        <div
-                            class="absolute w-2 h-3 bg-gradient-to-b from-yellow-300 to-amber-500 rounded-sm"
-                            style="
-                                left: {{ 45 + ($i % 4) * 10 }}%;
-                                top: 20%;
-                                animation: particle-{{ $i % 4 }} 1s ease-out forwards;
-                                animation-delay: {{ ($i * 0.05) }}s;
-                            "
-                        ></div>
-                    @endfor
-                </div>
-
-                {{-- Pack container --}}
-                <div
-                    class="relative w-72 transition-all duration-300"
+                    class="transition-[transform,opacity]"
                     :class="{
-                        'scale-0 opacity-0': phase === 'enter',
-                        'scale-100 opacity-100': phase !== 'enter',
-                        'animate-pack-shake': phase === 'shake'
+                        'scale-0 opacity-0 duration-300': phase === 'enter',
+                        'scale-100 opacity-100 duration-300': phase === 'tension',
+                        'scale-[1.03] opacity-100 duration-500': phase === 'tearing',
+                        'scale-[1.05] opacity-100 duration-700': phase === 'open',
+                        'scale-95 opacity-0 duration-400': phase === 'fadeout'
                     }"
-                    x-init="setTimeout(() => phase = 'visible', 50)"
                 >
-                    {{-- Top part of pack (rips up) --}}
-                    <div
-                        class="absolute top-0 left-0 right-0 h-[25%] overflow-hidden z-10 transition-all duration-700 ease-out origin-bottom"
-                        :class="{
-                            'translate-y-0 rotate-0': phase !== 'rip',
-                            '-translate-y-16 -rotate-12 opacity-0': phase === 'rip'
-                        }"
-                    >
-                        <img
-                            src="{{ asset('images/packs/pack.webp') }}"
-                            alt="Sobre USA 94"
-                            class="w-full object-cover object-top"
-                            style="clip-path: polygon(0 0, 100% 0, 100% 100%, 85% 95%, 70% 100%, 55% 95%, 40% 100%, 25% 95%, 10% 100%, 0 95%);"
-                        >
-                    </div>
+                    {{-- Inner wrapper: tension shake --}}
+                    <div :class="{ 'animate-pack-tension': phase === 'tension' }">
+                        {{-- Pack container --}}
+                        <div class="relative w-72 aspect-[353/285]">
 
-                    {{-- Main pack body --}}
-                    <div class="relative aspect-[353/285] overflow-hidden">
-                        <img
-                            src="{{ asset('images/packs/pack.webp') }}"
-                            alt="Sobre USA 94"
-                            class="w-full h-full object-contain"
-                        >
+                            {{-- L1: Pack body with torn top edge --}}
+                            <img
+                                src="{{ asset('images/packs/pack.webp') }}"
+                                alt=""
+                                class="absolute inset-0 w-full h-full object-contain"
+                                style="clip-path: polygon(0% 23%, 5% 25%, 10% 22%, 15% 26%, 20% 23%, 25% 24%, 30% 25%, 35% 23%, 40% 27%, 45% 22%, 50% 25%, 55% 21%, 60% 27%, 65% 24%, 70% 22%, 75% 26%, 80% 23%, 85% 28%, 90% 21%, 95% 25%, 100% 23%, 100% 100%, 0% 100%);"
+                            >
 
-                        {{-- Glow effect when ripping --}}
-                        <div
-                            class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 via-yellow-400/0 to-yellow-400/0 transition-all duration-500"
-                            :class="{ 'from-yellow-400/80 via-yellow-400/40 to-transparent': phase === 'rip' }"
-                        ></div>
-
-                        {{-- Rip line effect --}}
-                        <div
-                            class="absolute top-[20%] left-0 right-0 h-1 transition-all duration-300"
-                            :class="{
-                                'opacity-0 scale-x-0': phase !== 'rip',
-                                'opacity-100 scale-x-100 bg-gradient-to-r from-transparent via-white to-transparent shadow-lg shadow-white/50': phase === 'rip'
-                            }"
-                        ></div>
-                    </div>
-
-                    {{-- Stickers peeking out --}}
-                    <div
-                        class="absolute top-[15%] left-1/2 -translate-x-1/2 flex gap-1 transition-all duration-700 ease-out"
-                        :class="{
-                            'opacity-0 translate-y-4': phase !== 'rip',
-                            'opacity-100 -translate-y-2': phase === 'rip'
-                        }"
-                    >
-                        @for ($i = 0; $i < 3; $i++)
+                            {{-- L2: Golden glow in tear gap --}}
                             <div
-                                class="w-8 h-10 rounded-sm shadow-lg transform transition-all duration-500"
-                                style="
-                                    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-                                    animation-delay: {{ $i * 0.1 }}s;
-                                    transform: rotate({{ ($i - 1) * 8 }}deg);
-                                "
+                                class="absolute left-0 right-0 pointer-events-none transition-opacity duration-500"
+                                style="top: 16%; height: 16%;"
+                                :class="{
+                                    'opacity-0': phase === 'enter' || phase === 'tension' || phase === 'fadeout',
+                                    'opacity-80': phase === 'tearing',
+                                    'opacity-100': phase === 'open'
+                                }"
+                            >
+                                <div
+                                    class="w-full h-full"
+                                    style="background: radial-gradient(ellipse 100% 100% at center, rgba(251,191,36,0.9) 0%, rgba(245,158,11,0.5) 40%, transparent 80%);"
+                                ></div>
+                            </div>
+
+                            {{-- L3: Top flap with torn bottom edge (lifts in open phase) --}}
+                            <div
+                                class="absolute inset-0"
+                                style="transform-origin: center 22%; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);"
+                                :style="(phase === 'open' || phase === 'fadeout')
+                                    ? 'transform: translateY(-50px) rotate(-12deg);'
+                                    : 'transform: none;'"
+                            >
+                                <img
+                                    src="{{ asset('images/packs/pack.webp') }}"
+                                    alt=""
+                                    class="w-full h-full object-contain"
+                                    style="clip-path: polygon(0% 0%, 100% 0%, 100% 20%, 95% 22%, 90% 18%, 85% 25%, 80% 20%, 75% 23%, 70% 19%, 65% 21%, 60% 24%, 55% 18%, 50% 22%, 45% 19%, 40% 24%, 35% 20%, 30% 22%, 25% 21%, 20% 20%, 15% 23%, 10% 19%, 5% 22%, 0% 20%);"
+                                >
+                            </div>
+
+                            {{-- L4: Intact overlay (reveals tear from left to right) --}}
+                            <img
+                                src="{{ asset('images/packs/pack.webp') }}"
+                                alt=""
+                                class="absolute inset-0 w-full h-full object-contain"
+                                :style="'clip-path: inset(0 0 0 ' + tearProgress + '%);'"
+                            >
+
+                            {{-- L5: Foil shimmer overlay --}}
+                            <div
+                                class="absolute inset-0 pointer-events-none rounded"
+                                style="mix-blend-mode: overlay;"
+                                :class="{
+                                    'pack-foil-shimmer': phase === 'tension' || phase === 'tearing' || phase === 'open',
+                                    'opacity-0': phase === 'enter' || phase === 'fadeout'
+                                }"
                             ></div>
-                        @endfor
+
+                            {{-- L6: Tear spark at rip point --}}
+                            <div
+                                class="absolute pointer-events-none w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-white"
+                                x-show="phase === 'tearing'"
+                                x-transition:leave="transition-opacity duration-200"
+                                :style="'left:' + tearProgress + '%; top: 21%; box-shadow: 0 0 10px 4px rgba(251,191,36,0.9), 0 0 20px 8px rgba(251,191,36,0.4);'"
+                            ></div>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Opening text --}}
                 <p
-                    class="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white font-bold text-lg whitespace-nowrap transition-opacity duration-300"
-                    :class="{ 'opacity-100': phase === 'shake', 'opacity-0': phase !== 'shake' }"
+                    class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-white font-bold text-lg whitespace-nowrap transition-opacity duration-300"
+                    :class="{ 'opacity-100': phase === 'tension', 'opacity-0': phase !== 'tension' }"
                 >
                     Abriendo sobre...
                 </p>
             </div>
         </div>
-
-        <style>
-            @keyframes pack-shake {
-                0%, 100% { transform: rotate(0deg) scale(1); }
-                10% { transform: rotate(-3deg) scale(1.02); }
-                20% { transform: rotate(3deg) scale(1.02); }
-                30% { transform: rotate(-3deg) scale(1.03); }
-                40% { transform: rotate(3deg) scale(1.03); }
-                50% { transform: rotate(-2deg) scale(1.04); }
-                60% { transform: rotate(2deg) scale(1.04); }
-                70% { transform: rotate(-1deg) scale(1.03); }
-                80% { transform: rotate(1deg) scale(1.02); }
-                90% { transform: rotate(0deg) scale(1.01); }
-            }
-            .animate-pack-shake {
-                animation: pack-shake 0.7s ease-in-out;
-            }
-            @keyframes particle-0 {
-                0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                100% { transform: translate(-60px, -80px) rotate(180deg); opacity: 0; }
-            }
-            @keyframes particle-1 {
-                0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                100% { transform: translate(-20px, -100px) rotate(-120deg); opacity: 0; }
-            }
-            @keyframes particle-2 {
-                0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                100% { transform: translate(20px, -90px) rotate(150deg); opacity: 0; }
-            }
-            @keyframes particle-3 {
-                0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                100% { transform: translate(60px, -70px) rotate(-180deg); opacity: 0; }
-            }
-        </style>
     @endif
 
     {{-- Sticker Reveal Modal --}}
@@ -255,7 +239,7 @@
                 revealAll() { this.revealed = this.revealed.map(() => true); }
             }"
         >
-            <div class="w-full max-w-6xl rounded-2xl bg-gray-900/80 backdrop-blur-sm p-8">
+            <div class="w-full max-w-6xl rounded-2xl bg-gray-900/80 backdrop-blur-sm p-8 reveal-modal-enter">
                 {{-- Title --}}
                 <h3 class="mb-6 text-center text-xl font-bold text-white drop-shadow-lg">
                     <template x-if="!allRevealed">
