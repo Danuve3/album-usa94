@@ -126,7 +126,7 @@
                                         @else
                                             {{-- Empty Slot (user doesn't have this sticker) --}}
                                             <div
-                                                class="sticker-slot sticker-empty absolute group"
+                                                class="sticker-slot sticker-empty absolute"
                                                 style="
                                                     left: {{ $sticker['position_x'] }}%;
                                                     top: {{ $sticker['position_y'] }}%;
@@ -135,17 +135,7 @@
                                                 "
                                                 data-sticker-id="{{ $sticker['id'] }}"
                                                 data-sticker-number="{{ $sticker['number'] }}"
-                                                title="{{ $sticker['name'] }}"
-                                            >
-                                                <div class="w-full h-full rounded border border-dashed border-gray-400/50 bg-gray-500/10 flex items-center justify-center">
-                                                    <span class="text-gray-500/70 dark:text-gray-400/50 font-medium text-xs sm:text-sm">{{ $sticker['number'] }}</span>
-                                                </div>
-                                                {{-- Tooltip --}}
-                                                <div class="sticker-tooltip opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-20 pointer-events-none transition-opacity">
-                                                    {{ $sticker['name'] }}
-                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
-                                                </div>
-                                            </div>
+                                            ></div>
                                         @endif
                                     @endforeach
                                 @endif
@@ -269,7 +259,9 @@
                     const pagesToLoad = [
                         currentPageIndex - 1,
                         currentPageIndex,
-                        currentPageIndex + 1
+                        currentPageIndex + 1,
+                        currentPageIndex + 2,
+                        currentPageIndex + 3
                     ].filter(p => p >= 0 && p < this.totalPages);
 
                     pagesToLoad.forEach(pageIndex => {
@@ -440,16 +432,6 @@
 
         .sticker-slot:hover {
             z-index: 15;
-        }
-
-        /* Empty sticker slot */
-        .sticker-empty > div {
-            transition: all 0.2s ease;
-        }
-
-        .sticker-empty:hover > div {
-            border-color: rgba(156, 163, 175, 0.7);
-            background-color: rgba(107, 114, 128, 0.15);
         }
 
         /* Available sticker slot (looks like empty until drag) */
