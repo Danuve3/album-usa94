@@ -27,7 +27,7 @@
                 <aside class="w-full lg:w-[25%] lg:sticky lg:top-4 lg:h-[calc(100vh-5rem)] lg:self-start">
                     <div class="flex h-full flex-col gap-4">
                         {{-- Unglued Stickers --}}
-                        <div class="flex-1 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-gray-800">
+                        <div class="flex-[32px] overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-gray-800">
                             <div class="flex h-full flex-col">
                                 <div class="border-b border-gray-100 px-4 py-3 dark:border-gray-700">
                                     <h2 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">

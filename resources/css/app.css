@@ -169,7 +169,6 @@
     background-size: 200% 200%;
     animation: shiny-shimmer 3s ease-in-out infinite, shiny-glow 2s ease-in-out infinite;
     border: 2px solid #f59e0b;
-    position: relative;
     overflow: hidden;
 }
 

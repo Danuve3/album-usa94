@@ -10,9 +10,6 @@
             </div>
             <div>
                 <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ $totalCount }}</span>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ $totalCount === 1 ? 'cromo sin pegar' : 'cromos sin pegar' }}
-                </p>
             </div>
         </div>
 
@@ -48,7 +45,7 @@
         >
             {{-- Horizontal scrollable row --}}
             <div
-                class="stickers-fan flex flex-nowrap items-end overflow-x-auto py-2 pl-2 pr-8"
+                class="stickers-fan flex flex-nowrap items-end overflow-x-auto pt-12 pb-2 pl-2 pr-8"
                 @wheel.prevent="$el.scrollLeft += $event.deltaY"
             >
                 @foreach ($filteredStickers as $index => $sticker)

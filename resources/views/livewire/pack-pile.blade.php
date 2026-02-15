@@ -304,17 +304,6 @@
                                         </div>
                                     @endif
 
-                                    {{-- Number Badge --}}
-                                    <div class="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                                        #{{ $sticker['number'] }}
-                                    </div>
-
-                                    {{-- Shiny Badge --}}
-                                    @if ($sticker['rarity'] === 'shiny')
-                                        <span class="absolute top-1 left-1 text-[9px] font-bold text-amber-400 drop-shadow-md sticker-shiny-badge">
-                                            ✦ Shiny
-                                        </span>
-                                    @endif
 
                                     {{-- Duplicate Badge --}}
                                     @if ($sticker['is_duplicate'])
